@@ -1,87 +1,129 @@
 import Link from "next/link"
 import Image from "next/image"
-import { MessageSquare, Lightbulb, Code, Smartphone, Cloud } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Zap, Languages, ShieldCheck } from "lucide-react"
 
 export default function HomePage() {
   return (
-    <>
-      {/* Home Section */}
-      <section id="home" className="gradient-bg min-h-screen flex flex-col items-center justify-center p-4 pt-16">
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto py-20">
-          <div className="mb-8 floating">
-            <Image
-              src="/images/drx-logo.png"
-              alt="Dr X Logo"
-              width={96}
-              height={96}
-              className="mx-auto rounded-lg pulse-glow"
-            />
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight gradient-text">
-            Dr X - مساعد الذكاء الاصطناعي
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 leading-relaxed opacity-90">
-            مساعدك الذكي المتطور - مدعوم بأحدث تقنيات الذكاء الاصطناعي
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/chat"
-              className="btn-gradient text-white px-8 py-3 rounded-full text-lg font-semibold flex items-center justify-center"
-            >
-              دردش مع د. إكس <MessageSquare className="h-5 w-5 mr-2" />
-            </Link>
-            <Link
-              href="/services"
-              className="border-2 border-orange-400 text-orange-400 px-8 py-3 rounded-full text-lg font-semibold hover:bg-orange-400 hover:text-black transition-colors bg-transparent"
-            >
-              استكشف خدماتنا
-            </Link>
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white pt-24">
+      {/* Hero Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 text-center bg-gradient-to-b from-gray-900/50 to-transparent">
+        <div className="container px-4 md:px-6">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text leading-tight">
+              مساعدك الذكي المتطور - مدعوم بأحدث تقنيات الذكاء الاصطناعي
+            </h1>
+            <p className="text-lg md:text-xl text-gray-300">
+              مدعوم بأحدث تقنيات الذكاء الاصطناعي لتبسيط مهامك اليومية وتعزيز إنتاجيتك.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link href="/chat">
+                <Button className="px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg">
+                  ابدأ الدردشة الآن
+                </Button>
+              </Link>
+              <Link href="/services">
+                <Button
+                  variant="outline"
+                  className="px-8 py-3 text-lg font-semibold rounded-full border-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-all bg-transparent"
+                >
+                  اكتشف خدماتنا
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 w-full section-bg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">لماذا تختار Dr X؟</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-red-500 mx-auto mb-8"></div>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              نقدم حلولاً تقنية مبتكرة وموثوقة لمساعدتك على تحقيق أهدافك
-            </p>
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-900/50">
+        <div className="container px-4 md:px-6">
+          <div className="grid gap-8 md:grid-cols-3">
+            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
+              <CardHeader className="flex flex-col items-center text-center">
+                <div className="bg-blue-500/20 p-4 rounded-full mb-4">
+                  <ShieldCheck className="h-8 w-8 text-blue-400" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-white">أمان وخصوصية</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center text-gray-300">
+                نحن نضمن حماية بياناتك بأعلى معايير الأمان.
+              </CardContent>
+            </Card>
+            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
+              <CardHeader className="flex flex-col items-center text-center">
+                <div className="bg-red-500/20 p-4 rounded-full mb-4">
+                  <Zap className="h-8 w-8 text-red-400" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-white">أداء لا مثيل له</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center text-gray-300">تصميمات بواجهة آمنة وموثوقة لأعمالك.</CardContent>
+            </Card>
+            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
+              <CardHeader className="flex flex-col items-center text-center">
+                <div className="bg-green-500/20 p-2 rounded-full mb-4">
+                  <Languages className="h-8 w-8 text-green-400" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-white">حلول مبتكرة</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center text-gray-300">
+                نقدم أحدث التقنيات في الذكاء الاصطناعي وتطوير الويب.
+              </CardContent>
+            </Card>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center border border-gray-700 hover:border-orange-500 transition-all card-hover">
-              <div className="w-16 h-16 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Lightbulb className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4">حلول مبتكرة</h3>
-              <p className="text-gray-400">نقدم أحدث التقنيات والحلول الإبداعية لمواجهة تحدياتك.</p>
-            </div>
-            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center border border-gray-700 hover:border-green-500 transition-all card-hover">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Code className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4">جودة لا تضاهى</h3>
-              <p className="text-gray-400">نلتزم بأعلى معايير الجودة في كل مشروع نقوم به.</p>
-            </div>
-            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center border border-gray-700 hover:border-purple-500 transition-all card-hover">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Smartphone className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4">دعم متواصل</h3>
-              <p className="text-gray-400">فريقنا متاح لتقديم الدعم والمساعدة على مدار الساعة.</p>
-            </div>
-            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center border border-gray-700 hover:border-blue-500 transition-all card-hover">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Cloud className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4">خبرة واسعة</h3>
-              <p className="text-gray-400">سنوات من الخبرة في مجال الذكاء الاصطناعي والتكنولوجيا.</p>
+        </div>
+      </section>
+
+      {/* About Us Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-800/50">
+        <div className="container px-4 md:px-6 grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+          <div className="space-y-4 text-center lg:text-right">
+            <h2 className="text-3xl md:text-5xl font-bold gradient-text leading-tight">من نحن Dr X</h2>
+            <p className="text-lg text-gray-300">
+              نحن فريق من الخبراء المتخصصين في الذكاء الاصطناعي وتطوير الويب، ملتزمون بتقديم حلول مبتكرة وعالية الجودة
+              لعملائنا. نسعى دائمًا لتجاوز التوقعات وتحقيق أهداف أعمالك.
+            </p>
+            <Link href="/about">
+              <Button
+                variant="outline"
+                className="px-6 py-3 rounded-full border-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-all bg-transparent"
+              >
+                اعرف المزيد عنا
+              </Button>
+            </Link>
+          </div>
+          <div className="flex justify-center lg:justify-start">
+            <div className="relative w-full max-w-[600px] h-[400px]">
+              <Image
+                src="/placeholder.svg?height=400&width=600"
+                width={600}
+                height={400}
+                alt="About Us"
+                className="rounded-xl shadow-2xl object-cover"
+                priority={false}
+              />
             </div>
           </div>
         </div>
       </section>
-    </>
+
+      {/* Call to Action Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 text-center bg-gradient-to-r from-drx-blue to-drx-purple">
+        <div className="container px-4 md:px-6 space-y-6">
+          <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">
+            هل أنت مستعد لتحويل فكرتك إلى واقع؟
+          </h2>
+          <p className="text-lg md:text-xl text-gray-200">
+            تواصل معنا اليوم لمناقشة مشروعك والحصول على استشارة مجانية.
+          </p>
+          <Link href="/contact">
+            <Button className="px-8 py-3 text-lg font-semibold rounded-full bg-white text-drx-blue hover:bg-gray-100 transition-all shadow-lg">
+              تواصل معنا
+            </Button>
+          </Link>
+        </div>
+      </section>
+    </div>
   )
 }

@@ -1,354 +1,154 @@
-"use client"
-
-import type React from "react"
 import Link from "next/link"
-import { Mail, Github, DiscIcon as Discord, ExternalLink, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { useState } from "react"
-import { cn } from "@/lib/utils"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Mail, Phone, MapPin } from "lucide-react"
 
 export default function ContactPage() {
-  const [submitted, setSubmitted] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-      setSubmitted(true)
-      setTimeout(() => setSubmitted(false), 3000)
-    }, 2000)
-  }
-
-  const contactCardClass = "bg-gray-800 p-6 rounded-2xl text-center card-hover"
-  const formInputClass =
-    "w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-drx-orange focus:border-transparent text-white"
-
   return (
-    <div className="bg-black text-white">
-      {/* القسم الرئيسي */}
-      <section className="gradient-bg min-h-screen flex flex-col items-center justify-center p-4 pt-16">
-        <div className="relative z-10 text-center px-4 max-w-6xl mx-auto pt-8">
-          <div className="floating">
-            <Mail className="h-24 w-24 text-drx-orange mx-auto mb-8 animate-pulse-glow" />
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 gradient-text">تواصل معنا</h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-            نحن هنا لمساعدتك في تحقيق أهدافك الرقمية. تواصل معنا اليوم ودع الخبراء يقودون مشروعك نحو النجاح
-          </p>
-
-          {/* معلومات الاتصال السريعة */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            <div className={contactCardClass}>
-              <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">البريد الإلكتروني</h3>
-              <p className="text-gray-300">balqees0alalawi@gmail.com</p>
-            </div>
-            <div className={contactCardClass}>
-              <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center mx-auto mb-4">
-                <Github className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">GitHub</h3>
-              <a
-                href="https://github.com/wolfomani"
-                className="text-drx-orange hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                https://github.com/wolfomani
-              </a>
-            </div>
-            <div className={contactCardClass}>
-              <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center mx-auto mb-4">
-                <Discord className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Discord</h3>
-              <p className="text-gray-300">@abdulaziz-x7r1g</p>
-            </div>
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white pt-24">
+      {/* Hero Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 text-center bg-gradient-to-b from-gray-900/50 to-transparent">
+        <div className="container px-4 md:px-6">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text leading-tight">تواصل معنا</h1>
+            <p className="text-lg md:text-xl text-gray-300">
+              نحن هنا للإجابة على أسئلتك ومساعدتك في مشروعك القادم. لا تتردد في التواصل معنا.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* قسم النموذج ومعلومات الاتصال */}
-      <section id="contact" className="gradient-bg py-20 pt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">تواصل معنا</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-red-500 mx-auto mb-8"></div>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">نحن هنا لمساعدتك في تحقيق أهدافك التقنية</p>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* معلومات التواصل التفصيلية */}
-            <div>
-              <h3 className="text-2xl font-bold mb-6 gradient-text">معلومات التواصل</h3>
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center">
-                    <Mail className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="font-semibold">البريد الإلكتروني</div>
-                    <div className="text-gray-300">balqees0alalawi@gmail.com</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center">
-                    <Github className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="font-semibold">GitHub</div>
-                    <Link
-                      href="https://github.com/wolfomani"
-                      className="text-orange-400 hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      https://github.com/wolfomani
-                    </Link>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center">
-                    <Discord className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="font-semibold">Discord</div>
-                    <div className="text-gray-300">@abdulaziz-x7r1g</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center">
-                    <ExternalLink className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="font-semibold">التطبيق</div>
-                    <Link
-                      href="https://hamkamai.github.io/3weep.app"
-                      className="text-orange-400 hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      https://hamkamai.github.io/3weep.app
-                    </Link>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center">
-                    <Globe className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="font-semibold">الموقع</div>
-                    <Link
-                      href="https://36drx.vercel.app"
-                      className="text-orange-400 hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      https://36drx.vercel.app
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* نموذج الاتصال */}
-            <div className="bg-gray-800/50 backdrop-blur-lg p-8 rounded-2xl shadow-lg">
-              <h3 className="text-2xl font-bold mb-6">أرسل رسالة</h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Contact Form and Info */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-900/50">
+        <div className="container px-4 md:px-6 grid gap-8 lg:grid-cols-2 lg:gap-12">
+          {/* Contact Form */}
+          <Card className="bg-gray-800/50 border border-gray-700 shadow-xl p-6">
+            <CardHeader>
+              <CardTitle className="text-3xl font-bold text-white mb-4">أرسل لنا رسالة</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form className="space-y-6">
                 <div>
-                  <Label htmlFor="name" className="block text-sm font-medium mb-2">
-                    الاسم
-                  </Label>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                    الاسم الكامل
+                  </label>
                   <Input
-                    type="text"
                     id="name"
-                    required
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-drx-orange focus:border-transparent text-white"
+                    type="text"
+                    placeholder="أدخل اسمك"
+                    className="bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-drx-orange"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="email" className="block text-sm font-medium mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                     البريد الإلكتروني
-                  </Label>
+                  </label>
                   <Input
-                    type="email"
                     id="email"
-                    required
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-drx-orange focus:border-transparent text-white"
+                    type="email"
+                    placeholder="أدخل بريدك الإلكتروني"
+                    className="bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-drx-orange"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="message" className="block text-sm font-medium mb-2">
-                    الرسالة
-                  </Label>
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
+                    الموضوع
+                  </label>
+                  <Input
+                    id="subject"
+                    type="text"
+                    placeholder="موضوع رسالتك"
+                    className="bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-drx-orange"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                    رسالتك
+                  </label>
                   <Textarea
                     id="message"
-                    required
+                    placeholder="اكتب رسالتك هنا..."
                     rows={5}
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-drx-orange focus:border-transparent text-white"
+                    className="bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-drx-orange"
                   />
                 </div>
                 <Button
                   type="submit"
-                  disabled={isLoading}
-                  className="w-full btn-gradient text-white py-3 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg"
                 >
-                  {isLoading ? (
-                    <span className="flex items-center justify-center">
-                      <svg
-                        className="animate-spin h-5 w-5 ml-2 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      جاري الإرسال...
-                    </span>
-                  ) : submitted ? (
-                    <span className="text-green-300 flex items-center justify-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-5 w-5 ml-2"
-                      >
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      تم الإرسال بنجاح!
-                    </span>
-                  ) : (
-                    <span className="flex items-center justify-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-5 w-5 ml-2"
-                      >
-                        <path d="M22 2L11 13.12V22H13.88V13.12L22 2z"></path>
-                      </svg>
-                      إرسال الرسالة
-                    </span>
-                  )}
+                  إرسال الرسالة
                 </Button>
               </form>
-            </div>
-          </div>
-        </div>
-      </section>
+            </CardContent>
+          </Card>
 
-      {/* قسم الخريطة */}
-      <section className="section-bg py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">موقعنا على الخريطة</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-drx-orange to-drx-red mx-auto mb-8"></div>
-            <p className="text-xl text-gray-300">زر مكاتبنا في قلب الرياض</p>
-          </div>
-          <div className="bg-gray-800 p-8 rounded-2xl shadow-lg">
-            <div className="relative h-96 bg-gray-700 rounded-lg flex items-center justify-center">
-              <div className="text-center text-white">
-                <Globe className="h-24 w-24 text-drx-orange mx-auto mb-4" />
-                <h3 className="text-2xl font-semibold mb-2">خريطة تفاعلية</h3>
-                <p className="text-gray-300">يمكنك العثور علينا في حي العليا، الرياض</p>
-                <Button className="mt-4 btn-gradient text-white px-6 py-2 rounded-lg">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-5 w-5 ml-2"
-                  >
-                    <path d="M12 2v3h1a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h1V2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2z"></path>
-                    <polyline points="16 2 16 6 20 6"></polyline>
-                  </svg>
-                  احصل على الاتجاهات
-                </Button>
+          {/* Contact Information */}
+          <Card className="bg-gray-800/50 border border-gray-700 shadow-xl p-6">
+            <CardHeader>
+              <CardTitle className="text-3xl font-bold text-white mb-4">معلومات الاتصال</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="bg-drx-orange/20 p-3 rounded-full">
+                  <Mail className="h-6 w-6 text-drx-orange" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">البريد الإلكتروني</h3>
+                  <p className="text-gray-300">balqees0alalawi@gmail.com</p>
+                </div>
               </div>
-            </div>
-          </div>
+              <div className="flex items-center gap-4">
+                <div className="bg-drx-blue/20 p-3 rounded-full">
+                  <Phone className="h-6 w-6 text-drx-blue" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">الهاتف</h3>
+                  <p className="text-gray-300">+966 50 123 4567</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="bg-drx-purple/20 p-3 rounded-full">
+                  <MapPin className="h-6 w-6 text-drx-purple" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">العنوان</h3>
+                  <p className="text-gray-300">الرياض، المملكة العربية السعودية</p>
+                </div>
+              </div>
+              <div className="mt-8">
+                <h3 className="text-lg font-semibold text-white mb-4">تابعنا على وسائل التواصل الاجتماعي</h3>
+                <div className="flex gap-4">
+                  <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                    <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        fillRule="evenodd"
+                        d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22C18.343 21.128 22 16.991 22 12z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </Link>
+                  <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                    <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M8.29 20.251c1.804 0 3.483-.638 4.85-1.766 1.367-1.128 2.42-2.65 3.09-4.41.67-1.76 1.005-3.64 1.005-5.54s-.335-3.78-1.005-5.54c-.67-1.76-1.723-3.282-3.09-4.41C11.773 1.638 10.094 1 8.29 1c-1.804 0-3.483.638-4.85 1.766C2.073 3.894 1.02 5.416.35 7.176c-.67 1.76-1.005 3.64-1.005 5.54s.335 3.78 1.005 5.54c.67 1.76 1.723 3.282 3.09 4.41 1.367 1.128 3.046 1.766 4.85 1.766zM12 2.25c-2.62 0-4.98 1.05-6.75 2.75C3.5 6.75 2.45 9.13 2.45 12s1.05 5.25 2.8 7.05c1.75 1.8 4.13 2.8 6.75 2.8s5.05-1.05 6.8-2.8c1.75-1.8 2.8-4.13 2.8-7.05s-1.05-5.25-2.8-7.05C17.05 3.3 14.67 2.25 12 2.25zM12 17.5c-3.04 0-5.5-2.46-5.5-5.5s2.46-5.5 5.5-5.5 5.5 2.46 5.5 5.5-2.46 5.5-5.5 5.5z" />
+                    </svg>
+                  </Link>
+                  <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                    <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        fillRule="evenodd"
+                        d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.86 8.16 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.004.07 1.532 1.03 1.532 1.03.892 1.529 2.341 1.089 2.91.833.091-.647.35-1.089.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.682-.103-.253-.447-1.272.098-2.65 0 0 .84-.27 2.75.997.798-.222 1.64-.333 2.48-.337.84.004 1.682.115 2.48.337 1.91-1.267 2.75-.997 2.75-.997.545 1.378.202 2.397.099 2.65.64.698 1.028 1.591 1.028 2.682 0 3.841-2.339 4.687-4.566 4.935.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.579.688.488C19.14 20.16 22 16.418 22 12c0-5.523-4.477-10-10-10z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
-
-      {/* قسم الأسئلة الشائعة */}
-      <section className="section-bg py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">الأسئلة الشائعة</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-drx-orange to-drx-red mx-auto mb-8"></div>
-            <p className="text-xl text-gray-300">إجابات سريعة على أكثر الأسئلة شيوعاً</p>
-          </div>
-
-          <div className="space-y-4">
-            <FaqItem
-              question="كم يستغرق تطوير موقع إلكتروني؟"
-              answer="يعتمد الوقت على تعقيد المشروع، لكن عادة ما يستغرق المشروع من 2-8 أسابيع. نقوم بتزويدكم بجدول زمني مفصل بعد مناقشة متطلباتكم."
-            />
-            <FaqItem
-              question="هل تقدمون خدمات الصيانة والدعم؟"
-              answer="نعم، نقدم خدمات صيانة ودعم شاملة تشمل التحديثات الأمنية، إضافة المحتوى، وحل المشاكل التقنية على مدار الساعة."
-            />
-            <FaqItem
-              question="ما هي تكلفة المشاريع؟"
-              answer="التكلفة تختلف حسب نوع وحجم المشروع. نقدم استشارة مجانية لتحديد التكلفة المناسبة لميزانيتك ومتطلباتك."
-            />
-          </div>
-        </div>
-      </section>
-    </div>
-  )
-}
-
-function FaqItem({ question, answer }: { question: string; answer: string }) {
-  const [isOpen, setIsOpen] = useState(false)
-  return (
-    <div className="bg-gray-800 rounded-lg shadow-lg border border-gray-700">
-      <Button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 text-right text-white font-semibold hover:bg-gray-700 transition-colors rounded-lg flex justify-between items-center"
-        variant="ghost"
-      >
-        <span>{question}</span>
-        <svg
-          className={cn("h-5 w-5 transform transition-transform", isOpen ? "rotate-180" : "")}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
-      </Button>
-      {isOpen && <div className="px-6 pb-4 text-gray-300">{answer}</div>}
     </div>
   )
 }

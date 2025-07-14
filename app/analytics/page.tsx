@@ -1,360 +1,193 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import Chart from "chart.js/auto"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
+import { BarChart, Bar } from "recharts"
+import { PieChart, Pie, Cell } from "recharts"
 import {
-  Users,
-  Eye,
-  Clock,
-  Percent,
-  LineChartIcon as ChartLine,
-  PieChart,
-  Smartphone,
-  Trophy,
-  Star,
-  ArrowUp,
-  CircleDot,
-} from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+} from "@/components/ui/chart"
+
+const data = [
+  { name: "يناير", uv: 4000, pv: 2400, amt: 2400 },
+  { name: "فبراير", uv: 3000, pv: 1398, amt: 2210 },
+  { name: "مارس", uv: 2000, pv: 9800, amt: 2290 },
+  { name: "أبريل", uv: 2780, pv: 3908, amt: 2000 },
+  { name: "مايو", uv: 1890, pv: 4800, amt: 2181 },
+  { name: "يونيو", uv: 2390, pv: 3800, amt: 2500 },
+  { name: "يوليو", uv: 3490, pv: 4300, amt: 2100 },
+]
+
+const pieData = [
+  { name: "تطوير الويب", value: 400, color: "hsl(var(--chart-1))" },
+  { name: "تطبيقات الجوال", value: 300, color: "hsl(var(--chart-2))" },
+  { name: "الذكاء الاصطناعي", value: 300, color: "hsl(var(--chart-3))" },
+  { name: "خدمات السحابة", value: 200, color: "hsl(var(--chart-4))" },
+]
 
 export default function AnalyticsPage() {
-  const visitorsChartRef = useRef<HTMLCanvasElement>(null)
-  const sourcesChartRef = useRef<HTMLCanvasElement>(null)
-  const devicesChartRef = useRef<HTMLCanvasElement>(null)
-
-  const [totalUsers, setTotalUsers] = useState("25,847")
-  const [pageViews, setPageViews] = useState("185,692")
-  const [avgTime, setAvgTime] = useState("4:32")
-  const [bounceRate, setBounceRate] = useState("35%")
-  const [activeUsers, setActiveUsers] = useState(Math.floor(Math.random() * 50) + 10)
-
-  useEffect(() => {
-    const visitorsCtx = visitorsChartRef.current?.getContext("2d")
-    const sourcesCtx = sourcesChartRef.current?.getContext("2d")
-    const devicesCtx = devicesChartRef.current?.getContext("2d")
-
-    let visitorsChart: Chart | null = null
-    let sourcesChart: Chart | null = null
-    let devicesChart: Chart | null = null
-
-    if (visitorsCtx) {
-      visitorsChart = new Chart(visitorsCtx, {
-        type: "line",
-        data: {
-          labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"],
-          datasets: [
-            {
-              label: "الزيارات",
-              data: [1200, 1900, 3000, 5000, 2000, 3000, 4500, 3200, 2800, 4200, 3600, 2900, 4100, 3800],
-              borderColor: "rgba(255, 77, 0, 1)", // drx-orange
-              backgroundColor: "rgba(255, 77, 0, 0.1)", // drx-orange
-              borderWidth: 3,
-              fill: true,
-              tension: 0.4,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              labels: {
-                color: "white",
-              },
-            },
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                color: "white",
-              },
-              grid: {
-                color: "rgba(255, 255, 255, 0.1)",
-              },
-            },
-            x: {
-              ticks: {
-                color: "white",
-              },
-              grid: {
-                color: "rgba(255, 255, 255, 0.1)",
-              },
-            },
-          },
-        },
-      })
-    }
-
-    if (sourcesCtx) {
-      sourcesChart = new Chart(sourcesCtx, {
-        type: "doughnut",
-        data: {
-          labels: ["البحث المباشر", "وسائل التواصل", "البحث العضوي", "المراجع", "الإعلانات"],
-          datasets: [
-            {
-              data: [35, 25, 20, 15, 5],
-              backgroundColor: [
-                "rgba(255, 77, 0, 0.8)", // drx-orange
-                "rgba(16, 185, 129, 0.8)", // green
-                "rgba(245, 158, 11, 0.8)", // yellow
-                "rgba(239, 68, 68, 0.8)", // red
-                "rgba(139, 92, 246, 0.8)", // purple
-              ],
-              borderWidth: 2,
-              borderColor: "rgba(255, 255, 255, 0.2)",
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: "bottom",
-              labels: {
-                color: "white",
-                padding: 20,
-              },
-            },
-          },
-        },
-      })
-    }
-
-    if (devicesCtx) {
-      devicesChart = new Chart(devicesCtx, {
-        type: "bar",
-        data: {
-          labels: ["الهاتف المحمول", "سطح المكتب", "الجهاز اللوحي"],
-          datasets: [
-            {
-              label: "عدد المستخدمين",
-              data: [15420, 8760, 2850],
-              backgroundColor: [
-                "rgba(255, 77, 0, 0.8)", // drx-orange
-                "rgba(16, 185, 129, 0.8)", // green
-                "rgba(245, 158, 11, 0.8)", // yellow
-              ],
-              borderColor: [
-                "rgba(255, 77, 0, 1)", // drx-orange
-                "rgba(16, 185, 129, 1)", // green
-                "rgba(245, 158, 11, 1)", // yellow
-              ],
-              borderWidth: 2,
-              borderRadius: 8,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              labels: {
-                color: "white",
-              },
-            },
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                color: "white",
-              },
-              grid: {
-                color: "rgba(255, 255, 255, 0.1)",
-              },
-            },
-            x: {
-              ticks: {
-                color: "white",
-              },
-              grid: {
-                color: "rgba(255, 255, 255, 0.1)",
-              },
-            },
-          },
-        },
-      })
-    }
-
-    const activeUsersInterval = setInterval(() => {
-      setActiveUsers(Math.floor(Math.random() * 50) + 10)
-    }, 3000)
-
-    return () => {
-      visitorsChart?.destroy()
-      sourcesChart?.destroy()
-      devicesChart?.destroy()
-      clearInterval(activeUsersInterval)
-    }
-  }, [])
-
-  const statCardClass = "bg-gray-800 p-6 rounded-2xl text-center card-hover"
-  const chartContainerClass = "relative h-[400px] bg-gray-800 rounded-xl p-6 border border-gray-700"
-
   return (
-    <section id="analytics" className="section-bg py-20 pt-24 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">التحليلات</h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-red-500 mx-auto mb-8"></div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          <div className="bg-gray-800 p-6 rounded-2xl text-center card-hover">
-            <Users className="h-10 w-10 text-blue-400 mb-4 mx-auto" />
-            <div className="text-3xl font-bold gradient-text mb-2">25,847</div>
-            <div className="text-gray-400">إجمالي المستخدمين</div>
-          </div>
-          <div className="bg-gray-800 p-6 rounded-2xl text-center card-hover">
-            <Eye className="h-10 w-10 text-green-400 mb-4 mx-auto" />
-            <div className="text-3xl font-bold gradient-text mb-2">185,692</div>
-            <div className="text-gray-400">مشاهدات الصفحة</div>
-          </div>
-          <div className="bg-gray-800 p-6 rounded-2xl text-center card-hover">
-            <Clock className="h-10 w-10 text-purple-400 mb-4 mx-auto" />
-            <div className="text-3xl font-bold gradient-text mb-2">4:32</div>
-            <div className="text-gray-400">متوسط الوقت</div>
-          </div>
-          <div className="bg-gray-800 p-6 rounded-2xl text-center card-hover">
-            <Percent className="h-10 w-10 text-orange-400 mb-4 mx-auto" />
-            <div className="text-3xl font-bold gradient-text mb-2">35%</div>
-            <div className="text-gray-400">معدل الارتداد</div>
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white pt-24 px-4 md:px-6">
+      {/* Hero Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 text-center bg-gradient-to-b from-gray-900/50 to-transparent">
+        <div className="container px-4 md:px-6">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text leading-tight">
+              تحليلات وأداء Dr X
+            </h1>
+            <p className="text-lg md:text-xl text-gray-300">
+              نقدم لك نظرة عميقة على أداء مشاريعنا والبيانات الرئيسية التي تدعم قراراتك.
+            </p>
           </div>
         </div>
+      </section>
 
-        {/* الرسوم البيانية */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {/* رسم بياني خطي للزيارات */}
-          <Card className={chartContainerClass}>
-            <CardHeader className="p-0 mb-4">
-              <CardTitle className="text-xl font-semibold text-white flex items-center">
-                <ChartLine className="h-6 w-6 ml-2 text-drx-orange" />
-                الزيارات اليومية
-              </CardTitle>
+      {/* Analytics Dashboard */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-900/50">
+        <div className="container px-4 md:px-6 grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
+          {/* Line Chart */}
+          <Card className="bg-gray-800/50 border border-gray-700 shadow-xl col-span-full lg:col-span-2">
+            <CardHeader>
+              <CardTitle className="text-white">نمو المستخدمين</CardTitle>
+              <CardDescription className="text-gray-400">تتبع نمو المستخدمين على مدار الأشهر.</CardDescription>
             </CardHeader>
-            <CardContent className="p-0 h-[calc(100%-40px)]">
-              <canvas ref={visitorsChartRef}></canvas>
+            <CardContent>
+              <ChartContainer
+                config={{
+                  uv: {
+                    label: "المستخدمون الجدد",
+                    color: "hsl(var(--chart-1))",
+                  },
+                  pv: {
+                    label: "المستخدمون النشطون",
+                    color: "hsl(var(--chart-2))",
+                  },
+                }}
+                className="h-[300px] w-full"
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" />
+                    <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" />
+                    <YAxis stroke="hsl(var(--muted-foreground))" />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <ChartLegend content={<ChartLegendContent />} />
+                    <Line type="monotone" dataKey="uv" stroke="var(--color-uv)" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="pv" stroke="var(--color-pv)" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
           </Card>
 
-          {/* رسم بياني دائري للمصادر */}
-          <Card className={chartContainerClass}>
-            <CardHeader className="p-0 mb-4">
-              <CardTitle className="text-xl font-semibold text-white flex items-center">
-                <PieChart className="h-6 w-6 ml-2 text-drx-orange" />
-                مصادر الزيارات
-              </CardTitle>
+          {/* Bar Chart */}
+          <Card className="bg-gray-800/50 border border-gray-700 shadow-xl">
+            <CardHeader>
+              <CardTitle className="text-white">إيرادات الخدمات</CardTitle>
+              <CardDescription className="text-gray-400">الإيرادات الشهرية من مختلف الخدمات.</CardDescription>
             </CardHeader>
-            <CardContent className="p-0 h-[calc(100%-40px)]">
-              <canvas ref={sourcesChartRef}></canvas>
+            <CardContent>
+              <ChartContainer
+                config={{
+                  uv: {
+                    label: "الإيرادات",
+                    color: "hsl(var(--chart-3))",
+                  },
+                }}
+                className="h-[300px] w-full"
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" />
+                    <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" />
+                    <YAxis stroke="hsl(var(--muted-foreground))" />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <ChartLegend content={<ChartLegendContent />} />
+                    <Bar dataKey="uv" fill="var(--color-uv)" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
           </Card>
-        </div>
 
-        {/* رسم بياني أعمدة للأجهزة */}
-        <Card className={cn(chartContainerClass, "h-[450px] mb-12")}>
-          <CardHeader className="p-0 mb-6">
-            <CardTitle className="text-xl font-semibold text-white flex items-center">
-              <Smartphone className="h-6 w-6 ml-2 text-drx-orange" />
-              إحصائيات الأجهزة
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0 h-[calc(100%-40px)]">
-            <canvas ref={devicesChartRef}></canvas>
-          </CardContent>
-        </Card>
+          {/* Pie Chart */}
+          <Card className="bg-gray-800/50 border border-gray-700 shadow-xl">
+            <CardHeader>
+              <CardTitle className="text-white">توزيع المشاريع</CardTitle>
+              <CardDescription className="text-gray-400">توزيع المشاريع حسب نوع الخدمة.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ChartContainer
+                config={{
+                  "تطوير الويب": {
+                    label: "تطوير الويب",
+                    color: "hsl(var(--chart-1))",
+                  },
+                  "تطبيقات الجوال": {
+                    label: "تطبيقات الجوال",
+                    color: "hsl(var(--chart-2))",
+                  },
+                  "الذكاء الاصطناعي": {
+                    label: "الذكاء الاصطناعي",
+                    color: "hsl(var(--chart-3))",
+                  },
+                  "خدمات السحابة": {
+                    label: "خدمات السحابة",
+                    color: "hsl(var(--chart-4))",
+                  },
+                }}
+                className="h-[300px] w-full"
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={pieData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      outerRadius={80}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {pieData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <ChartLegend content={<ChartLegendContent />} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </CardContent>
+          </Card>
 
-        {/* جدول أهم الصفحات */}
-        <Card className={cn(statCardClass, "p-6 mb-12")}>
-          <CardHeader className="p-0 mb-6">
-            <CardTitle className="text-xl font-semibold text-white flex items-center">
-              <Trophy className="h-6 w-6 ml-2 text-drx-orange" />
-              أهم الصفحات
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0 overflow-x-auto">
-            <table className="w-full text-white">
-              <thead>
-                <tr className="border-b border-gray-600">
-                  <th className="text-right py-3 px-4">الصفحة</th>
-                  <th className="text-right py-3 px-4">المشاهدات</th>
-                  <th className="text-right py-3 px-4">الوقت المتوسط</th>
-                  <th className="text-right py-3 px-4">معدل الارتداد</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-gray-700">
-                  <td className="py-3 px-4">/</td>
-                  <td className="py-3 px-4">15,234</td>
-                  <td className="py-3 px-4">3:24</td>
-                  <td className="py-3 px-4">32%</td>
-                </tr>
-                <tr className="border-b border-gray-700">
-                  <td className="py-3 px-4">/chat</td>
-                  <td className="py-3 px-4">8,976</td>
-                  <td className="py-3 px-4">8:15</td>
-                  <td className="py-3 px-4">18%</td>
-                </tr>
-                <tr className="border-b border-gray-700">
-                  <td className="py-3 px-4">/services</td>
-                  <td className="py-3 px-4">6,543</td>
-                  <td className="py-3 px-4">4:32</td>
-                  <td className="py-3 px-4">25%</td>
-                </tr>
-                <tr className="border-b border-gray-700">
-                  <td className="py-3 px-4">/portfolio</td>
-                  <td className="py-3 px-4">4,321</td>
-                  <td className="py-3 px-4">5:18</td>
-                  <td className="py-3 px-4">28%</td>
-                </tr>
-              </tbody>
-            </table>
-          </CardContent>
-        </Card>
-
-        {/* مؤشرات الأداء في الوقت الفعلي */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className={statCardClass}>
-            <CardContent className="p-0">
-              <h4 className="text-lg font-semibold mb-4">المستخدمون النشطون الآن</h4>
-              <div className="text-4xl font-bold text-green-400 mb-2 animate-pulse">{activeUsers}</div>
-              <div className="flex items-center justify-center text-green-400">
-                <CircleDot className="h-3 w-3 bg-green-400 rounded-full animate-pulse mr-2" />
-                مباشر
+          {/* Key Metrics */}
+          <Card className="bg-gray-800/50 border border-gray-700 shadow-xl">
+            <CardHeader>
+              <CardTitle className="text-white">المقاييس الرئيسية</CardTitle>
+              <CardDescription className="text-gray-400">نظرة سريعة على أهم الأرقام.</CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-300">إجمالي المشاريع:</span>
+                <span className="text-white font-bold text-lg">120</span>
               </div>
-            </CardContent>
-          </Card>
-
-          <Card className={statCardClass}>
-            <CardContent className="p-0">
-              <h4 className="text-lg font-semibold mb-4">معدل التحويل</h4>
-              <div className="text-4xl font-bold text-blue-400 mb-2">4.2%</div>
-              <div className="text-green-400 flex items-center justify-center">
-                <ArrowUp className="h-4 w-4 ml-1" />
-                +0.3% من الأسبوع الماضي
+              <div className="flex justify-between items-center">
+                <span className="text-gray-300">العملاء النشطون:</span>
+                <span className="text-white font-bold text-lg">85</span>
               </div>
-            </CardContent>
-          </Card>
-
-          <Card className={statCardClass}>
-            <CardContent className="p-0">
-              <h4 className="text-lg font-semibold mb-4">رضا العملاء</h4>
-              <div className="text-4xl font-bold text-yellow-400 mb-2">4.8/5</div>
-              <div className="flex justify-center text-yellow-400">
-                <Star className="h-5 w-5" fill="currentColor" />
-                <Star className="h-5 w-5" fill="currentColor" />
-                <Star className="h-5 w-5" fill="currentColor" />
-                <Star className="h-5 w-5" fill="currentColor" />
-                <Star className="h-5 w-5" />
+              <div className="flex justify-between items-center">
+                <span className="text-gray-300">متوسط رضا العملاء:</span>
+                <span className="text-white font-bold text-lg">4.8/5</span>
               </div>
             </CardContent>
           </Card>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   )
 }
