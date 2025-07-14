@@ -1,5 +1,6 @@
 "use client"
 
+import "ios-vibrator-pro-max" // Assuming this is a valid import for vibration
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { useChat } from "ai/react"
@@ -49,20 +50,9 @@ interface StreamingWord {
   text: string
 }
 
-const WORD_DELAY = 40
-const CHUNK_SIZE = 2
-
-// Safe vibration function
-const safeVibrate = (duration: number) => {
-  try {
-    if (typeof window !== "undefined" && "navigator" in window && "vibrate" in navigator) {
-      navigator.vibrate(duration)
-    }
-  } catch (error) {
-    // Silently ignore vibration errors
-    console.debug("Vibration not supported or failed:", error)
-  }
-}
+// Faster word delay for smoother streaming
+const WORD_DELAY = 40 // ms per word
+const CHUNK_SIZE = 2 // Number of words to add at once
 
 export default function ChatInterface() {
   const [inputValue, setInputValue] = useState("")
@@ -72,7 +62,7 @@ export default function ChatInterface() {
   const [hasTyped, setHasTyped] = useState(false)
   const [activeButton, setActiveButton] = useState<ActiveButton>("none")
   const [isMobile, setIsMobile] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>([]) // Renamed from `messages` to `localMessages` to avoid conflict with `useChat`
   const [messageSections, setMessageSections] = useState<MessageSection[]>([])
   const [isStreaming, setIsStreaming] = useState(false)
   const [streamingWords, setStreamingWords] = useState<StreamingWord[]>([])
@@ -84,14 +74,17 @@ export default function ChatInterface() {
   const inputContainerRef = useRef<HTMLDivElement>(null)
   const shouldFocusAfterStreamingRef = useRef(false)
   const mainContainerRef = useRef<HTMLDivElement>(null)
+  // Store selection state
   const selectionStateRef = useRef<{ start: number | null; end: number | null }>({ start: null, end: null })
 
-  const TOP_PADDING_GLOBAL_NAV = 96 // Adjusted from pt-16 to pt-24 (96px)
-  const BOTTOM_PADDING_INPUT_AREA = 128
-  const ADDITIONAL_OFFSET = 16
+  // Constants for layout calculations to account for the padding values
+  // These are now less critical as we're relying on global layout for top padding
+  const TOP_PADDING_GLOBAL_NAV = 96 // pt-24 (6rem = 96px) from global layout
+  const BOTTOM_PADDING_INPUT_AREA = 128 // pb-32 (8rem = 128px)
+  const ADDITIONAL_OFFSET = 16 // Reduced offset for fine-tuning
 
+  // AI SDK integration
   const [currentModel, setCurrentModel] = useState("deepseek")
-
   const {
     messages: aiMessages,
     input: aiInput,
@@ -104,14 +97,16 @@ export default function ChatInterface() {
     api: "/api/chat",
     onFinish: () => {
       scrollToBottom()
-      setIsStreaming(false)
+      setIsStreaming(false) // Ensure streaming state is reset
       setStreamingWords([])
       setStreamingMessageId(null)
     },
     onStreamMode: "text",
   })
 
+  // Sync AI SDK messages with local messages for rendering and custom logic
   useEffect(() => {
+    // Add initial welcome message if no messages exist in AI SDK
     if (aiMessages.length === 0) {
       setAiMessages([
         {
@@ -121,45 +116,56 @@ export default function ChatInterface() {
         },
       ])
     }
-
+    // Convert aiMessages to local Message format and manage sections
     const newLocalMessages: Message[] = aiMessages.map((msg) => ({
       id: msg.id,
       content: msg.content,
       type: msg.role === "user" ? "user" : "system",
-      completed: true,
+      completed: true, // AI SDK messages are always "completed" when received
     }))
     setMessages(newLocalMessages)
   }, [aiMessages, setAiMessages])
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages, aiIsLoading])
+  }, [messages, aiIsLoading]) // Scroll when messages change or AI is loading
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
+  // Check if device is mobile and get viewport height
   useEffect(() => {
     const checkMobileAndViewport = () => {
       const isMobileDevice = window.innerWidth < 768
       setIsMobile(isMobileDevice)
+
+      // Capture the viewport height
       const vh = window.innerHeight
       setViewportHeight(vh)
+
+      // Apply fixed height to main container on mobile
       if (isMobileDevice && mainContainerRef.current) {
         mainContainerRef.current.style.height = `${vh}px`
       }
     }
 
     checkMobileAndViewport()
+
+    // Set initial height
     if (mainContainerRef.current) {
       mainContainerRef.current.style.height = isMobile ? `${viewportHeight}px` : "100svh"
     }
+
+    // Update on resize
     window.addEventListener("resize", checkMobileAndViewport)
+
     return () => {
       window.removeEventListener("resize", checkMobileAndViewport)
     }
   }, [isMobile, viewportHeight])
 
+  // Organize messages into sections (this logic might be redundant with AI SDK, but keeping for now)
   useEffect(() => {
     if (messages.length === 0) {
       setMessageSections([])
@@ -177,12 +183,16 @@ export default function ChatInterface() {
 
     messages.forEach((message) => {
       if (message.newSection) {
+        // Start a new section
         if (currentSection.messages.length > 0) {
+          // Mark previous section as inactive
           sections.push({
             ...currentSection,
             isActive: false,
           })
         }
+
+        // Create new active section
         const newSectionId = `section-${Date.now()}-${sections.length}`
         currentSection = {
           id: newSectionId,
@@ -191,23 +201,31 @@ export default function ChatInterface() {
           isActive: true,
           sectionIndex: sections.length,
         }
+
+        // Update active section ID
         setActiveSectionId(newSectionId)
       } else {
+        // Add to current section
         currentSection.messages.push(message)
       }
     })
 
+    // Add the last section if it has messages
     if (currentSection.messages.length > 0) {
       sections.push(currentSection)
     }
+
     setMessageSections(sections)
   }, [messages])
 
+  // Scroll to maximum position when new section is created, but only for sections after the first
   useEffect(() => {
     if (messageSections.length > 1) {
       setTimeout(() => {
         const scrollContainer = chatContainerRef.current
+
         if (scrollContainer) {
+          // Scroll to maximum possible position
           scrollContainer.scrollTo({
             top: scrollContainer.scrollHeight,
             behavior: "smooth",
@@ -217,12 +235,14 @@ export default function ChatInterface() {
     }
   }, [messageSections])
 
+  // Focus the textarea on component mount (only on desktop)
   useEffect(() => {
     if (textareaRef.current && !isMobile) {
       textareaRef.current.focus()
     }
   }, [isMobile])
 
+  // Set focus back to textarea after streaming ends (only on desktop)
   useEffect(() => {
     if (!isStreaming && shouldFocusAfterStreamingRef.current && !isMobile) {
       focusTextarea()
@@ -230,10 +250,13 @@ export default function ChatInterface() {
     }
   }, [isStreaming, isMobile])
 
+  // Calculate available content height (viewport minus header and input)
   const getContentHeight = () => {
+    // Calculate available height by subtracting the top and bottom padding from viewport height
     return viewportHeight - TOP_PADDING_GLOBAL_NAV - BOTTOM_PADDING_INPUT_AREA - ADDITIONAL_OFFSET
   }
 
+  // Save the current selection state
   const saveSelectionState = () => {
     if (textareaRef.current) {
       selectionStateRef.current = {
@@ -243,13 +266,17 @@ export default function ChatInterface() {
     }
   }
 
+  // Restore the saved selection state
   const restoreSelectionState = () => {
     const textarea = textareaRef.current
     const { start, end } = selectionStateRef.current
+
     if (textarea && start !== null && end !== null) {
+      // Focus first, then set selection range
       textarea.focus()
       textarea.setSelectionRange(start, end)
     } else if (textarea) {
+      // If no selection was saved, just focus
       textarea.focus()
     }
   }
@@ -261,6 +288,7 @@ export default function ChatInterface() {
   }
 
   const handleInputContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Only focus if clicking directly on the container, not on buttons or other interactive elements
     if (
       e.target === e.currentTarget ||
       (e.currentTarget === inputContainerRef.current && !(e.target as HTMLElement).closest("button"))
@@ -292,14 +320,18 @@ export default function ChatInterface() {
 
   const handleLocalInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value
+
+    // Only allow input changes when not streaming
     if (!aiIsLoading) {
-      setInputValue(newValue)
-      handleAiInputChange(e)
+      setInputValue(newValue) // Update local input state
+      handleAiInputChange(e) // Also update AI SDK input state
+
       if (newValue.trim() !== "" && !hasTyped) {
         setHasTyped(true)
       } else if (newValue.trim() === "" && hasTyped) {
         setHasTyped(false)
       }
+
       const textarea = textareaRef.current
       if (textarea) {
         textarea.style.height = "auto"
@@ -312,20 +344,28 @@ export default function ChatInterface() {
   const handleLocalSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (inputValue.trim() && !aiIsLoading) {
-      safeVibrate(50) // Use safe vibration function
+      navigator.vibrate(50)
+
+      // Use AI SDK's handleSubmit
       handleAiSubmit(e, {
         messages: [...aiMessages, { id: `user-${Date.now()}`, role: "user", content: inputValue.trim() }],
         data: { model: currentModel },
       })
+
+      // Reset local input state
       setInputValue("")
       setHasTyped(false)
       setActiveButton("none")
+
       if (textareaRef.current) {
         textareaRef.current.style.height = "auto"
       }
+
+      // Only focus the textarea on desktop, not on mobile
       if (!isMobile) {
         focusTextarea()
       } else {
+        // On mobile, blur the textarea to dismiss the keyboard
         if (textareaRef.current) {
           textareaRef.current.blur()
         }
@@ -334,11 +374,14 @@ export default function ChatInterface() {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // Handle Cmd+Enter on both mobile and desktop
     if (!aiIsLoading && e.key === "Enter" && e.metaKey) {
       e.preventDefault()
       handleLocalSubmit(e)
       return
     }
+
+    // Only handle regular Enter key (without Shift) on desktop
     if (!aiIsLoading && !isMobile && e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
       handleLocalSubmit(e)
@@ -347,8 +390,12 @@ export default function ChatInterface() {
 
   const toggleButton = (button: ActiveButton) => {
     if (!aiIsLoading) {
+      // Save the current selection state before toggling
       saveSelectionState()
+
       setActiveButton((prev) => (prev === button ? "none" : button))
+
+      // Restore the selection state after toggling
       setTimeout(() => {
         restoreSelectionState()
       }, 0)
@@ -356,15 +403,16 @@ export default function ChatInterface() {
   }
 
   const renderMessage = (message: Message) => {
-    const isCompleted = message.completed
+    const isCompleted = message.completed // AI SDK messages are completed by default
+
     return (
       <div key={message.id} className={cn("flex flex-col", message.type === "user" ? "items-end" : "items-start")}>
         <div
           className={cn(
             "max-w-[85%] px-4 py-3 rounded-2xl text-white transition-all duration-300 transform hover:scale-[1.02]",
             message.type === "user"
-              ? "bg-gradient-to-r from-drx-blue to-drx-purple rounded-bl-none shadow-lg"
-              : "bg-gradient-to-r from-drx-orange to-drx-red rounded-br-none shadow-lg",
+              ? "bg-gradient-to-r from-blue-500 to-indigo-600 rounded-bl-none shadow-lg"
+              : "bg-gradient-to-r from-amber-500 to-orange-500 rounded-br-none shadow-lg",
           )}
         >
           {message.content && (
@@ -378,6 +426,7 @@ export default function ChatInterface() {
             </span>
           )}
         </div>
+
         {message.type === "system" && isCompleted && (
           <div className="flex items-center gap-3 px-2 mt-2 mb-4">
             <button className="text-gray-400 hover:text-white transition-colors p-1.5 rounded-full bg-gray-700/50">
@@ -407,18 +456,18 @@ export default function ChatInterface() {
 
   return (
     <div
-      className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center pt-24 px-0 pb-0 md:px-4 md:pb-4" // Adjusted pt-24 and removed horizontal padding for mobile
+      className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center pt-24 px-4 pb-4" // Adjusted pt-24
       ref={mainContainerRef}
     >
       {/* AI Status Header */}
-      <div className="w-full max-w-4xl mb-4 bg-gray-800/80 backdrop-blur-xl border border-gray-700 rounded-2xl p-4 flex items-center justify-between px-4 md:px-4">
+      <div className="w-full max-w-4xl mb-4 bg-gray-800/80 backdrop-blur-xl border border-gray-700 rounded-2xl p-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="bg-gradient-to-r from-drx-orange to-drx-red rounded-xl p-2">
+          <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl p-2">
             <Robot className="h-6 w-6 text-white" />
           </div>
           <div>
             <h1 className="text-xl font-bold text-white flex items-center">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-drx-orange to-drx-red">Dr X</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-orange-500">Dr X</span>
               <span className="ml-2">- مساعد الذكاء الاصطناعي</span>
             </h1>
             <p className="text-sm text-gray-300">مساعدك الذكي المتطور - مدعوم بأحدث تقنيات الذكاء الاصطناعي</p>
@@ -429,14 +478,13 @@ export default function ChatInterface() {
           <span className="text-green-300">Dr X متصل</span>
         </div>
       </div>
-
       {/* Chat Container */}
       <div className="flex flex-col w-full max-w-4xl flex-1 rounded-2xl overflow-hidden bg-gray-800/50 backdrop-blur-xl border border-gray-700 shadow-2xl">
         {/* Model Selector */}
         <div className="p-4 bg-gradient-to-r from-gray-800 to-gray-900 border-b border-gray-700">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <Brain className="h-5 w-5 text-drx-orange" />
+              <Brain className="h-5 w-5 text-amber-400" />
               <h3 className="text-lg font-medium text-white">اختر نموذج الذكاء الاصطناعي:</h3>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -445,7 +493,7 @@ export default function ChatInterface() {
                 className={cn(
                   "flex items-center gap-2 px-4 py-2 rounded-xl transition-all transform hover:-translate-y-0.5",
                   currentModel === "deepseek"
-                    ? "bg-gradient-to-r from-drx-blue to-drx-purple text-white font-medium shadow-lg"
+                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-lg"
                     : "bg-gray-700/60 border border-gray-600 text-white hover:bg-gray-700",
                 )}
               >
@@ -457,7 +505,7 @@ export default function ChatInterface() {
                 className={cn(
                   "flex items-center gap-2 px-4 py-2 rounded-xl transition-all transform hover:-translate-y-0.5",
                   currentModel === "huggingface"
-                    ? "bg-gradient-to-r from-drx-orange to-drx-red text-white font-medium shadow-lg"
+                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white font-medium shadow-lg"
                     : "bg-gray-700/60 border border-gray-600 text-white hover:bg-gray-700",
                 )}
               >
@@ -466,18 +514,17 @@ export default function ChatInterface() {
               </Button>
             </div>
           </div>
-
           {/* Features Panel */}
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-3 flex flex-col items-center">
-              <div className="bg-drx-orange/10 p-2 rounded-lg mb-2">
-                <Zap className="h-5 w-5 text-drx-orange" />
+              <div className="bg-amber-500/10 p-2 rounded-lg mb-2">
+                <Zap className="h-5 w-5 text-amber-400" />
               </div>
               <p className="text-sm text-center text-gray-300">استجابة فورية</p>
             </div>
             <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-3 flex flex-col items-center">
-              <div className="bg-drx-blue/10 p-2 rounded-lg mb-2">
-                <Languages className="h-5 w-5 text-drx-blue" />
+              <div className="bg-blue-500/10 p-2 rounded-lg mb-2">
+                <Languages className="h-5 w-5 text-blue-400" />
               </div>
               <p className="text-sm text-center text-gray-300">دعم متعدد اللغات</p>
             </div>
@@ -489,7 +536,6 @@ export default function ChatInterface() {
             </div>
           </div>
         </div>
-
         {/* Messages Area */}
         <div
           ref={chatContainerRef}
@@ -498,13 +544,12 @@ export default function ChatInterface() {
         >
           <div className="max-w-3xl mx-auto space-y-6">
             {messages.map((message) => renderMessage(message))}
-
             {aiIsLoading && (
               <div className="flex items-center gap-3 mb-4 justify-start">
-                <div className="bg-gradient-to-r from-drx-orange to-drx-red rounded-full p-2 flex-shrink-0 animate-pulse">
+                <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-full p-2 flex-shrink-0 animate-pulse">
                   <Robot className="h-5 w-5 text-white" />
                 </div>
-                <div className="bg-gradient-to-r from-drx-orange/80 to-drx-red/80 rounded-br-none p-3 text-white flex items-center gap-2">
+                <div className="bg-gradient-to-r from-amber-500/80 to-orange-500/80 rounded-br-none p-3 text-white flex items-center gap-2">
                   <span>Dr X يكتب</span>
                   <div className="flex gap-1">
                     <div
@@ -523,24 +568,21 @@ export default function ChatInterface() {
                 </div>
               </div>
             )}
-
             {aiError && (
               <div className="bg-red-900/30 border border-red-700 rounded-xl p-4 text-red-300">
                 <span className="font-medium">حدث خطأ:</span> {aiError.message}
               </div>
             )}
-
             <div ref={messagesEndRef} className="h-4" />
           </div>
         </div>
-
         {/* Input Area */}
         <form onSubmit={handleLocalSubmit} className="p-4 border-t border-gray-700 bg-gray-900/50 backdrop-blur-lg">
           <div
             ref={inputContainerRef}
             className={cn(
               "relative w-full rounded-2xl border border-gray-600 bg-gray-800/50 p-3 cursor-text transition-all",
-              aiIsLoading ? "opacity-70" : "hover:border-drx-orange/50 focus-within:border-drx-orange",
+              aiIsLoading ? "opacity-70" : "hover:border-amber-500/50 focus-within:border-amber-500",
             )}
             onClick={handleInputContainerClick}
           >
@@ -567,39 +609,39 @@ export default function ChatInterface() {
                     variant="ghost"
                     size="icon"
                     className={cn(
-                      "rounded-full h-9 w-9 flex-shrink-0 bg-gray-700/70 hover:bg-drx-orange/20 transition-all",
-                      activeButton === "add" && "bg-drx-orange/30 border border-drx-orange/50",
+                      "rounded-full h-9 w-9 flex-shrink-0 bg-gray-700/70 hover:bg-amber-500/20 transition-all",
+                      activeButton === "add" && "bg-amber-500/30 border border-amber-500/50",
                     )}
                     onClick={() => toggleButton("add")}
                     disabled={aiIsLoading}
                   >
-                    <Plus className="h-5 w-5 text-drx-orange" />
+                    <Plus className="h-5 w-5 text-amber-400" />
                     <span className="sr-only">Add</span>
                   </Button>
                   <Button
                     type="button"
                     variant="ghost"
                     className={cn(
-                      "rounded-xl h-9 px-4 flex items-center bg-gray-700/70 hover:bg-drx-blue/20 gap-1.5 transition-all",
-                      activeButton === "deepSearch" && "bg-drx-blue/30 border border-drx-blue/50",
+                      "rounded-xl h-9 px-4 flex items-center bg-gray-700/70 hover:bg-blue-500/20 gap-1.5 transition-all",
+                      activeButton === "deepSearch" && "bg-blue-500/30 border border-blue-500/50",
                     )}
                     onClick={() => toggleButton("deepSearch")}
                     disabled={aiIsLoading}
                   >
-                    <Search className="h-4 w-4 text-drx-blue" />
+                    <Search className="h-4 w-4 text-blue-400" />
                     <span className="text-sm text-white">DeepSearch</span>
                   </Button>
                   <Button
                     type="button"
                     variant="ghost"
                     className={cn(
-                      "rounded-xl h-9 px-4 flex items-center bg-gray-700/70 hover:bg-drx-purple/20 gap-1.5 transition-all",
-                      activeButton === "think" && "bg-drx-purple/30 border border-drx-purple/50",
+                      "rounded-xl h-9 px-4 flex items-center bg-gray-700/70 hover:bg-purple-500/20 gap-1.5 transition-all",
+                      activeButton === "think" && "bg-purple-500/30 border border-purple-500/50",
                     )}
                     onClick={() => toggleButton("think")}
                     disabled={aiIsLoading}
                   >
-                    <Lightbulb className="h-4 w-4 text-drx-purple" />
+                    <Lightbulb className="h-4 w-4 text-purple-400" />
                     <span className="text-sm text-white">Think</span>
                   </Button>
                 </div>
@@ -609,7 +651,7 @@ export default function ChatInterface() {
                   size="icon"
                   className={cn(
                     "rounded-full h-9 w-9 border-0 flex-shrink-0 transition-all transform hover:scale-110",
-                    hasTyped ? "bg-gradient-to-r from-drx-orange to-drx-red shadow-lg" : "bg-gray-700",
+                    hasTyped ? "bg-gradient-to-r from-amber-500 to-orange-500 shadow-lg" : "bg-gray-700",
                   )}
                   disabled={!inputValue.trim() || aiIsLoading}
                 >

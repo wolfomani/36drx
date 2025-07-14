@@ -33,10 +33,6 @@ const config = {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -44,6 +40,10 @@ const config = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -53,12 +53,11 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom Dr X colors
-        "drx-orange": "#FF6B00",
-        "drx-red": "#FF3B30",
-        "drx-blue": "#007AFF",
-        "drx-purple": "#5856D6",
-        "drx-dark-purple": "#3A3A5A",
+        // Custom Dr X colors (aligned with new gradients)
+        "drx-orange": "#ff6b6b", // A vibrant orange-red
+        "drx-red": "#ffa07a", // A softer orange
+        "drx-purple": "#8a2be2", // Blue-violet
+        "drx-blue": "#4169e1", // Royal blue
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -78,6 +77,9 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      fontFamily: {
+        cairo: ["var(--font-cairo)"],
       },
     },
   },
