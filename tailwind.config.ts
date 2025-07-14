@@ -53,11 +53,13 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom Dr X colors (aligned with new gradients)
-        "drx-orange": "#ff6b6b", // A vibrant orange-red
-        "drx-red": "#ffa07a", // A softer orange
-        "drx-purple": "#8a2be2", // Blue-violet
-        "drx-blue": "#4169e1", // Royal blue
+        // Custom colors from HTML
+        "drx-orange": "#ff4d00",
+        "drx-red": "#ff0040",
+        "drx-purple": "#2d1b69",
+        "drx-dark-purple": "#4c1d95",
+        "drx-gray": "#1a1a1a",
+        "drx-dark-gray": "#0f0f0f",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -73,10 +75,22 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        // Custom keyframes from HTML
+        "pulse-glow": {
+          from: { boxShadow: "0 0 20px rgba(255, 77, 0, 0.3)" },
+          to: { boxShadow: "0 0 30px rgba(255, 77, 0, 0.6)" },
+        },
+        floating: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        // Custom animations from HTML
+        "pulse-glow": "pulse-glow 2s ease-in-out infinite alternate",
+        floating: "floating 3s ease-in-out infinite",
       },
       fontFamily: {
         cairo: ["var(--font-cairo)"],

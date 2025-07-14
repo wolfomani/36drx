@@ -36,13 +36,13 @@
   }
 
   .dark {
-    --background: 222.2 47.4% 11.2%;
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 47.4% 11.2%;
+    --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 47.4% 11.2%;
+    --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
@@ -67,116 +67,108 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-cairo), sans-serif; /* Apply Cairo font */
   }
 }
 
-/* Custom Dr X Styles */
+/* Custom styles from HTML */
 .gradient-bg {
-  background: linear-gradient(135deg, #4169e1, #8a2be2, #ffa07a, #ff6b6b); /* Blue-purple to orange-red */
-  background-size: 400% 400%;
-  animation: gradientAnimation 15s ease infinite;
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d1b69 50%, #ff4d00 100%);
 }
 
 .gradient-text {
-  background: linear-gradient(45deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1); /* Orange-red to blue-purple */
+  background: linear-gradient(135deg, #ff4d00, #ff8a00, #ff0040);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
-}
-
-.btn-gradient {
-  background: linear-gradient(45deg, #ff6b6b, #ffa07a); /* Orange-red to softer orange */
-  border: none;
-  color: white;
-  transition: all 0.3s ease;
-}
-
-.btn-gradient:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
 }
 
 .glow-effect {
-  box-shadow: 0 0 8px rgba(255, 160, 122, 0.6), 0 0 15px rgba(138, 43, 226, 0.4);
+  box-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
 }
 
-/* Chat bubble styles (from new chat interface) */
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+  from {
+    box-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(255, 77, 0, 0.6);
+  }
+}
+
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 .chat-bubble-user {
-  background: linear-gradient(to right, #3b82f6, #4f46e5); /* Blue to Indigo */
-  border-radius: 1rem 1rem 0 1rem;
+  background: linear-gradient(135deg, #ff4d00, #ff8a00);
+  border-radius: 20px 20px 5px 20px;
 }
 
 .chat-bubble-ai {
-  background: linear-gradient(to right, #fbbf24, #f97316); /* Amber to Orange */
-  border-radius: 1rem 1rem 1rem 0;
+  background: linear-gradient(135deg, #2d1b69, #4c1d95);
+  border-radius: 20px 20px 20px 5px;
 }
 
-/* Card hover effect */
+.nav-blur {
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.8);
+}
+
 .card-hover {
   transition: all 0.3s ease;
 }
 
 .card-hover:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(255, 77, 0, 0.2); /* Using a Dr X orange shade for consistency */
+  box-shadow: 0 10px 25px rgba(255, 77, 0, 0.2);
 }
 
-/* Animations */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.btn-gradient {
+  background: linear-gradient(135deg, #ff4d00, #ff8a00);
+  transition: all 0.3s ease;
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
+.btn-gradient:hover {
+  background: linear-gradient(135deg, #ff8a00, #ff4d00);
+  transform: scale(1.05);
 }
 
-.animate-fade-in-up.delay-200 {
-  animation-delay: 0.2s;
+.section-bg {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d1b69 100%);
 }
 
-.animate-fade-in-up.delay-400 {
-  animation-delay: 0.4s;
+/* Custom scrollbar for ScrollArea */
+.scroll-area-viewport::-webkit-scrollbar {
+  width: 8px;
 }
 
-.animate-fade-in-up.delay-600 {
-  animation-delay: 0.6s;
+.scroll-area-viewport::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.scroll-area-viewport::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
 }
 
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out forwards;
+.scroll-area-viewport::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }

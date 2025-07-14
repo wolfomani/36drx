@@ -1,117 +1,26 @@
 import Link from "next/link"
 import Image from "next/image"
+import {
+  Lightbulb,
+  Gem,
+  Handshake,
+  ShieldAlert,
+  User,
+  Code,
+  LineChart,
+  Cloud,
+  Github,
+  Globe,
+  Users,
+  Eye,
+  Clock,
+  Percent,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardTitle } from "@/components/ui/card"
-import { Lightbulb, Code, Cloud, Users, Eye, Clock, Percent, ArrowRight, Award, CheckCircle } from "lucide-react"
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-black text-white pt-24">
-      {/* Hero Section for About */}
-      <section className="relative py-16 md:py-24 text-center overflow-hidden">
-        <div className="absolute inset-0 gradient-bg opacity-50"></div>
-        <div className="relative z-10 p-8 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight gradient-text animate-fade-in-up">
-            قصتنا ورؤيتنا
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 animate-fade-in-up delay-200">
-            نحن نؤمن بقوة الابتكار في تشكيل المستقبل الرقمي.
-          </p>
-          <Link href="/contact">
-            <Button className="btn-gradient text-white px-8 py-3 text-lg rounded-full shadow-lg hover:scale-105 transition-transform animate-fade-in-up delay-400">
-              تواصل مع فريقنا <ArrowRight className="mr-2 h-5 w-5" />
-            </Button>
-          </Link>
-        </div>
-      </section>
-
-      {/* Our Story Section */}
-      <section className="py-16 md:py-24 bg-gray-900/70 backdrop-blur-lg">
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="text-right animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">قصتنا ورؤيتنا</h2>
-            <p className="text-lg md:text-xl text-gray-300 mb-4">
-              تأسست Dr X على يد مجموعة من الخبراء في مجال التكنولوجيا، بهدف سد الفجوة بين الأفكار الطموحة والتنفيذ
-              الرقمي الفعال. نؤمن بأن التكنولوجيا هي مفتاح التقدم، ونسعى لتمكين الشركات والأفراد من تحقيق أقصى
-              إمكاناتهم.
-            </p>
-            <p className="text-lg md:text-xl text-gray-300">
-              رؤيتنا هي أن نكون الشريك التقني المفضل للشركات التي تسعى للابتكار والنمو، من خلال تقديم حلول ذكية ومستدامة
-              تتجاوز التوقعات.
-            </p>
-          </div>
-          <div className="flex justify-center animate-fade-in-up delay-200">
-            <Image
-              src="/images/placeholder.svg?height=400&width=600"
-              alt="Our Story"
-              width={600}
-              height={400}
-              className="rounded-xl shadow-2xl"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Our Mission & Vision Section */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 gradient-text">مهمتنا ورؤيتنا</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-drx-orange transition-all duration-300">
-              <Lightbulb className="h-12 w-12 text-drx-orange mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-white mb-3">مهمتنا</h3>
-              <p className="text-gray-300">
-                تقديم حلول تقنية مبتكرة وعالية الجودة تمكن عملائنا من تحقيق أقصى إمكاناتهم في العصر الرقمي.
-              </p>
-            </div>
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-drx-red transition-all duration-300">
-              <Users className="h-12 w-12 text-drx-red mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-white mb-3">رؤيتنا</h3>
-              <p className="text-gray-300">
-                أن نكون الشريك التقني المفضل للشركات والأفراد، من خلال بناء مستقبل يعتمد على الذكاء الاصطناعي والابتكار.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Values Section */}
-      <section className="py-16 md:py-24 bg-gray-900/70 backdrop-blur-lg">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 gradient-text">قيمنا الأساسية</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up">
-              <Lightbulb className="h-12 w-12 text-amber-400 mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">الابتكار</CardTitle>
-              <CardContent className="text-gray-300 text-sm">
-                نسعى دائمًا لتبني أحدث التقنيات وتقديم حلول إبداعية.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up delay-200">
-              <Users className="h-12 w-12 text-blue-400 mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">التعاون</CardTitle>
-              <CardContent className="text-gray-300 text-sm">
-                نعمل كفريق واحد مع عملائنا لتحقيق أفضل النتائج.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up delay-400">
-              <Award className="h-12 w-12 text-purple-400 mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">الجودة</CardTitle>
-              <CardContent className="text-gray-300 text-sm">
-                نلتزم بتقديم حلول عالية الجودة وموثوقة تلبي أعلى المعايير.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up delay-600">
-              <CheckCircle className="h-12 w-12 text-green-400 mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">الشفافية</CardTitle>
-              <CardContent className="text-gray-300 text-sm">
-                نؤمن بالصراحة والوضوح في جميع تعاملاتنا مع العملاء.
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
+    <div className="bg-black text-white">
       {/* القسم الرئيسي */}
       <section className="gradient-bg min-h-screen flex flex-col items-center justify-center p-4 pt-16">
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto py-20">
@@ -134,6 +43,92 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* قسم قصتنا */}
+      <section className="section-bg py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-white mb-4">قصتنا</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-drx-orange to-drx-red mx-auto mb-8"></div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-2xl font-bold mb-6 gradient-text">نحن روّاد الذكاء الاصطناعي</h3>
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                في Dr X، نؤمن بقوة التكنولوجيا في تغيير العالم. نحن فريق من المطورين والمهندسين المتخصصين في الذكاء
+                الاصطناعي، نسعى لتقديم حلول مبتكرة تساعد الأفراد والشركات على تحقيق أهدافهم.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center">
+                  <div className="text-3xl font-bold gradient-text mb-2">500+</div>
+                  <div className="text-gray-400">مشروع مكتمل</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold gradient-text mb-2">100+</div>
+                  <div className="text-gray-400">عميل راضٍ</div>
+                </div>
+              </div>
+            </div>
+            <div className="text-center">
+              <Image
+                src="/images/drx-logo.png"
+                alt="Dr X Team"
+                width={256}
+                height={256}
+                className="mx-auto rounded-lg pulse-glow"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* قسم قيمنا */}
+      <section className="section-bg py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-white mb-4">قيمنا الأساسية</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-drx-orange to-drx-red mx-auto mb-8"></div>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              نؤمن بمجموعة من القيم الأساسية التي توجه عملنا وتحدد هويتنا
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center card-hover">
+              <div className="w-16 h-16 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center mx-auto mb-6">
+                <Lightbulb className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4">الابتكار</h3>
+              <p className="text-gray-400">نسعى دائماً لاستكشاف حلول جديدة ومبتكرة تواكب التطورات التكنولوجية</p>
+            </div>
+
+            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center card-hover">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Gem className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4">الجودة</h3>
+              <p className="text-gray-400">نلتزم بأعلى معايير الجودة في جميع منتجاتنا وخدماتنا</p>
+            </div>
+
+            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center card-hover">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Handshake className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4">الشراكة</h3>
+              <p className="text-gray-400">نبني علاقات طويلة الأمد مع عملائنا قائمة على الثقة والتعاون</p>
+            </div>
+
+            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center card-hover">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <ShieldAlert className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4">الأمان</h3>
+              <p className="text-gray-400">نضع الأمان والخصوصية في المقدمة في جميع حلولنا التقنية</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* قسم فريق العمل */}
       <section className="section-bg py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -146,48 +141,66 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="bg-gray-900/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center animate-fade-in-up">
-              <Image
-                src="/placeholder-user.jpg"
-                alt="Team Member 1"
-                width={120}
-                height={120}
-                className="rounded-full mb-4 border-4 border-amber-500"
-              />
-              <CardTitle className="text-xl font-semibold text-white">أحمد السعيد</CardTitle>
-              <CardContent className="text-amber-400 text-sm mb-2">الرئيس التنفيذي</CardContent>
-              <CardContent className="text-gray-300 text-sm">
-                قائد ملهم بخبرة واسعة في إدارة المشاريع التقنية والابتكار.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-900/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center animate-fade-in-up delay-200">
-              <Image
-                src="/placeholder-user.jpg"
-                alt="Team Member 2"
-                width={120}
-                height={120}
-                className="rounded-full mb-4 border-4 border-blue-500"
-              />
-              <CardTitle className="text-xl font-semibold text-white">فاطمة الزهراء</CardTitle>
-              <CardContent className="text-blue-400 text-sm mb-2">مديرة تطوير الويب</CardContent>
-              <CardContent className="text-gray-300 text-sm">
-                متخصصة في بناء واجهات الويب الحديثة وتجربة المستخدم.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-900/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center animate-fade-in-up delay-400">
-              <Image
-                src="/placeholder-user.jpg"
-                alt="Team Member 3"
-                width={120}
-                height={120}
-                className="rounded-full mb-4 border-4 border-purple-500"
-              />
-              <CardTitle className="text-xl font-semibold text-white">خالد منصور</CardTitle>
-              <CardContent className="text-purple-400 text-sm mb-2">مهندس ذكاء اصطناعي</CardContent>
-              <CardContent className="text-gray-300 text-sm">
-                خبير في تعلم الآلة وتطوير حلول الذكاء الاصطناعي المتقدمة.
-              </CardContent>
-            </Card>
+            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center card-hover">
+              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <User className="h-10 w-10 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">د. عبدالعزيز الحمداني</h3>
+              <p className="text-blue-400 font-medium mb-4">المؤسس والرئيس التنفيذي</p>
+              <p className="text-gray-400 text-sm">
+                خبير في الذكاء الاصطناعي مع أكثر من 15 عاماً من الخبرة في تطوير الحلول التقنية
+              </p>
+              <div className="mt-6 flex justify-center space-x-4 space-x-reverse">
+                <Link
+                  href="https://github.com/wolfomani"
+                  className="text-blue-400 hover:text-blue-300 transition-colors"
+                >
+                  <Github className="h-6 w-6" />
+                </Link>
+                <Link
+                  href="https://hamkamai.github.io/3weep.app"
+                  className="text-blue-400 hover:text-blue-300 transition-colors"
+                >
+                  <Globe className="h-6 w-6" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center card-hover">
+              <div className="w-24 h-24 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Code className="h-10 w-10 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">سارة أحمد</h3>
+              <p className="text-green-400 font-medium mb-4">مديرة التطوير</p>
+              <p className="text-gray-400 text-sm">
+                متخصصة في تطوير تطبيقات الذكاء الاصطناعي وتعلم الآلة مع خبرة 10 سنوات
+              </p>
+              <div className="mt-6 flex justify-center space-x-4 space-x-reverse">
+                <Link href="#" className="text-green-400 hover:text-green-300 transition-colors">
+                  <Github className="h-6 w-6" />
+                </Link>
+                <Link href="#" className="text-green-400 hover:text-green-300 transition-colors">
+                  <Globe className="h-6 w-6" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center card-hover">
+              <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <LineChart className="h-10 w-10 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">محمد علي</h3>
+              <p className="text-purple-400 font-medium mb-4">مختص تحليل البيانات</p>
+              <p className="text-gray-400 text-sm">خبير في تحليل البيانات الضخمة وبناء نماذج التنبؤ الذكية</p>
+              <div className="mt-6 flex justify-center space-x-4 space-x-reverse">
+                <Link href="#" className="text-purple-400 hover:text-purple-300 transition-colors">
+                  <Github className="h-6 w-6" />
+                </Link>
+                <Link href="#" className="text-purple-400 hover:text-purple-300 transition-colors">
+                  <Globe className="h-6 w-6" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -327,44 +340,6 @@ export default function AboutPage() {
               <Percent className="h-10 w-10 text-white mx-auto mb-4" />
               <h4 className="font-semibold text-white">نسبة النجاح</h4>
               <p className="text-gray-400 text-sm">95%</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* قسم الذكاء الاصطناعي */}
-      <section id="about" className="section-bg py-20 pt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">من نحن؟</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-red-500 mx-auto mb-8"></div>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-2xl font-bold mb-6 gradient-text">نحن روّاد الذكاء الاصطناعي</h3>
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                في Dr X، نؤمن بقوة التكنولوجيا في تغيير العالم. نحن فريق من المطورين والمهندسين المتخصصين في الذكاء
-                الاصطناعي، نسعى لتقديم حلول مبتكرة تساعد الأفراد والشركات على تحقيق أهدافهم.
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center">
-                  <div className="text-3xl font-bold gradient-text mb-2">500+</div>
-                  <div className="text-gray-400">مشروع مكتمل</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold gradient-text mb-2">100+</div>
-                  <div className="text-gray-400">عميل راضٍ</div>
-                </div>
-              </div>
-            </div>
-            <div className="text-center">
-              <Image
-                src="/images/drx-logo.png"
-                alt="Dr X Team"
-                width={256}
-                height={256}
-                className="w-64 h-64 mx-auto rounded-lg pulse-glow"
-              />
             </div>
           </div>
         </div>

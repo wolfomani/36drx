@@ -1,127 +1,99 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone } from "lucide-react"
+import { Github, ExternalLink, Globe, Mail, DiscIcon as Discord, MapPin } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900/90 backdrop-blur-lg border-t border-gray-700 py-10 text-gray-300">
-      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* About Us */}
-        <div className="col-span-1 md:col-span-1">
-          <div className="flex items-center gap-2 mb-4">
-            <Image
-              src="/images/drx-logo.png"
-              alt="Dr X Logo"
-              width={40}
-              height={40}
-              className="rounded-full glow-effect"
-            />
-            <span className="text-2xl font-bold gradient-text">Dr X</span>
+    <footer className="bg-gray-900 text-white py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="col-span-1 md:col-span-2">
+            <div className="flex items-center mb-4">
+              <Image
+                src="/images/drx-logo.png"
+                alt="Dr X Logo"
+                width={32}
+                height={32}
+                className="ml-3 rounded glow-effect"
+              />
+              <h3 className="text-2xl font-bold gradient-text">Dr X</h3>
+            </div>
+            <p className="text-gray-300 mb-6 leading-relaxed">
+              نحن رواد في مجال الذكاء الاصطناعي، نقدم حلولاً مبتكرة تساعد الشركات على تحقيق أهدافها وتطوير أعمالها.
+            </p>
+            <div className="flex space-x-4 space-x-reverse">
+              <Link
+                href="https://github.com/wolfomani"
+                className="text-gray-300 hover:text-orange-400 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github className="h-6 w-6" />
+              </Link>
+              <Link
+                href="https://hamkamai.github.io/3weep.app"
+                className="text-gray-300 hover:text-orange-400 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink className="h-6 w-6" />
+              </Link>
+              <Link
+                href="https://36drx.vercel.app"
+                className="text-gray-300 hover:text-orange-400 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Globe className="h-6 w-6" />
+              </Link>
+            </div>
           </div>
-          <p className="text-sm leading-relaxed">
-            نحن شركة Dr X، نقدم حلولاً مبتكرة في تطوير الويب، تطبيقات الجوال، والذكاء الاصطناعي. نسعى لتمكين عملائنا
-            بأحدث التقنيات.
-          </p>
-        </div>
-
-        {/* Quick Links */}
-        <div>
-          <h3 className="text-xl font-semibold text-white mb-4">روابط سريعة</h3>
-          <ul className="space-y-2">
-            <li>
-              <Link href="/" className="hover:text-white transition-colors">
-                الرئيسية
-              </Link>
-            </li>
-            <li>
-              <Link href="/services" className="hover:text-white transition-colors">
-                خدماتنا
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:text-white transition-colors">
-                من نحن
-              </Link>
-            </li>
-            <li>
-              <Link href="/portfolio" className="hover:text-white transition-colors">
-                أعمالنا
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-white transition-colors">
-                تواصل معنا
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Services */}
-        <div>
-          <h3 className="text-xl font-semibold text-white mb-4">خدماتنا</h3>
-          <ul className="space-y-2">
-            <li>
-              <Link href="/services#web-development" className="hover:text-white transition-colors">
-                تطوير الويب
-              </Link>
-            </li>
-            <li>
-              <Link href="/services#mobile-apps" className="hover:text-white transition-colors">
-                تطبيقات الجوال
-              </Link>
-            </li>
-            <li>
-              <Link href="/services#ai-solutions" className="hover:text-white transition-colors">
-                حلول الذكاء الاصطناعي
-              </Link>
-            </li>
-            <li>
-              <Link href="/services#ui-ux" className="hover:text-white transition-colors">
-                تصميم UI/UX
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Contact Info */}
-        <div>
-          <h3 className="text-xl font-semibold text-white mb-4">تواصل معنا</h3>
-          <ul className="space-y-3">
-            <li className="flex items-center gap-2">
-              <Mail className="h-5 w-5 text-amber-400" />
-              <a href="mailto:info@drx.com" className="hover:text-white transition-colors">
-                info@drx.com
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <Phone className="h-5 w-5 text-amber-400" />
-              <a href="tel:+966501234567" className="hover:text-white transition-colors">
-                +966 50 123 4567
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-amber-400">الموقع:</span> الرياض، المملكة العربية السعودية
-            </li>
-          </ul>
-          <div className="flex gap-4 mt-6">
-            <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-white transition-colors">
-              <Facebook className="h-6 w-6" />
-            </a>
-            <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-white transition-colors">
-              <Twitter className="h-6 w-6" />
-            </a>
-            <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-white transition-colors">
-              <Instagram className="h-6 w-6" />
-            </a>
-            <a href="#" aria-label="LinkedIn" className="text-gray-400 hover:text-white transition-colors">
-              <Linkedin className="h-6 w-6" />
-            </a>
+          <div>
+            <h4 className="text-lg font-semibold mb-4">الخدمات</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/services" className="text-gray-300 hover:text-orange-400 transition-colors">
+                  تطوير الويب
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="text-gray-300 hover:text-orange-400 transition-colors">
+                  تطبيقات الجوال
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="text-gray-300 hover:text-orange-400 transition-colors">
+                  الذكاء الاصطناعي
+                </Link>
+              </li>
+              <li>
+                <Link href="/analytics" className="text-gray-300 hover:text-orange-400 transition-colors">
+                  التحليلات
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold mb-4">تواصل معنا</h4>
+            <ul className="space-y-2 text-gray-300">
+              <li className="flex items-center">
+                <Mail className="h-5 w-5 ml-2" />
+                balqees0alalawi@gmail.com
+              </li>
+              <li className="flex items-center">
+                <Discord className="h-5 w-5 ml-2" />
+                @abdulaziz-x7r1g
+              </li>
+              <li className="flex items-center">
+                <MapPin className="h-5 w-5 ml-2" />
+                سلطنة عمان
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
-
-      <div className="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-500">
-        <p>&copy; {new Date().getFullYear()} Dr X. جميع الحقوق محفوظة.</p>
+        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+          <p className="text-gray-300">&copy; 2025 Dr X. جميع الحقوق محفوظة لعبدالعزيز الحمداني.</p>
+        </div>
       </div>
     </footer>
   )

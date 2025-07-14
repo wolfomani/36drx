@@ -122,9 +122,6 @@ importers:
       input-otp:
         specifier: latest
         version: 1.4.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      ios-vibrator-pro-max:
-        specifier: latest
-        version: 1.3.2
       lucide-react:
         specifier: ^0.454.0
         version: 0.454.0(react@19.0.0)
@@ -1444,9 +1441,6 @@ packages:
   internmap@2.0.3:
     resolution: {integrity: sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg==}
     engines: {node: '>=12'}
-
-  ios-vibrator-pro-max@1.3.2:
-    resolution: {integrity: sha512-HG5bUMXlju4pjDOQ4jg8d/9eAVh8myDzDOFuTfrHz6CmswNzLePPpIDjxX0lppO2F/2XMjQoWrIaSL6xj1Dyfg==}
 
   is-arrayish@0.3.2:
     resolution: {integrity: sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==}
@@ -3199,8 +3193,6 @@ snapshots:
       react-dom: 19.0.0(react@19.0.0)
 
   internmap@2.0.3: {}
-
-  ios-vibrator-pro-max@1.3.2: {}
 
   is-arrayish@0.3.2:
     optional: true
