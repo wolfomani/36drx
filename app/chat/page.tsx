@@ -75,9 +75,9 @@ export default function ChatInterface() {
   const mainContainerRef = useRef<HTMLDivElement>(null)
   const selectionStateRef = useRef<{ start: number | null; end: number | null }>({ start: null, end: null })
 
-  const TOP_PADDING_GLOBAL_NAV = 96 // Approx height of Navbar
-  const BOTTOM_PADDING_INPUT_AREA = 128 // Approx height of input area
-  const ADDITIONAL_OFFSET = 16 // Some extra padding
+  const TOP_PADDING_GLOBAL_NAV = 96 // Adjusted from pt-16 to pt-24 (96px)
+  const BOTTOM_PADDING_INPUT_AREA = 128
+  const ADDITIONAL_OFFSET = 16
 
   const [currentModel, setCurrentModel] = useState("deepseek")
 
@@ -115,7 +115,7 @@ export default function ChatInterface() {
       id: msg.id,
       content: msg.content,
       type: msg.role === "user" ? "user" : "system",
-      completed: true, // Mark all AI messages as completed for now
+      completed: true,
     }))
     setMessages(newLocalMessages)
   }, [aiMessages, setAiMessages])
@@ -134,20 +134,15 @@ export default function ChatInterface() {
       setIsMobile(isMobileDevice)
       const vh = window.innerHeight
       setViewportHeight(vh)
-
-      // For mobile, set main container height to viewport height
       if (isMobileDevice && mainContainerRef.current) {
         mainContainerRef.current.style.height = `${vh}px`
       }
     }
 
-    checkMobileAndViewport() // Initial check
-
-    // Set height on mount for non-mobile as well, or ensure it's 100svh
+    checkMobileAndViewport()
     if (mainContainerRef.current) {
       mainContainerRef.current.style.height = isMobile ? `${viewportHeight}px` : "100svh"
     }
-
     window.addEventListener("resize", checkMobileAndViewport)
     return () => {
       window.removeEventListener("resize", checkMobileAndViewport)
@@ -174,7 +169,7 @@ export default function ChatInterface() {
         if (currentSection.messages.length > 0) {
           sections.push({
             ...currentSection,
-            isActive: false, // Deactivate previous section
+            isActive: false,
           })
         }
         const newSectionId = `section-${Date.now()}-${sections.length}`
@@ -182,7 +177,7 @@ export default function ChatInterface() {
           id: newSectionId,
           messages: [message],
           isNewSection: true,
-          isActive: true, // Activate new section
+          isActive: true,
           sectionIndex: sections.length,
         }
         setActiveSectionId(newSectionId)
@@ -191,16 +186,13 @@ export default function ChatInterface() {
       }
     })
 
-    // Push the last section
     if (currentSection.messages.length > 0) {
       sections.push(currentSection)
     }
-
     setMessageSections(sections)
   }, [messages])
 
   useEffect(() => {
-    // Scroll to bottom when a new section is added
     if (messageSections.length > 1) {
       setTimeout(() => {
         const scrollContainer = chatContainerRef.current
@@ -210,7 +202,7 @@ export default function ChatInterface() {
             behavior: "smooth",
           })
         }
-      }, 100) // Small delay to allow DOM to update
+      }, 100)
     }
   }, [messageSections])
 
@@ -258,7 +250,6 @@ export default function ChatInterface() {
   }
 
   const handleInputContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Only focus textarea if the click is directly on the container or not on a button
     if (
       e.target === e.currentTarget ||
       (e.currentTarget === inputContainerRef.current && !(e.target as HTMLElement).closest("button"))
@@ -292,19 +283,16 @@ export default function ChatInterface() {
     const newValue = e.target.value
     if (!aiIsLoading) {
       setInputValue(newValue)
-      handleAiInputChange(e) // Pass to AI SDK's handler
-
+      handleAiInputChange(e)
       if (newValue.trim() !== "" && !hasTyped) {
         setHasTyped(true)
       } else if (newValue.trim() === "" && hasTyped) {
         setHasTyped(false)
       }
-
-      // Auto-resize textarea
       const textarea = textareaRef.current
       if (textarea) {
-        textarea.style.height = "auto" // Reset height to recalculate
-        const newHeight = Math.max(24, Math.min(textarea.scrollHeight, 160)) // Min 24px, Max 160px
+        textarea.style.height = "auto"
+        const newHeight = Math.max(24, Math.min(textarea.scrollHeight, 160))
         textarea.style.height = `${newHeight}px`
       }
     }
@@ -313,21 +301,20 @@ export default function ChatInterface() {
   const handleLocalSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (inputValue.trim() && !aiIsLoading) {
-      navigator.vibrate(50) // Haptic feedback on submit
+      navigator.vibrate(50)
       handleAiSubmit(e, {
         messages: [...aiMessages, { id: `user-${Date.now()}`, role: "user", content: inputValue.trim() }],
         data: { model: currentModel },
       })
       setInputValue("")
       setHasTyped(false)
-      setActiveButton("none") // Reset active button
+      setActiveButton("none")
       if (textareaRef.current) {
-        textareaRef.current.style.height = "auto" // Reset textarea height after submit
+        textareaRef.current.style.height = "auto"
       }
       if (!isMobile) {
         focusTextarea()
       } else {
-        // On mobile, blur textarea after sending to hide keyboard
         if (textareaRef.current) {
           textareaRef.current.blur()
         }
@@ -336,13 +323,11 @@ export default function ChatInterface() {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // Allow Cmd/Ctrl + Enter for new line or submit
     if (!aiIsLoading && e.key === "Enter" && e.metaKey) {
       e.preventDefault()
       handleLocalSubmit(e)
       return
     }
-    // Submit on Enter, unless Shift is pressed for new line
     if (!aiIsLoading && !isMobile && e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
       handleLocalSubmit(e)
@@ -351,10 +336,10 @@ export default function ChatInterface() {
 
   const toggleButton = (button: ActiveButton) => {
     if (!aiIsLoading) {
-      saveSelectionState() // Save cursor position
+      saveSelectionState()
       setActiveButton((prev) => (prev === button ? "none" : button))
       setTimeout(() => {
-        restoreSelectionState() // Restore cursor position after state update
+        restoreSelectionState()
       }, 0)
     }
   }
@@ -367,8 +352,8 @@ export default function ChatInterface() {
           className={cn(
             "max-w-[85%] px-4 py-3 rounded-2xl text-white transition-all duration-300 transform hover:scale-[1.02]",
             message.type === "user"
-              ? "bg-gradient-to-r from-blue-500 to-indigo-600 rounded-bl-none shadow-lg"
-              : "bg-gradient-to-r from-amber-500 to-orange-500 rounded-br-none shadow-lg",
+              ? "bg-gradient-to-r from-drx-blue to-drx-purple rounded-bl-none shadow-lg"
+              : "bg-gradient-to-r from-drx-orange to-drx-red rounded-br-none shadow-lg",
           )}
         >
           {message.content && (
@@ -406,29 +391,28 @@ export default function ChatInterface() {
   }
 
   const shouldApplyHeight = (sectionIndex: number) => {
-    return sectionIndex > 0 // Apply height to all sections except the first one
+    return sectionIndex > 0
   }
 
   return (
     <div
-      className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center pt-24 px-0 pb-0 md:px-4 md:pb-4" // Adjusted padding for full width on mobile
+      className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center pt-24 px-0 pb-0 md:px-4 md:pb-4" // Adjusted pt-24 and removed horizontal padding for mobile
       ref={mainContainerRef}
     >
       {/* AI Status Header */}
-      <div className="w-full max-w-4xl mb-4 bg-gray-800/80 backdrop-blur-xl border border-gray-700 rounded-2xl p-4 flex items-center justify-between">
+      <div className="w-full max-w-4xl mb-4 bg-gray-800/80 backdrop-blur-xl border border-gray-700 rounded-2xl p-4 flex items-center justify-between px-4 md:px-4">
         <div className="flex items-center gap-3">
-          <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl p-2">
+          <div className="bg-gradient-to-r from-drx-orange to-drx-red rounded-xl p-2">
             <Robot className="h-6 w-6 text-white" />
           </div>
           <div>
             <h1 className="text-xl font-bold text-white flex items-center">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-orange-500">Dr X</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-drx-orange to-drx-red">Dr X</span>
               <span className="ml-2">- مساعد الذكاء الاصطناعي</span>
             </h1>
             <p className="text-sm text-gray-300">مساعدك الذكي المتطور - مدعوم بأحدث تقنيات الذكاء الاصطناعي</p>
           </div>
         </div>
-
         <div className="flex items-center gap-2 bg-green-600/20 border border-green-600/50 rounded-full px-4 py-2 text-sm">
           <CircleDot className="h-2 w-2 bg-green-400 rounded-full animate-pulse" />
           <span className="text-green-300">Dr X متصل</span>
@@ -441,17 +425,16 @@ export default function ChatInterface() {
         <div className="p-4 bg-gradient-to-r from-gray-800 to-gray-900 border-b border-gray-700">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <Brain className="h-5 w-5 text-amber-400" />
+              <Brain className="h-5 w-5 text-drx-orange" />
               <h3 className="text-lg font-medium text-white">اختر نموذج الذكاء الاصطناعي:</h3>
             </div>
-
             <div className="flex flex-wrap gap-2">
               <Button
                 onClick={() => selectModel("deepseek")}
                 className={cn(
                   "flex items-center gap-2 px-4 py-2 rounded-xl transition-all transform hover:-translate-y-0.5",
                   currentModel === "deepseek"
-                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-lg"
+                    ? "bg-gradient-to-r from-drx-blue to-drx-purple text-white font-medium shadow-lg"
                     : "bg-gray-700/60 border border-gray-600 text-white hover:bg-gray-700",
                 )}
               >
@@ -463,7 +446,7 @@ export default function ChatInterface() {
                 className={cn(
                   "flex items-center gap-2 px-4 py-2 rounded-xl transition-all transform hover:-translate-y-0.5",
                   currentModel === "huggingface"
-                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white font-medium shadow-lg"
+                    ? "bg-gradient-to-r from-drx-orange to-drx-red text-white font-medium shadow-lg"
                     : "bg-gray-700/60 border border-gray-600 text-white hover:bg-gray-700",
                 )}
               >
@@ -476,14 +459,14 @@ export default function ChatInterface() {
           {/* Features Panel */}
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-3 flex flex-col items-center">
-              <div className="bg-amber-500/10 p-2 rounded-lg mb-2">
-                <Zap className="h-5 w-5 text-amber-400" />
+              <div className="bg-drx-orange/10 p-2 rounded-lg mb-2">
+                <Zap className="h-5 w-5 text-drx-orange" />
               </div>
               <p className="text-sm text-center text-gray-300">استجابة فورية</p>
             </div>
             <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-3 flex flex-col items-center">
-              <div className="bg-blue-500/10 p-2 rounded-lg mb-2">
-                <Languages className="h-5 w-5 text-blue-400" />
+              <div className="bg-drx-blue/10 p-2 rounded-lg mb-2">
+                <Languages className="h-5 w-5 text-drx-blue" />
               </div>
               <p className="text-sm text-center text-gray-300">دعم متعدد اللغات</p>
             </div>
@@ -500,17 +483,17 @@ export default function ChatInterface() {
         <div
           ref={chatContainerRef}
           className="flex-1 p-4 overflow-y-auto bg-gradient-to-b from-gray-900/30 to-gray-800/30"
-          style={{ maxHeight: "calc(100vh - 320px)" }} // Adjust based on actual header/footer height
+          style={{ maxHeight: "calc(100vh - 320px)" }}
         >
           <div className="max-w-3xl mx-auto space-y-6">
             {messages.map((message) => renderMessage(message))}
 
             {aiIsLoading && (
               <div className="flex items-center gap-3 mb-4 justify-start">
-                <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-full p-2 flex-shrink-0 animate-pulse">
+                <div className="bg-gradient-to-r from-drx-orange to-drx-red rounded-full p-2 flex-shrink-0 animate-pulse">
                   <Robot className="h-5 w-5 text-white" />
                 </div>
-                <div className="bg-gradient-to-r from-amber-500/80 to-orange-500/80 rounded-br-none p-3 text-white flex items-center gap-2">
+                <div className="bg-gradient-to-r from-drx-orange/80 to-drx-red/80 rounded-br-none p-3 text-white flex items-center gap-2">
                   <span>Dr X يكتب</span>
                   <div className="flex gap-1">
                     <div
@@ -546,7 +529,7 @@ export default function ChatInterface() {
             ref={inputContainerRef}
             className={cn(
               "relative w-full rounded-2xl border border-gray-600 bg-gray-800/50 p-3 cursor-text transition-all",
-              aiIsLoading ? "opacity-70" : "hover:border-amber-500/50 focus-within:border-amber-500",
+              aiIsLoading ? "opacity-70" : "hover:border-drx-orange/50 focus-within:border-drx-orange",
             )}
             onClick={handleInputContainerClick}
           >
@@ -573,39 +556,39 @@ export default function ChatInterface() {
                     variant="ghost"
                     size="icon"
                     className={cn(
-                      "rounded-full h-9 w-9 flex-shrink-0 bg-gray-700/70 hover:bg-amber-500/20 transition-all",
-                      activeButton === "add" && "bg-amber-500/30 border border-amber-500/50",
+                      "rounded-full h-9 w-9 flex-shrink-0 bg-gray-700/70 hover:bg-drx-orange/20 transition-all",
+                      activeButton === "add" && "bg-drx-orange/30 border border-drx-orange/50",
                     )}
                     onClick={() => toggleButton("add")}
                     disabled={aiIsLoading}
                   >
-                    <Plus className="h-5 w-5 text-amber-400" />
+                    <Plus className="h-5 w-5 text-drx-orange" />
                     <span className="sr-only">Add</span>
                   </Button>
                   <Button
                     type="button"
                     variant="ghost"
                     className={cn(
-                      "rounded-xl h-9 px-4 flex items-center bg-gray-700/70 hover:bg-blue-500/20 gap-1.5 transition-all",
-                      activeButton === "deepSearch" && "bg-blue-500/30 border border-blue-500/50",
+                      "rounded-xl h-9 px-4 flex items-center bg-gray-700/70 hover:bg-drx-blue/20 gap-1.5 transition-all",
+                      activeButton === "deepSearch" && "bg-drx-blue/30 border border-drx-blue/50",
                     )}
                     onClick={() => toggleButton("deepSearch")}
                     disabled={aiIsLoading}
                   >
-                    <Search className="h-4 w-4 text-blue-400" />
+                    <Search className="h-4 w-4 text-drx-blue" />
                     <span className="text-sm text-white">DeepSearch</span>
                   </Button>
                   <Button
                     type="button"
                     variant="ghost"
                     className={cn(
-                      "rounded-xl h-9 px-4 flex items-center bg-gray-700/70 hover:bg-purple-500/20 gap-1.5 transition-all",
-                      activeButton === "think" && "bg-purple-500/30 border border-purple-500/50",
+                      "rounded-xl h-9 px-4 flex items-center bg-gray-700/70 hover:bg-drx-purple/20 gap-1.5 transition-all",
+                      activeButton === "think" && "bg-drx-purple/30 border border-drx-purple/50",
                     )}
                     onClick={() => toggleButton("think")}
                     disabled={aiIsLoading}
                   >
-                    <Lightbulb className="h-4 w-4 text-purple-400" />
+                    <Lightbulb className="h-4 w-4 text-drx-purple" />
                     <span className="text-sm text-white">Think</span>
                   </Button>
                 </div>
@@ -615,7 +598,7 @@ export default function ChatInterface() {
                   size="icon"
                   className={cn(
                     "rounded-full h-9 w-9 border-0 flex-shrink-0 transition-all transform hover:scale-110",
-                    hasTyped ? "bg-gradient-to-r from-amber-500 to-orange-500 shadow-lg" : "bg-gray-700",
+                    hasTyped ? "bg-gradient-to-r from-drx-orange to-drx-red shadow-lg" : "bg-gray-700",
                   )}
                   disabled={!inputValue.trim() || aiIsLoading}
                 >

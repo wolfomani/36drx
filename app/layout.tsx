@@ -11,6 +11,15 @@ const cairo = Cairo({
   variable: "--font-cairo",
 })
 
+export const metadata = {
+  generator: "dr.x",
+  title: "Dr X - حلول الذكاء الاصطناعي وتطوير الويب",
+  description: "Dr X هي شركة رائدة في تطوير الويب، تطبيقات الجوال، وحلول الذكاء الاصطناعي المبتكرة.",
+  icons: {
+    icon: "/images/drx-app-icon.png",
+  },
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -28,10 +37,4 @@ export default function RootLayout({
       </body>
     </html>
   )
-}
-
-export const metadata = {
-  generator: "dr.x",
-  title: "Dr X - حلول الذكاء الاصطناعي وتطوير الويب",
-  description: "Dr X هي شركة رائدة في تطوير الويب، تطبيقات الجوال، وحلول الذكاء الاصطناعي المبتكرة.",
 }

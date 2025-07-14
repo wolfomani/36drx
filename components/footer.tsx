@@ -1,94 +1,90 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone } from "lucide-react"
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-12 border-t border-gray-700">
-      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Company Info */}
-        <div className="col-span-1 md:col-span-2">
-          <Link href="/" className="flex items-center gap-3 mb-4">
-            <Image src="/images/drx-logo.png" alt="Dr X Logo" width={50} height={50} className="rounded-full" />
+    <footer className="bg-gray-900/80 backdrop-blur-lg border-t border-gray-700 py-8 px-4">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+        {/* Logo and Description */}
+        <div className="flex flex-col items-center md:items-start text-center md:text-right">
+          <Link href="/" className="flex items-center gap-2 mb-4">
+            <Image
+              src="/images/drx-logo.png"
+              alt="Dr X Logo"
+              width={50}
+              height={50}
+              className="rounded-full glow-effect"
+            />
             <span className="text-3xl font-bold gradient-text">Dr X</span>
           </Link>
-          <p className="text-lg leading-relaxed mb-4">
-            Dr X هي شركة رائدة في تطوير الويب، تطبيقات الجوال، وحلول الذكاء الاصطناعي المبتكرة. نحن نساعد الشركات على
-            تحقيق أهدافها الرقمية.
+          <p className="text-gray-400 max-w-md">
+            Dr X هي شركة رائدة في تقديم حلول الذكاء الاصطناعي المتطورة وتطوير الويب وتطبيقات الجوال، ملتزمون بتقديم
+            الابتكار والتميز.
           </p>
-          <div className="flex gap-4">
-            <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-white transition-colors">
-              <Facebook className="h-6 w-6" />
-            </a>
-            <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-white transition-colors">
-              <Twitter className="h-6 w-6" />
-            </a>
-            <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-white transition-colors">
-              <Instagram className="h-6 w-6" />
-            </a>
-            <a href="#" aria-label="LinkedIn" className="text-gray-400 hover:text-white transition-colors">
-              <Linkedin className="h-6 w-6" />
-            </a>
+        </div>
+
+        {/* Navigation Links */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-4 text-center md:text-right">
+          <div className="flex flex-col gap-2">
+            <h3 className="text-lg font-semibold text-white mb-2">روابط سريعة</h3>
+            <Link href="/" className="text-gray-400 hover:text-white transition-colors">
+              الرئيسية
+            </Link>
+            <Link href="/services" className="text-gray-400 hover:text-white transition-colors">
+              خدماتنا
+            </Link>
+            <Link href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
+              أعمالنا
+            </Link>
+          </div>
+          <div className="flex flex-col gap-2">
+            <h3 className="text-lg font-semibold text-white mb-2">الشركة</h3>
+            <Link href="/about" className="text-gray-400 hover:text-white transition-colors">
+              من نحن
+            </Link>
+            <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+              تواصل معنا
+            </Link>
+            <Link href="/chat" className="text-gray-400 hover:text-white transition-colors">
+              الدردشة
+            </Link>
+          </div>
+          <div className="flex flex-col gap-2">
+            <h3 className="text-lg font-semibold text-white mb-2">الموارد</h3>
+            <Link href="/analytics" className="text-gray-400 hover:text-white transition-colors">
+              التحليلات
+            </Link>
+            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              المدونة
+            </Link>
+            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              الأسئلة الشائعة
+            </Link>
           </div>
         </div>
 
-        {/* Quick Links */}
-        <div>
-          <h3 className="text-xl font-semibold text-white mb-4">روابط سريعة</h3>
-          <ul className="space-y-2">
-            <li>
-              <Link href="/services" className="hover:text-white transition-colors">
-                خدماتنا
-              </Link>
-            </li>
-            <li>
-              <Link href="/portfolio" className="hover:text-white transition-colors">
-                أعمالنا
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:text-white transition-colors">
-                من نحن
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-white transition-colors">
-                تواصل معنا
-              </Link>
-            </li>
-            <li>
-              <Link href="/chat" className="hover:text-white transition-colors">
-                الدردشة
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Contact Info */}
-        <div>
-          <h3 className="text-xl font-semibold text-white mb-4">تواصل معنا</h3>
-          <ul className="space-y-2">
-            <li className="flex items-center gap-2">
-              <Mail className="h-5 w-5 text-drx-orange" />
-              <a href="mailto:info@drx.com" className="hover:text-white transition-colors">
-                info@drx.com
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <Phone className="h-5 w-5 text-drx-orange" />
-              <a href="tel:+1234567890" className="hover:text-white transition-colors">
-                +123 456 7890
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-drx-orange">📍</span>
-              <span>الرياض، المملكة العربية السعودية</span>
-            </li>
-          </ul>
+        {/* Social Media */}
+        <div className="flex flex-col items-center md:items-end gap-4">
+          <h3 className="text-lg font-semibold text-white mb-2">تابعنا</h3>
+          <div className="flex gap-4">
+            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Facebook className="h-6 w-6" />
+            </Link>
+            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Twitter className="h-6 w-6" />
+            </Link>
+            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Instagram className="h-6 w-6" />
+            </Link>
+            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Linkedin className="h-6 w-6" />
+            </Link>
+          </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 mt-12 pt-8 border-t border-gray-700 text-center text-gray-500">
+      <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
         <p>&copy; {new Date().getFullYear()} Dr X. جميع الحقوق محفوظة.</p>
       </div>
     </footer>

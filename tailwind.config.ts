@@ -53,14 +53,12 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Dr X Custom Colors
-        "drx-orange": "#FF4D00", // A vibrant orange
-        "drx-orange-dark": "#CC3D00", // A darker shade for gradients
-        "drx-red": "#FF0000", // A strong red
-        "drx-red-dark": "#CC0000", // A darker shade for gradients
-        "drx-blue": "#007BFF", // A standard blue
-        "drx-indigo": "#4B0082", // A deep indigo
-        "drx-purple": "#8A2BE2", // A medium purple
+        // Custom Dr X colors
+        "drx-orange": "#FF6B00",
+        "drx-red": "#FF3B30",
+        "drx-blue": "#007AFF",
+        "drx-purple": "#5856D6",
+        "drx-dark-purple": "#3A3A5A",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,9 +78,6 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-      },
-      fontFamily: {
-        cairo: ["var(--font-cairo)"],
       },
     },
   },

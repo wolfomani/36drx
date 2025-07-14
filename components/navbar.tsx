@@ -6,9 +6,11 @@ import Image from "next/image"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { usePathname } from "next/navigation"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
 
   const navLinks = [
     { name: "الرئيسية", href: "/" },
@@ -25,7 +27,13 @@ export default function Navbar() {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/images/drx-logo.png" alt="Dr X Logo" width={40} height={40} className="rounded-full" />
+          <Image
+            src="/images/drx-logo.png" // Using the new prominent logo
+            alt="Dr X Logo"
+            width={40}
+            height={40}
+            className="rounded-full glow-effect" // Keep glow effect for prominence
+          />
           <span className="text-2xl font-bold gradient-text">Dr X</span>
         </Link>
 
@@ -35,7 +43,10 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-gray-300 hover:text-white transition-colors text-lg font-medium relative group"
+              className={cn(
+                "text-gray-300 hover:text-white transition-colors text-lg font-medium relative group",
+                pathname === link.href && "text-white font-bold border-b-2 border-drx-orange pb-1",
+              )}
             >
               {link.name}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-300 group-hover:w-full"></span>

@@ -1,134 +1,170 @@
 import Link from "next/link"
 import Image from "next/image"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Award, Lightbulb } from "lucide-react"
+import { Users, Lightbulb, Rocket, Handshake } from "lucide-react"
 
 export default function AboutPage() {
   return (
-    <div className="pt-24 bg-black text-white min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white pt-24">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 text-center overflow-hidden">
-        <div className="absolute inset-0 gradient-bg opacity-50"></div>
-        <div className="relative z-10 p-8 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight gradient-text animate-fade-in-up">
-            من نحن
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 animate-fade-in-up delay-200">
-            نحن Dr X، فريق من المبتكرين والمطورين المتخصصين في حلول الذكاء الاصطناعي وتطوير الويب.
-          </p>
-          <Link href="/contact">
-            <Button className="btn-gradient text-white px-8 py-3 text-lg rounded-full shadow-lg hover:scale-105 transition-transform animate-fade-in-up delay-400">
-              تواصل معنا <ArrowRight className="mr-2 h-5 w-5" />
-            </Button>
-          </Link>
+      <section className="w-full py-12 md:py-24 lg:py-32 text-center bg-gradient-to-b from-gray-900/50 to-transparent">
+        <div className="container px-4 md:px-6">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text leading-tight">من نحن Dr X</h1>
+            <p className="text-lg md:text-xl text-gray-300">
+              نحن فريق من الخبراء المتخصصين في الذكاء الاصطناعي وتطوير الويب، ملتزمون بتقديم حلول مبتكرة وعالية الجودة
+              لعملائنا.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Our Story Section */}
-      <section className="py-16 md:py-24 bg-gray-900/70 backdrop-blur-lg">
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">قصتنا</h2>
-            <p className="text-lg text-gray-300 leading-relaxed mb-6">
-              تأسست Dr X على يد مجموعة من الخبراء الشغوفين بالتكنولوجيا والابتكار، بهدف سد الفجوة بين الاحتياجات الرقمية
-              المتزايدة والحلول المبتكرة. بدأنا رحلتنا برؤية واضحة: تمكين الشركات والأفراد من خلال أحدث تقنيات الذكاء
-              الاصطناعي وتطوير الويب.
-            </p>
-            <p className="text-lg text-gray-300 leading-relaxed">
-              منذ ذلك الحين، قمنا ببناء سمعة طيبة في تقديم حلول عالية الجودة، مدعومة بفريق من المهندسين والمصممين وخبراء
-              الذكاء الاصطناعي الذين يلتزمون بالتميز.
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-900/50">
+        <div className="container px-4 md:px-6 grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+          <div className="space-y-4 text-center lg:text-right">
+            <h2 className="text-3xl md:text-5xl font-bold gradient-text leading-tight">قصتنا</h2>
+            <p className="text-lg text-gray-300">
+              تأسست Dr X على يد مجموعة من المهندسين والمبتكرين الشغوفين بالتكنولوجيا والذكاء الاصطناعي. بدأنا رحلتنا
+              بهدف سد الفجوة بين الأفكار الطموحة والتنفيذ التقني الفعال، وتقديم حلول رقمية تحدث فرقًا حقيقيًا في أعمال
+              عملائنا. منذ ذلك الحين، نمت شركتنا وتطورت، محافظين على التزامنا بالجودة والابتكار.
             </p>
           </div>
-          <div className="relative h-64 md:h-96 rounded-xl overflow-hidden shadow-2xl animate-fade-in-up delay-200">
+          <div className="flex justify-center lg:justify-start">
             <Image
-              src="/placeholder.svg?height=500&width=800"
+              src="/placeholder.svg?height=400&width=600"
+              width={600}
+              height={400}
               alt="Our Story"
-              layout="fill"
-              objectFit="cover"
-              className="transition-transform duration-500 hover:scale-105"
+              className="rounded-xl shadow-2xl object-cover"
             />
           </div>
         </div>
       </section>
 
-      {/* Our Mission & Vision Section */}
-      <section className="py-16 md:py-24 text-center">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 gradient-text animate-fade-in-up">مهمتنا ورؤيتنا</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 animate-fade-in-up">
-              <Lightbulb className="h-12 w-12 text-drx-orange mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-white mb-3">مهمتنا</h3>
-              <p className="text-gray-300">
-                تقديم حلول رقمية مبتكرة وموثوقة، تمكن عملائنا من تحقيق أقصى إمكاناتهم في العصر الرقمي.
-              </p>
-            </div>
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 animate-fade-in-up delay-200">
-              <Award className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-white mb-3">رؤيتنا</h3>
-              <p className="text-gray-300">
-                أن نكون الشريك الرقمي المفضل للشركات التي تسعى للتميز والابتكار في منطقة الشرق الأوسط وخارجها.
-              </p>
-            </div>
+      {/* Our Values Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-800/50">
+        <div className="container px-4 md:px-6">
+          <h2 className="text-3xl md:text-5xl font-bold text-center gradient-text mb-12">قيمنا الأساسية</h2>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
+              <CardHeader className="flex flex-col items-center text-center">
+                <div className="bg-blue-500/20 p-4 rounded-full mb-4">
+                  <Lightbulb className="h-8 w-8 text-blue-400" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-white">الابتكار</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center text-gray-300">
+                نسعى دائمًا لتبني أحدث التقنيات وتقديم حلول إبداعية.
+              </CardContent>
+            </Card>
+            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
+              <CardHeader className="flex flex-col items-center text-center">
+                <div className="bg-green-500/20 p-4 rounded-full mb-4">
+                  <Handshake className="h-8 w-8 text-green-400" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-white">التعاون</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center text-gray-300">
+                نؤمن بقوة العمل الجماعي والشراكة مع عملائنا.
+              </CardContent>
+            </Card>
+            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
+              <CardHeader className="flex flex-col items-center text-center">
+                <div className="bg-purple-500/20 p-4 rounded-full mb-4">
+                  <Rocket className="h-8 w-8 text-purple-400" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-white">التميز</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center text-gray-300">
+                نلتزم بتقديم أعلى مستويات الجودة في كل ما نقوم به.
+              </CardContent>
+            </Card>
+            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
+              <CardHeader className="flex flex-col items-center text-center">
+                <div className="bg-red-500/20 p-4 rounded-full mb-4">
+                  <Users className="h-8 w-8 text-red-400" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-white">العميل أولاً</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center text-gray-300">
+                رضا عملائنا هو أولويتنا القصوى في كل خطوة.
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* Our Team Section */}
-      <section className="py-16 md:py-24 bg-gray-900/70 backdrop-blur-lg">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 gradient-text animate-fade-in-up">فريقنا</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 animate-fade-in-up">
+      {/* Team Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-900/50">
+        <div className="container px-4 md:px-6">
+          <h2 className="text-3xl md:text-5xl font-bold text-center gradient-text mb-12">فريقنا</h2>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {/* Placeholder Team Member 1 */}
+            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl flex flex-col items-center text-center p-6">
               <Image
                 src="/placeholder-user.jpg"
-                alt="Team Member 1"
                 width={120}
                 height={120}
-                className="rounded-full mx-auto mb-4 border-4 border-drx-orange"
+                alt="Team Member"
+                className="rounded-full mb-4 object-cover h-32 w-32"
               />
-              <h3 className="text-2xl font-semibold text-white mb-2">د. أحمد الشريف</h3>
-              <p className="text-drx-orange mb-3">الرئيس التنفيذي ومؤسس الذكاء الاصطناعي</p>
-              <p className="text-gray-300">خبير في الذكاء الاصطناعي والتعلم الآلي مع أكثر من 15 عامًا من الخبرة.</p>
-            </div>
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 animate-fade-in-up delay-200">
+              <h3 className="text-xl font-bold text-white">الاسم الأول الأخير</h3>
+              <p className="text-gray-400">المنصب</p>
+              <p className="text-sm text-gray-500 mt-2">وصف موجز لدور العضو وخبراته.</p>
+            </Card>
+            {/* Placeholder Team Member 2 */}
+            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl flex flex-col items-center text-center p-6">
               <Image
                 src="/placeholder-user.jpg"
-                alt="Team Member 2"
                 width={120}
                 height={120}
-                className="rounded-full mx-auto mb-4 border-4 border-blue-400"
+                alt="Team Member"
+                className="rounded-full mb-4 object-cover h-32 w-32"
               />
-              <h3 className="text-2xl font-semibold text-white mb-2">فاطمة الزهراء</h3>
-              <p className="text-blue-400 mb-3">مديرة تطوير الويب</p>
-              <p className="text-gray-300">تقود فريق تطوير الويب بخبرة واسعة في بناء تطبيقات الويب المعقدة.</p>
-            </div>
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 animate-fade-in-up delay-400">
+              <h3 className="text-xl font-bold text-white">الاسم الأول الأخير</h3>
+              <p className="text-gray-400">المنصب</p>
+              <p className="text-sm text-gray-500 mt-2">وصف موجز لدور العضو وخبراته.</p>
+            </Card>
+            {/* Placeholder Team Member 3 */}
+            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl flex flex-col items-center text-center p-6">
               <Image
                 src="/placeholder-user.jpg"
-                alt="Team Member 3"
                 width={120}
                 height={120}
-                className="rounded-full mx-auto mb-4 border-4 border-green-400"
+                alt="Team Member"
+                className="rounded-full mb-4 object-cover h-32 w-32"
               />
-              <h3 className="text-2xl font-semibold text-white mb-2">خالد العلي</h3>
-              <p className="text-green-400 mb-3">رئيس قسم تطبيقات الجوال</p>
-              <p className="text-gray-300">متخصص في تطوير تطبيقات iOS و Android مع سجل حافل بالنجاح.</p>
-            </div>
+              <h3 className="text-xl font-bold text-white">الاسم الأول الأخير</h3>
+              <p className="text-gray-400">المنصب</p>
+              <p className="text-sm text-gray-500 mt-2">وصف موجز لدور العضو وخبراته.</p>
+            </Card>
+            {/* Placeholder Team Member 4 */}
+            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl flex flex-col items-center text-center p-6">
+              <Image
+                src="/placeholder-user.jpg"
+                width={120}
+                height={120}
+                alt="Team Member"
+                className="rounded-full mb-4 object-cover h-32 w-32"
+              />
+              <h3 className="text-xl font-bold text-white">الاسم الأول الأخير</h3>
+              <p className="text-gray-400">المنصب</p>
+              <p className="text-sm text-gray-500 mt-2">وصف موجز لدور العضو وخبراته.</p>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800 text-white text-center">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text animate-fade-in-up">انضم إلى عائلة Dr X</h2>
-          <p className="text-lg mb-8 text-gray-300 animate-fade-in-up delay-200">
-            نحن نبحث دائمًا عن المواهب الشغوفة للانضمام إلى فريقنا المتنامي.
-          </p>
+      {/* Call to Action Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 text-center bg-gradient-to-r from-drx-blue to-drx-purple">
+        <div className="container px-4 md:px-6 space-y-6">
+          <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">انضم إلى عائلة Dr X</h2>
+          <p className="text-lg md:text-xl text-gray-200">نحن نبحث دائمًا عن المواهب للانضمام إلى فريقنا المتنامي.</p>
           <Link href="/contact">
-            <Button className="btn-gradient text-white px-10 py-4 text-xl rounded-full shadow-lg hover:shadow-xl transition-all animate-fade-in-up delay-400">
-              تصفح الوظائف الشاغرة
+            <Button className="px-8 py-3 text-lg font-semibold rounded-full bg-white text-drx-blue hover:bg-gray-100 transition-all shadow-lg">
+              تواصل معنا
             </Button>
           </Link>
         </div>

@@ -28,8 +28,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.6% 91.4%;
-    --input: 214.3 31.6% 91.4%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
@@ -62,7 +62,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 210 40% 98%;
   }
 }
 
@@ -72,95 +72,45 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-cairo);
   }
 }
 
-/* Custom Dr X Styles */
+/* Custom styles for Dr X theme */
 .gradient-text {
   background: linear-gradient(to right, var(--drx-orange), var(--drx-red));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
-.gradient-bg {
-  background: linear-gradient(to bottom right, var(--drx-orange-dark), var(--drx-red-dark));
 }
 
 .btn-gradient {
   background: linear-gradient(to right, var(--drx-orange), var(--drx-red));
-  border: none;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
+  transition: all 0.3s ease-in-out;
 }
 
-.btn-gradient::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, var(--drx-red), var(--drx-orange));
-  transition: left 0.3s ease-in-out;
-  z-index: -1;
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 100, 0, 0.4);
 }
 
-.btn-gradient:hover::before {
-  left: 0;
-}
-
-.btn-outline-gradient {
-  background: transparent;
-  border: 2px solid;
-  border-image: linear-gradient(to right, var(--drx-orange), var(--drx-red)) 1;
-  color: white;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-}
-
-.btn-outline-gradient::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, var(--drx-orange-dark), var(--drx-red-dark));
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  z-index: -1;
-}
-
-.btn-outline-gradient:hover::before {
-  opacity: 1;
+.glow-effect {
+  box-shadow: 0 0 10px rgba(255, 100, 0, 0.6), 0 0 20px rgba(255, 100, 0, 0.4);
 }
 
 .card-hover {
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .card-hover:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-  border-color: var(--drx-orange);
+}
+
+.section-bg {
+  background: linear-gradient(to bottom, rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.9));
 }
 
 /* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeInUp {
+@keyframes fade-in-up {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -172,22 +122,65 @@
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
-  opacity: 0; /* Start invisible */
+  animation: fade-in-up 0.6s ease-out forwards;
 }
 
-.animate-fade-in-up.delay-200 {
+.delay-100 {
+  animation-delay: 0.1s;
+}
+.delay-200 {
   animation-delay: 0.2s;
 }
-
-.animate-fade-in-up.delay-400 {
+.delay-300 {
+  animation-delay: 0.3s;
+}
+.delay-400 {
   animation-delay: 0.4s;
 }
+.delay-500 {
+  animation-delay: 0.5s;
+}
 
-.animate-fade-in-up.delay-600 {
-  animation-delay: 0.6s;
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
+  animation: fade-in 0.5s ease-in forwards;
+}
+
+/* Chat specific styles */
+.chat-message-user {
+  background: linear-gradient(to right, var(--drx-blue), var(--drx-purple));
+  border-bottom-left-radius: 0.5rem;
+}
+
+.chat-message-system {
+  background: linear-gradient(to right, var(--drx-orange), var(--drx-red));
+  border-bottom-right-radius: 0.5rem;
+}
+
+/* Ensure full width on mobile for chat page */
+@media (max-width: 767px) {
+  .min-h-screen.flex.flex-col.items-center.justify-center.pt-24.px-0.pb-0.md\:px-4.md\:pb-4 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .w-full.max-w-4xl.mb-4.bg-gray-800\/80.backdrop-blur-xl.border.border-gray-700.rounded-2xl.p-4.flex.items-center.justify-between.px-4.md\:px-4 {
+    border-radius: 0;
+    margin-bottom: 0;
+    border-left: none;
+    border-right: none;
+  }
+  .flex.flex-col.w-full.max-w-4xl.flex-1.rounded-2xl.overflow-hidden.bg-gray-800\/50.backdrop-blur-xl.border.border-gray-700.shadow-2xl {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
 }
