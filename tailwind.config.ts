@@ -53,7 +53,7 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom Dr X colors
+        // Custom Dr X colors (aligned with new gradients)
         "drx-orange": "#ff6b6b", // A vibrant orange-red
         "drx-red": "#ffa07a", // A softer orange
         "drx-purple": "#8a2be2", // Blue-violet
