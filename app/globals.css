@@ -72,13 +72,12 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-cairo), sans-serif; /* Apply Cairo font */
   }
 }
 
 /* Custom Dr X Styles */
 .gradient-bg {
-  background: linear-gradient(135deg, #4169e1, #8a2be2, #ffa07a, #ff6b6b); /* Blue-purple to orange-red */
+  background: linear-gradient(135deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1);
   background-size: 400% 400%;
   animation: gradientAnimation 15s ease infinite;
 }
@@ -96,7 +95,7 @@
 }
 
 .gradient-text {
-  background: linear-gradient(45deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1); /* Orange-red to blue-purple */
+  background: linear-gradient(45deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -104,7 +103,7 @@
 }
 
 .btn-gradient {
-  background: linear-gradient(45deg, #ff6b6b, #ffa07a); /* Orange-red to softer orange */
+  background: linear-gradient(45deg, var(--drx-orange), var(--drx-red));
   border: none;
   color: white;
   transition: all 0.3s ease;
@@ -119,25 +118,15 @@
   box-shadow: 0 0 8px rgba(255, 160, 122, 0.6), 0 0 15px rgba(138, 43, 226, 0.4);
 }
 
-/* Chat bubble styles (from new chat interface) */
+/* Chat bubble styles (from previous chat page) */
 .chat-bubble-user {
-  background: linear-gradient(to right, #3b82f6, #4f46e5); /* Blue to Indigo */
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6); /* Blue to Purple */
   border-radius: 1rem 1rem 0 1rem;
 }
 
 .chat-bubble-ai {
-  background: linear-gradient(to right, #fbbf24, #f97316); /* Amber to Orange */
+  background: linear-gradient(45deg, var(--drx-orange), var(--drx-red)); /* Orange to Red */
   border-radius: 1rem 1rem 1rem 0;
-}
-
-/* Card hover effect */
-.card-hover {
-  transition: all 0.3s ease;
-}
-
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(255, 77, 0, 0.2); /* Using a Dr X orange shade for consistency */
 }
 
 /* Animations */
@@ -162,10 +151,6 @@
 
 .animate-fade-in-up.delay-400 {
   animation-delay: 0.4s;
-}
-
-.animate-fade-in-up.delay-600 {
-  animation-delay: 0.6s;
 }
 
 @keyframes fade-in {

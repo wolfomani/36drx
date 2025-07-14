@@ -33,7 +33,9 @@ import {
   Star,
   User,
   Send,
-  Palette,
+  Zap,
+  ArrowRight,
+  CheckCircle,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
@@ -42,7 +44,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardTitle } from "@/components/ui/card"
 
 export default function ServicesPage() {
   const [activeService, setActiveService] = useState("all")
@@ -76,162 +77,185 @@ export default function ServicesPage() {
     )
 
   return (
-    <div className="pt-24 bg-gray-900 text-white min-h-screen">
-      {" "}
-      {/* Adjusted padding for fixed navbar */}
-      <section className="py-20 text-center">
-        <div className="container mx-auto px-4">
-          <h1 className="text-5xl font-extrabold mb-6 gradient-text animate-fade-in-up">خدماتنا المبتكرة</h1>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto animate-fade-in-up delay-200">
-            نقدم مجموعة شاملة من الحلول الرقمية المصممة لتمكين أعمالك وتحقيق أهدافك في العالم الرقمي.
-          </p>
-        </div>
-      </section>
-      <section id="web-development" className="py-16 bg-gray-800/70">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-10 text-center gradient-text animate-fade-in-up">تطوير الويب</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6 animate-fade-in-up">
-              <p className="text-lg text-gray-300">
-                نحن متخصصون في بناء مواقع ويب قوية، متجاوبة، ومحسّنة للأداء باستخدام أحدث التقنيات. سواء كنت بحاجة إلى
-                موقع تعريفي بسيط، متجر إلكتروني معقد، أو منصة ويب مخصصة، فإن فريقنا يضمن لك حلاً يلبي احتياجاتك بدقة.
-              </p>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>تطوير الواجهات الأمامية (Frontend) باستخدام React, Next.js</li>
-                <li>تطوير الواجهات الخلفية (Backend) باستخدام Node.js, Python</li>
-                <li>متاجر إلكترونية متكاملة (E-commerce)</li>
-                <li>أنظمة إدارة المحتوى (CMS) مخصصة</li>
-                <li>تحسين محركات البحث (SEO)</li>
-              </ul>
-              <Link href="/contact">
-                <Button className="btn-gradient text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all">
-                  اطلب خدمة تطوير الويب
-                </Button>
-              </Link>
-            </div>
-            <div className="flex justify-center animate-fade-in-up delay-200">
-              <Image
-                src="/placeholder.svg?height=400&width=600"
-                alt="Web Development"
-                width={600}
-                height={400}
-                className="rounded-xl shadow-lg"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="mobile-apps" className="py-16 bg-gray-900">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-10 text-center gradient-text animate-fade-in-up">تطبيقات الجوال</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="flex justify-center order-2 md:order-1 animate-fade-in-up">
-              <Image
-                src="/placeholder.svg?height=400&width=600"
-                alt="Mobile Apps"
-                width={600}
-                height={400}
-                className="rounded-xl shadow-lg"
-              />
-            </div>
-            <div className="space-y-6 order-1 md:order-2 animate-fade-in-up delay-200">
-              <p className="text-lg text-gray-300">
-                نصمم ونطور تطبيقات جوال مبتكرة لأجهزة iOS و Android توفر تجربة مستخدم استثنائية. نركز على الأداء،
-                الأمان، وسهولة الاستخدام لضمان وصولك إلى جمهور أوسع.
-              </p>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>تطبيقات iOS أصلية (Swift/Objective-C)</li>
-                <li>تطبيقات Android أصلية (Kotlin/Java)</li>
-                <li>تطبيقات هجينة (Hybrid) باستخدام React Native, Flutter</li>
-                <li>تصميم واجهة المستخدم (UI) وتجربة المستخدم (UX)</li>
-                <li>دمج واجهات برمجة التطبيقات (APIs)</li>
-              </ul>
-              <Link href="/contact">
-                <Button className="btn-gradient text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all">
-                  اطلب خدمة تطبيقات الجوال
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="ai-solutions" className="py-16 bg-gray-800/70">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-10 text-center gradient-text animate-fade-in-up">
-            حلول الذكاء الاصطناعي
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6 animate-fade-in-up">
-              <p className="text-lg text-gray-300">
-                نطور أنظمة ذكاء اصطناعي مخصصة، تعلم آلة، ومعالجة اللغة الطبيعية لتحويل أعمالك. من التحليلات التنبؤية إلى
-                الأتمتة الذكية، نساعدك على استغلال قوة البيانات.
-              </p>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>التعلم الآلي (Machine Learning) والتعلم العميق (Deep Learning)</li>
-                <li>معالجة اللغة الطبيعية (NLP)</li>
-                <li>الرؤية الحاسوبية (Computer Vision)</li>
-                <li>التحليلات التنبؤية (Predictive Analytics)</li>
-                <li>أنظمة التوصية (Recommendation Systems)</li>
-              </ul>
-              <Link href="/contact">
-                <Button className="btn-gradient text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all">
-                  اطلب خدمة حلول الذكاء الاصطناعي
-                </Button>
-              </Link>
-            </div>
-            <div className="flex justify-center animate-fade-in-up delay-200">
-              <Image
-                src="/placeholder.svg?height=400&width=600"
-                alt="AI Solutions"
-                width={600}
-                height={400}
-                className="rounded-xl shadow-lg"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="other-services" className="py-16 bg-gray-900">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-10 gradient-text animate-fade-in-up">خدمات إضافية</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up">
-              <Palette className="h-12 w-12 text-pink-400 mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">تصميم UI/UX</CardTitle>
-              <CardContent className="text-gray-300 text-sm">
-                تصميم واجهات مستخدم جذابة وتجارب مستخدم سلسة لمنتجاتك الرقمية.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up delay-200">
-              <Database className="h-12 w-12 text-green-400 mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">إدارة قواعد البيانات</CardTitle>
-              <CardContent className="text-gray-300 text-sm">
-                تصميم، تنفيذ، وإدارة قواعد بيانات قوية وآمنة لبياناتك.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up delay-400">
-              <Cloud className="h-12 w-12 text-indigo-400 mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">حلول السحابة</CardTitle>
-              <CardContent className="text-gray-300 text-sm">
-                نشر وإدارة تطبيقاتك على منصات السحابة مثل AWS, Azure, Google Cloud.
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-      <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800 text-white text-center">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-6 gradient-text animate-fade-in-up">هل أنت مستعد لبدء مشروعك؟</h2>
-          <p className="text-lg mb-8 text-gray-300 animate-fade-in-up delay-200">
-            دعنا نساعدك في تحويل أفكارك إلى واقع رقمي ملموس.
+    <div className="min-h-screen bg-black text-white pt-24">
+      {/* Hero Section for Services */}
+      <section className="relative py-16 md:py-24 text-center overflow-hidden">
+        <div className="absolute inset-0 gradient-bg opacity-50"></div>
+        <div className="relative z-10 p-8 max-w-4xl mx-auto">
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight gradient-text animate-fade-in-up">
+            خدماتنا المتكاملة
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-300 mb-8 animate-fade-in-up delay-200">
+            نقدم حلولاً تقنية مبتكرة ومخصصة لتلبية احتياجات عملك المتطورة.
           </p>
           <Link href="/contact">
-            <Button className="btn-gradient text-white px-10 py-4 text-xl rounded-full shadow-lg hover:shadow-xl transition-all animate-fade-in-up delay-400">
-              تواصل معنا اليوم
+            <Button className="btn-gradient text-white px-8 py-3 text-lg rounded-full shadow-lg hover:scale-105 transition-transform animate-fade-in-up delay-400">
+              اطلب استشارة مجانية <ArrowRight className="mr-2 h-5 w-5" />
             </Button>
           </Link>
         </div>
       </section>
+
+      {/* Web Development Section */}
+      <section className="py-16 md:py-24 bg-gray-900/70 backdrop-blur-lg">
+        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="text-right">
+            <Code className="h-16 w-16 text-drx-orange mb-6 mx-auto md:mx-0" />
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">تطوير الويب</h2>
+            <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-6">
+              نصمم ونطور مواقع ويب عصرية، متجاوبة، وآمنة توفر تجربة مستخدم استثنائية. سواء كنت بحاجة إلى موقع تعريفي
+              بسيط، متجر إلكتروني متكامل، أو تطبيق ويب معقد، فإننا نستخدم أحدث التقنيات لضمان الأداء الأمثل والتصميم
+              الجذاب.
+            </p>
+            <ul className="text-lg text-gray-300 space-y-3 mb-6">
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> تصميم متجاوب لجميع الأجهزة
+              </li>
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> تحسين محركات البحث (SEO)
+              </li>
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> أنظمة إدارة المحتوى (CMS)
+              </li>
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> أمان وحماية متقدمة
+              </li>
+            </ul>
+            <Link href="/portfolio">
+              <Button
+                variant="outline"
+                className="bg-white/10 border border-white/20 text-white px-6 py-2 rounded-full hover:bg-white/20 transition-colors"
+              >
+                شاهد مشاريع الويب
+              </Button>
+            </Link>
+          </div>
+          <div className="flex justify-center">
+            <Image
+              src="/images/placeholder.svg?height=400&width=600"
+              alt="Web Development"
+              width={600}
+              height={400}
+              className="rounded-xl shadow-2xl"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Mobile App Development Section */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="flex justify-center order-2 md:order-1">
+            <Image
+              src="/images/placeholder.svg?height=400&width=600"
+              alt="Mobile App Development"
+              width={600}
+              height={400}
+              className="rounded-xl shadow-2xl"
+            />
+          </div>
+          <div className="text-right order-1 md:order-2">
+            <Smartphone className="h-16 w-16 text-drx-red mb-6 mx-auto md:mx-0" />
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">تطبيقات الجوال</h2>
+            <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-6">
+              نحول أفكارك إلى تطبيقات جوال مبتكرة وعالية الأداء لأجهزة iOS و Android. نركز على تجربة المستخدم البديهية
+              والتصميم الجذاب، مع ضمان الأداء السلس والموثوقية.
+            </p>
+            <ul className="text-lg text-gray-300 space-y-3 mb-6">
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> تطبيقات iOS و Android الأصلية
+              </li>
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> تصميم واجهة المستخدم وتجربة المستخدم (UI/UX)
+              </li>
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> تكامل API وخدمات الطرف الثالث
+              </li>
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> صيانة ودعم مستمر
+              </li>
+            </ul>
+            <Link href="/portfolio">
+              <Button
+                variant="outline"
+                className="bg-white/10 border border-white/20 text-white px-6 py-2 rounded-full hover:bg-white/20 transition-colors"
+              >
+                شاهد مشاريع الجوال
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Solutions Section */}
+      <section className="py-16 md:py-24 bg-gray-900/70 backdrop-blur-lg">
+        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="text-right">
+            <Brain className="h-16 w-16 text-blue-500 mb-6 mx-auto md:mx-0" />
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">حلول الذكاء الاصطناعي</h2>
+            <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-6">
+              نستفيد من قوة الذكاء الاصطناعي لتقديم حلول مبتكرة تعمل على تحسين الكفاءة، أتمتة المهام، واتخاذ قرارات
+              أفضل. من معالجة اللغة الطبيعية إلى رؤية الكمبيوتر، نساعدك على استغلال إمكانات الذكاء الاصطناعي.
+            </p>
+            <ul className="text-lg text-gray-300 space-y-3 mb-6">
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> معالجة اللغة الطبيعية (NLP)
+              </li>
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> رؤية الكمبيوتر وتحليل الصور
+              </li>
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> أنظمة التوصية والتحليلات التنبؤية
+              </li>
+              <li className="flex items-center justify-end">
+                <CheckCircle className="h-5 w-5 text-green-400 ml-2" /> روبوتات الدردشة الذكية (Chatbots)
+              </li>
+            </ul>
+            <Link href="/chat">
+              <Button
+                variant="outline"
+                className="bg-white/10 border border-white/20 text-white px-6 py-2 rounded-full hover:bg-white/20 transition-colors"
+              >
+                جرب مساعد الذكاء الاصطناعي
+              </Button>
+            </Link>
+          </div>
+          <div className="flex justify-center">
+            <Image
+              src="/images/placeholder.svg?height=400&width=600"
+              alt="AI Solutions"
+              width={600}
+              height={400}
+              className="rounded-xl shadow-2xl"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-16 md:py-24 text-center">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 gradient-text">لماذا تختار Dr X؟</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700">
+              <Lightbulb className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold text-white mb-3">ابتكار مستمر</h3>
+              <p className="text-gray-300">نحن في طليعة التكنولوجيا، نقدم حلولاً مبتكرة ومستقبلية.</p>
+            </div>
+            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700">
+              <ShieldCheck className="h-12 w-12 text-green-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold text-white mb-3">جودة وموثوقية</h3>
+              <p className="text-gray-300">نلتزم بأعلى معايير الجودة لضمان حلول قوية وموثوقة.</p>
+            </div>
+            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700">
+              <Zap className="h-12 w-12 text-purple-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold text-white mb-3">دعم متميز</h3>
+              <p className="text-gray-300">فريق دعم مخصص لضمان رضاك التام بعد التسليم.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* قسم فلترة الخدمات */}
       <section className="py-12 section-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -254,6 +278,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
       {/* خدماتنا الرئيسية */}
       <section id="services" className="py-20 w-full section-bg pt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -290,6 +315,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
       {/* خدمات تطوير الويب */}
       {(activeService === "all" || activeService === "web") && (
         <section className="py-20 section-bg">
@@ -390,6 +416,7 @@ export default function ServicesPage() {
           </div>
         </section>
       )}
+
       {/* خدمات تطبيقات الجوال */}
       {(activeService === "all" || activeService === "mobile") && (
         <section className="py-20 section-bg">
@@ -485,6 +512,7 @@ export default function ServicesPage() {
           </div>
         </section>
       )}
+
       {/* خدمات الذكاء الاصطناعي */}
       {(activeService === "all" || activeService === "ai") && (
         <section className="py-20 section-bg">
@@ -563,6 +591,7 @@ export default function ServicesPage() {
           </div>
         </section>
       )}
+
       {/* خدمات الحلول السحابية */}
       {(activeService === "all" || activeService === "cloud") && (
         <section className="py-20 section-bg">
@@ -693,6 +722,7 @@ export default function ServicesPage() {
           </div>
         </section>
       )}
+
       {/* قسم الإحصائيات */}
       <section className="py-20 section-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -721,6 +751,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
       {/* قسم الشهادات */}
       <section className="py-20 section-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -804,6 +835,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
       {/* نموذج الاتصال السريع (Modal) */}
       <Dialog open={showModal} onOpenChange={setShowModal}>
         <DialogContent className="bg-gray-900 text-white p-6 rounded-lg max-w-lg w-full border border-gray-700">

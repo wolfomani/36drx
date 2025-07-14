@@ -4,9 +4,12 @@ import "ios-vibrator-pro-max" // Assuming this is a valid import for vibration
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { useChat } from "ai/react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Brain,
   Zap,
@@ -344,6 +347,7 @@ export default function ChatInterface() {
   const handleLocalSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (inputValue.trim() && !aiIsLoading) {
+      // Add vibration when message is submitted
       navigator.vibrate(50)
 
       // Use AI SDK's handleSubmit
@@ -409,39 +413,40 @@ export default function ChatInterface() {
       <div key={message.id} className={cn("flex flex-col", message.type === "user" ? "items-end" : "items-start")}>
         <div
           className={cn(
-            "max-w-[85%] px-4 py-3 rounded-2xl text-white transition-all duration-300 transform hover:scale-[1.02]",
+            "max-w-[80%] px-4 py-2 rounded-2xl text-white",
             message.type === "user"
-              ? "bg-gradient-to-r from-blue-500 to-indigo-600 rounded-bl-none shadow-lg"
-              : "bg-gradient-to-r from-amber-500 to-orange-500 rounded-br-none shadow-lg",
+              ? "bg-gradient-to-r from-blue-500 to-purple-500 rounded-bl-none"
+              : "bg-gradient-to-r from-drx-orange to-drx-red rounded-br-none",
           )}
         >
+          {/* For user messages or completed system messages, render without animation */}
           {message.content && (
-            <span
-              className={cn(
-                "text-base leading-relaxed",
-                message.type === "system" && !isCompleted ? "animate-fade-in" : "",
-              )}
-            >
+            <span className={message.type === "system" && !isCompleted ? "animate-fade-in" : ""}>
               {message.content}
             </span>
           )}
+
+          {/* For streaming messages, render with animation (if AI SDK supports chunking for this) */}
+          {/* This part might need adjustment based on how `useChat` streams.
+              For now, `useChat` handles streaming directly into `message.content`. */}
         </div>
 
+        {/* Message actions */}
         {message.type === "system" && isCompleted && (
-          <div className="flex items-center gap-3 px-2 mt-2 mb-4">
-            <button className="text-gray-400 hover:text-white transition-colors p-1.5 rounded-full bg-gray-700/50">
+          <div className="flex items-center gap-2 px-4 mt-1 mb-2">
+            <button className="text-gray-400 hover:text-gray-200 transition-colors">
               <RefreshCcw className="h-4 w-4" />
             </button>
-            <button className="text-gray-400 hover:text-white transition-colors p-1.5 rounded-full bg-gray-700/50">
+            <button className="text-gray-400 hover:text-gray-200 transition-colors">
               <Copy className="h-4 w-4" />
             </button>
-            <button className="text-gray-400 hover:text-white transition-colors p-1.5 rounded-full bg-gray-700/50">
+            <button className="text-gray-400 hover:text-gray-200 transition-colors">
               <Share2 className="h-4 w-4" />
             </button>
-            <button className="text-gray-400 hover:text-amber-400 transition-colors p-1.5 rounded-full bg-gray-700/50">
+            <button className="text-gray-400 hover:text-gray-200 transition-colors">
               <ThumbsUp className="h-4 w-4" />
             </button>
-            <button className="text-gray-400 hover:text-rose-500 transition-colors p-1.5 rounded-full bg-gray-700/50">
+            <button className="text-gray-400 hover:text-gray-200 transition-colors">
               <ThumbsDown className="h-4 w-4" />
             </button>
           </div>
@@ -450,219 +455,209 @@ export default function ChatInterface() {
     )
   }
 
+  // Determine if a section should have fixed height (only for sections after the first)
   const shouldApplyHeight = (sectionIndex: number) => {
     return sectionIndex > 0
   }
 
   return (
-    <div
-      className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center pt-24 px-4 pb-4" // Adjusted pt-24
-      ref={mainContainerRef}
-    >
-      {/* AI Status Header */}
-      <div className="w-full max-w-4xl mb-4 bg-gray-800/80 backdrop-blur-xl border border-gray-700 rounded-2xl p-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl p-2">
-            <Robot className="h-6 w-6 text-white" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white flex items-center">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-orange-500">Dr X</span>
-              <span className="ml-2">- مساعد الذكاء الاصطناعي</span>
-            </h1>
-            <p className="text-sm text-gray-300">مساعدك الذكي المتطور - مدعوم بأحدث تقنيات الذكاء الاصطناعي</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 bg-green-600/20 border border-green-600/50 rounded-full px-4 py-2 text-sm">
-          <CircleDot className="h-2 w-2 bg-green-400 rounded-full animate-pulse" />
-          <span className="text-green-300">Dr X متصل</span>
-        </div>
+    <section id="chat" className="gradient-bg min-h-screen flex flex-col items-center justify-center pt-24 px-4">
+      {/* AI Status */}
+      <div className="absolute top-20 right-4 bg-green-600/20 border border-green-600/50 rounded-full px-4 py-2 text-sm flex items-center gap-2">
+        <CircleDot className="h-2 w-2 bg-green-400 rounded-full animate-pulse" />
+        <span>Dr X متصل</span>
       </div>
-      {/* Chat Container */}
-      <div className="flex flex-col w-full max-w-4xl flex-1 rounded-2xl overflow-hidden bg-gray-800/50 backdrop-blur-xl border border-gray-700 shadow-2xl">
-        {/* Model Selector */}
-        <div className="p-4 bg-gradient-to-r from-gray-800 to-gray-900 border-b border-gray-700">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <Brain className="h-5 w-5 text-amber-400" />
-              <h3 className="text-lg font-medium text-white">اختر نموذج الذكاء الاصطناعي:</h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
+
+      <Card className="flex flex-col flex-1 w-full my-4 bg-gray-800/90 backdrop-blur-lg border border-gray-700 shadow-2xl rounded-2xl overflow-hidden">
+        <CardHeader className="p-6 pb-4 bg-gradient-to-r from-gray-900 to-gray-800">
+          <CardTitle className="text-center text-4xl font-bold gradient-text flex items-center justify-center mb-2">
+            <Image src="/images/drx-logo.png" alt="Dr X" width={32} height={32} className="ml-3 rounded glow-effect" />
+            Dr X - مساعد الذكاء الاصطناعي
+          </CardTitle>
+          <p className="text-center text-gray-300">مساعدك الذكي المتطور - مدعوم بأحدث تقنيات الذكاء الاصطناعي</p>
+
+          {/* Model Selector */}
+          <div className="bg-black/30 backdrop-blur-md border border-white/20 rounded-xl p-4 mt-6">
+            <h3 className="text-lg font-semibold mb-3 flex items-center">
+              <Brain className="h-5 w-5 ml-2" />
+              اختر نموذج الذكاء الاصطناعي:
+            </h3>
+            <div className="flex flex-wrap justify-center gap-2">
               <Button
                 onClick={() => selectModel("deepseek")}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-xl transition-all transform hover:-translate-y-0.5",
+                  "flex items-center gap-2 px-4 py-2 rounded-lg transition-all",
                   currentModel === "deepseek"
-                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-lg"
-                    : "bg-gray-700/60 border border-gray-600 text-white hover:bg-gray-700",
+                    ? "btn-gradient text-white font-medium"
+                    : "bg-white/10 border border-white/20 text-white hover:bg-white/20",
                 )}
               >
                 <Search className="h-4 w-4" />
-                <span>DeepSeek R1</span>
+                DeepSeek R1
               </Button>
               <Button
                 onClick={() => selectModel("huggingface")}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-xl transition-all transform hover:-translate-y-0.5",
+                  "flex items-center gap-2 px-4 py-2 rounded-lg transition-all",
                   currentModel === "huggingface"
-                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white font-medium shadow-lg"
-                    : "bg-gray-700/60 border border-gray-600 text-white hover:bg-gray-700",
+                    ? "btn-gradient text-white font-medium"
+                    : "bg-white/10 border border-white/20 text-white hover:bg-white/20",
                 )}
               >
                 <Smile className="h-4 w-4" />
-                <span>Hugging Face</span>
+                Hugging Face
               </Button>
             </div>
           </div>
-          {/* Features Panel */}
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-3 flex flex-col items-center">
-              <div className="bg-amber-500/10 p-2 rounded-lg mb-2">
-                <Zap className="h-5 w-5 text-amber-400" />
+
+          {/* Feature Panel */}
+          <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-xl p-5 mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+              <div>
+                <Zap className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
+                <p className="text-sm text-gray-300">استجابة فورية</p>
               </div>
-              <p className="text-sm text-center text-gray-300">استجابة فورية</p>
-            </div>
-            <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-3 flex flex-col items-center">
-              <div className="bg-blue-500/10 p-2 rounded-lg mb-2">
-                <Languages className="h-5 w-5 text-blue-400" />
+              <div>
+                <Languages className="h-6 w-6 text-blue-400 mx-auto mb-2" />
+                <p className="text-sm text-gray-300">دعم متعدد اللغات</p>
               </div>
-              <p className="text-sm text-center text-gray-300">دعم متعدد اللغات</p>
-            </div>
-            <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-3 flex flex-col items-center">
-              <div className="bg-green-500/10 p-2 rounded-lg mb-2">
-                <ShieldCheck className="h-5 w-5 text-green-400" />
+              <div>
+                <ShieldCheck className="h-6 w-6 text-green-400 mx-auto mb-2" />
+                <p className="text-sm text-gray-300">آمن ومحمي</p>
               </div>
-              <p className="text-sm text-center text-gray-300">آمن ومحمي</p>
             </div>
           </div>
-        </div>
+        </CardHeader>
+
         {/* Messages Area */}
-        <div
-          ref={chatContainerRef}
-          className="flex-1 p-4 overflow-y-auto bg-gradient-to-b from-gray-900/30 to-gray-800/30"
-          style={{ maxHeight: "calc(100vh - 320px)" }}
-        >
-          <div className="max-w-3xl mx-auto space-y-6">
-            {messages.map((message) => renderMessage(message))}
-            {aiIsLoading && (
-              <div className="flex items-center gap-3 mb-4 justify-start">
-                <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-full p-2 flex-shrink-0 animate-pulse">
-                  <Robot className="h-5 w-5 text-white" />
-                </div>
-                <div className="bg-gradient-to-r from-amber-500/80 to-orange-500/80 rounded-br-none p-3 text-white flex items-center gap-2">
-                  <span>Dr X يكتب</span>
-                  <div className="flex gap-1">
-                    <div
-                      className="w-2 h-2 bg-white rounded-full animate-bounce"
-                      style={{ animationDelay: "0s" }}
-                    ></div>
-                    <div
-                      className="w-2 h-2 bg-white rounded-full animate-bounce"
-                      style={{ animationDelay: "0.1s" }}
-                    ></div>
-                    <div
-                      className="w-2 h-2 bg-white rounded-full animate-bounce"
-                      style={{ animationDelay: "0.2s" }}
-                    ></div>
+        <CardContent className="flex-1 overflow-hidden p-6" style={{ maxHeight: "400px", overflowY: "auto" }}>
+          <ScrollArea className="h-full pr-4">
+            <div className="max-w-3xl mx-auto space-y-4">
+              {messages.map((message) => renderMessage(message))}
+              {aiIsLoading && (
+                <div className="flex items-center gap-3 mb-4 justify-start">
+                  <div className="bg-gradient-to-r from-drx-orange to-drx-red rounded-full p-2 flex-shrink-0">
+                    <Robot className="h-5 w-5 text-white" />
+                  </div>
+                  <div className="bg-gradient-to-r from-drx-orange to-drx-red rounded-br-none p-4 text-white flex items-center gap-2">
+                    <span>Dr X يكتب</span>
+                    <div className="flex gap-1">
+                      <div
+                        className="w-2 h-2 bg-white rounded-full animate-bounce"
+                        style={{ animationDelay: "0s" }}
+                      ></div>
+                      <div
+                        className="w-2 h-2 bg-white rounded-full animate-bounce"
+                        style={{ animationDelay: "0.1s" }}
+                      ></div>
+                      <div
+                        className="w-2 h-2 bg-white rounded-full animate-bounce"
+                        style={{ animationDelay: "0.2s" }}
+                      ></div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-            {aiError && (
-              <div className="bg-red-900/30 border border-red-700 rounded-xl p-4 text-red-300">
-                <span className="font-medium">حدث خطأ:</span> {aiError.message}
-              </div>
-            )}
-            <div ref={messagesEndRef} className="h-4" />
-          </div>
-        </div>
+              )}
+              {aiError && <div className="text-red-500 text-center mt-4">حدث خطأ: {aiError.message}</div>}
+              <div ref={messagesEndRef} />
+            </div>
+          </ScrollArea>
+        </CardContent>
+
         {/* Input Area */}
-        <form onSubmit={handleLocalSubmit} className="p-4 border-t border-gray-700 bg-gray-900/50 backdrop-blur-lg">
+        <form onSubmit={handleLocalSubmit} className="p-6 border-t border-gray-700 bg-gray-900/50">
           <div
             ref={inputContainerRef}
             className={cn(
-              "relative w-full rounded-2xl border border-gray-600 bg-gray-800/50 p-3 cursor-text transition-all",
-              aiIsLoading ? "opacity-70" : "hover:border-amber-500/50 focus-within:border-amber-500",
+              "relative w-full rounded-3xl border border-white/20 bg-white/10 p-3 cursor-text",
+              aiIsLoading && "opacity-80",
             )}
             onClick={handleInputContainerClick}
           >
-            <div className="pb-10">
+            <div className="pb-9">
               <Textarea
                 ref={textareaRef}
-                placeholder={aiIsLoading ? "بانتظار الرد..." : "اكتب رسالتك هنا..."}
-                className="min-h-[24px] max-h-[160px] w-full rounded-2xl border-0 bg-transparent text-white placeholder:text-gray-400 placeholder:text-base focus-visible:ring-0 focus-visible:ring-offset-0 text-base pl-3 pr-4 pt-0 pb-0 resize-none overflow-y-auto leading-tight"
+                placeholder={aiIsLoading ? "Waiting for response..." : "اكتب رسالتك هنا..."}
+                className="min-h-[24px] max-h-[160px] w-full rounded-3xl border-0 bg-transparent text-white placeholder:text-gray-400 placeholder:text-base focus-visible:ring-0 focus-visible:ring-offset-0 text-base pl-2 pr-4 pt-0 pb-0 resize-none overflow-y-auto leading-tight"
                 value={inputValue}
                 onChange={handleLocalInputChange}
                 onKeyDown={handleKeyDown}
                 onFocus={() => {
+                  // Ensure the textarea is scrolled into view when focused
                   if (textareaRef.current) {
                     textareaRef.current.scrollIntoView({ behavior: "smooth", block: "center" })
                   }
                 }}
               />
             </div>
+
             <div className="absolute bottom-3 left-3 right-3">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center space-x-2">
                   <Button
                     type="button"
-                    variant="ghost"
+                    variant="outline"
                     size="icon"
                     className={cn(
-                      "rounded-full h-9 w-9 flex-shrink-0 bg-gray-700/70 hover:bg-amber-500/20 transition-all",
-                      activeButton === "add" && "bg-amber-500/30 border border-amber-500/50",
+                      "rounded-full h-8 w-8 flex-shrink-0 border-white/20 bg-white/10 p-0 transition-colors hover:bg-white/20",
+                      activeButton === "add" && "bg-white/20 border-white/30",
                     )}
                     onClick={() => toggleButton("add")}
                     disabled={aiIsLoading}
                   >
-                    <Plus className="h-5 w-5 text-amber-400" />
+                    <Plus className={cn("h-4 w-4 text-gray-300", activeButton === "add" && "text-white")} />
                     <span className="sr-only">Add</span>
                   </Button>
+
                   <Button
                     type="button"
-                    variant="ghost"
+                    variant="outline"
                     className={cn(
-                      "rounded-xl h-9 px-4 flex items-center bg-gray-700/70 hover:bg-blue-500/20 gap-1.5 transition-all",
-                      activeButton === "deepSearch" && "bg-blue-500/30 border border-blue-500/50",
+                      "rounded-full h-8 px-3 flex items-center border-white/20 bg-white/10 gap-1.5 transition-colors hover:bg-white/20",
+                      activeButton === "deepSearch" && "bg-white/20 border-white/30",
                     )}
                     onClick={() => toggleButton("deepSearch")}
                     disabled={aiIsLoading}
                   >
-                    <Search className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm text-white">DeepSearch</span>
+                    <Search className={cn("h-4 w-4 text-gray-300", activeButton === "deepSearch" && "text-white")} />
+                    <span className={cn("text-white text-sm", activeButton === "deepSearch" && "font-medium")}>
+                      DeepSearch
+                    </span>
                   </Button>
+
                   <Button
                     type="button"
-                    variant="ghost"
+                    variant="outline"
                     className={cn(
-                      "rounded-xl h-9 px-4 flex items-center bg-gray-700/70 hover:bg-purple-500/20 gap-1.5 transition-all",
-                      activeButton === "think" && "bg-purple-500/30 border border-purple-500/50",
+                      "rounded-full h-8 px-3 flex items-center border-white/20 bg-white/10 gap-1.5 transition-colors hover:bg-white/20",
+                      activeButton === "think" && "bg-white/20 border-white/30",
                     )}
                     onClick={() => toggleButton("think")}
                     disabled={aiIsLoading}
                   >
-                    <Lightbulb className="h-4 w-4 text-purple-400" />
-                    <span className="text-sm text-white">Think</span>
+                    <Lightbulb className={cn("h-4 w-4 text-gray-300", activeButton === "think" && "text-white")} />
+                    <span className={cn("text-white text-sm", activeButton === "think" && "font-medium")}>Think</span>
                   </Button>
                 </div>
+
                 <Button
                   type="submit"
-                  variant="ghost"
+                  variant="outline"
                   size="icon"
                   className={cn(
-                    "rounded-full h-9 w-9 border-0 flex-shrink-0 transition-all transform hover:scale-110",
-                    hasTyped ? "bg-gradient-to-r from-amber-500 to-orange-500 shadow-lg" : "bg-gray-700",
+                    "rounded-full h-8 w-8 border-0 flex-shrink-0 transition-all duration-200",
+                    hasTyped ? "btn-gradient scale-110" : "bg-gray-700",
                   )}
                   disabled={!inputValue.trim() || aiIsLoading}
                 >
-                  <ArrowUp className="h-5 w-5 text-white" />
+                  <ArrowUp className={cn("h-4 w-4 transition-colors", hasTyped ? "text-white" : "text-gray-500")} />
                   <span className="sr-only">Submit</span>
                 </Button>
               </div>
             </div>
           </div>
         </form>
-      </div>
-    </div>
+      </Card>
+    </section>
   )
 }
