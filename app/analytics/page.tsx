@@ -197,52 +197,33 @@ export default function AnalyticsPage() {
   const chartContainerClass = "relative h-[400px] bg-gray-800 rounded-xl p-6 border border-gray-700"
 
   return (
-    <div className="section-bg min-h-screen pt-16 pb-12">
+    <section id="analytics" className="section-bg py-20 pt-24 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* العنوان الرئيسي */}
-        <div className="text-center mb-12 pt-8">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-            <ChartLine className="inline-block h-12 w-12 md:h-16 md:w-16 ml-4 text-drx-orange" />
-            التحليلات والإحصائيات
-          </h1>
-          <p className="text-xl text-gray-300 opacity-90 max-w-3xl mx-auto">
-            لوحة تحكم شاملة لمراقبة الأداء وتحليل البيانات
-          </p>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4">التحليلات</h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-red-500 mx-auto mb-8"></div>
         </div>
-
-        {/* بطاقات الإحصائيات السريعة */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          <Card className={statCardClass}>
-            <CardContent className="p-0">
-              <Users className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold gradient-text">{totalUsers}</h3>
-              <p className="text-gray-400">إجمالي المستخدمين</p>
-            </CardContent>
-          </Card>
-
-          <Card className={statCardClass}>
-            <CardContent className="p-0">
-              <Eye className="h-12 w-12 text-green-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold gradient-text">{pageViews}</h3>
-              <p className="text-gray-400">مشاهدات الصفحة</p>
-            </CardContent>
-          </Card>
-
-          <Card className={statCardClass}>
-            <CardContent className="p-0">
-              <Clock className="h-12 w-12 text-purple-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold gradient-text">{avgTime}</h3>
-              <p className="text-gray-400">متوسط وقت الجلسة</p>
-            </CardContent>
-          </Card>
-
-          <Card className={statCardClass}>
-            <CardContent className="p-0">
-              <Percent className="h-12 w-12 text-drx-orange mx-auto mb-4" />
-              <h3 className="text-2xl font-bold gradient-text">{bounceRate}</h3>
-              <p className="text-gray-400">معدل الارتداد</p>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          <div className="bg-gray-800 p-6 rounded-2xl text-center card-hover">
+            <Users className="h-10 w-10 text-blue-400 mb-4 mx-auto" />
+            <div className="text-3xl font-bold gradient-text mb-2">{totalUsers}</div>
+            <div className="text-gray-400">إجمالي المستخدمين</div>
+          </div>
+          <div className="bg-gray-800 p-6 rounded-2xl text-center card-hover">
+            <Eye className="h-10 w-10 text-green-400 mb-4 mx-auto" />
+            <div className="text-3xl font-bold gradient-text mb-2">{pageViews}</div>
+            <div className="text-gray-400">مشاهدات الصفحة</div>
+          </div>
+          <div className="bg-gray-800 p-6 rounded-2xl text-center card-hover">
+            <Clock className="h-10 w-10 text-purple-400 mb-4 mx-auto" />
+            <div className="text-3xl font-bold gradient-text mb-2">{avgTime}</div>
+            <div className="text-gray-400">متوسط الوقت</div>
+          </div>
+          <div className="bg-gray-800 p-6 rounded-2xl text-center card-hover">
+            <Percent className="h-10 w-10 text-orange-400 mb-4 mx-auto" />
+            <div className="text-3xl font-bold gradient-text mb-2">{bounceRate}</div>
+            <div className="text-gray-400">معدل الارتداد</div>
+          </div>
         </div>
 
         {/* الرسوم البيانية */}
@@ -374,6 +355,6 @@ export default function AnalyticsPage() {
           </Card>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

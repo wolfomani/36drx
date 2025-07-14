@@ -74,7 +74,7 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="gradient-bg min-h-screen flex flex-col items-center justify-center p-4 pt-16">
+    <section id="chat" className="gradient-bg min-h-screen flex flex-col items-center justify-center p-4 pt-16">
       {/* AI Status */}
       <div className="absolute top-20 right-4 bg-green-600/20 border border-green-600/50 rounded-full px-4 py-2 text-sm flex items-center gap-2">
         <CircleDot className="h-2 w-2 bg-green-400 rounded-full animate-pulse" />
@@ -248,6 +248,6 @@ export default function ChatPage() {
           </div>
         </form>
       </Card>
-    </div>
+    </section>
   )
 }

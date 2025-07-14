@@ -45,9 +45,9 @@ export default function PortfolioPage() {
     {
       id: 3,
       category: "ai",
-      title: "نظام التحليل الذكي",
+      title: "نظام الذكاء الاصطناعي",
       description: "نظام ذكي لتحليل البيانات والتنبؤ بالاتجاهات المستقبلية",
-      technologies: ["Python", "TensorFlow", "ML"],
+      technologies: ["Python", "TensorFlow", "Docker"],
       year: "2024",
       icon: Brain,
     },
@@ -145,11 +145,11 @@ export default function PortfolioPage() {
       </section>
 
       {/* معرض المشاريع */}
-      <section id="portfolio" className="py-20 gradient-bg">
+      <section id="portfolio" className="py-20 gradient-bg pt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">أعمالنا</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-drx-orange to-drx-red mx-auto mb-8"></div>
+            <h2 className="text-4xl font-bold mb-4">أعمالنا</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-red-500 mx-auto mb-8"></div>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               مجموعة مختارة من أفضل مشاريعنا التي تعكس خبرتنا وإبداعنا
             </p>

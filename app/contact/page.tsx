@@ -1,9 +1,7 @@
 "use client"
 
 import type React from "react"
-
-import Link from "next/link"
-import { MailOpenIcon as Envelope, MapPin, Send, Check, Map, Github, DiscIcon as Discord, Globe } from "lucide-react"
+import { Mail, Github, DiscIcon as Discord, ExternalLink, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -36,7 +34,7 @@ export default function ContactPage() {
       <section className="gradient-bg min-h-screen flex flex-col items-center justify-center p-4 pt-16">
         <div className="relative z-10 text-center px-4 max-w-6xl mx-auto pt-8">
           <div className="floating">
-            <Envelope className="h-24 w-24 text-drx-orange mx-auto mb-8 animate-pulse-glow" />
+            <Mail className="h-24 w-24 text-drx-orange mx-auto mb-8 animate-pulse-glow" />
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 gradient-text">تواصل معنا</h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
@@ -47,7 +45,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
             <div className={contactCardClass}>
               <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center mx-auto mb-4">
-                <Envelope className="h-6 w-6 text-white" />
+                <Mail className="h-6 w-6 text-white" />
               </div>
               <h3 className="text-lg font-semibold mb-2">البريد الإلكتروني</h3>
               <p className="text-gray-300">balqees0alalawi@gmail.com</p>
@@ -57,9 +55,14 @@ export default function ContactPage() {
                 <Github className="h-6 w-6 text-white" />
               </div>
               <h3 className="text-lg font-semibold mb-2">GitHub</h3>
-              <Link href="https://github.com/wolfomani" className="text-drx-orange hover:underline">
-                wolfomani
-              </Link>
+              <a
+                href="https://github.com/wolfomani"
+                className="text-drx-orange hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                https://github.com/wolfomani
+              </a>
             </div>
             <div className={contactCardClass}>
               <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center mx-auto mb-4">
@@ -189,12 +192,34 @@ export default function ContactPage() {
                     </span>
                   ) : submitted ? (
                     <span className="text-green-300 flex items-center justify-center">
-                      <Check className="h-5 w-5 ml-2" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="h-5 w-5 ml-2"
+                      >
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
                       تم الإرسال بنجاح!
                     </span>
                   ) : (
                     <span className="flex items-center justify-center">
-                      <Send className="h-5 w-5 ml-2" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="h-5 w-5 ml-2"
+                      >
+                        <path d="M22 2L11 13.12V22H13.88V13.12L22 2z"></path>
+                      </svg>
                       إرسال الرسالة
                     </span>
                   )}
@@ -207,55 +232,70 @@ export default function ContactPage() {
               <div className="bg-gray-800 p-8 rounded-2xl shadow-lg">
                 <h3 className="text-2xl font-bold text-white mb-6">معلومات الاتصال</h3>
                 <div className="space-y-6">
-                  <div className="flex items-center space-x-4 space-x-reverse">
+                  <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center">
-                      <Envelope className="h-6 w-6 text-white" />
+                      <Mail className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-semibold">البريد الإلكتروني</h4>
-                      <p className="text-gray-300">balqees0alalawi@gmail.com</p>
+                      <div className="font-semibold">البريد الإلكتروني</div>
+                      <div className="text-gray-300">balqees0alalawi@gmail.com</div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4 space-x-reverse">
+                  <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center">
                       <Github className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-semibold">GitHub</h4>
-                      <Link href="https://github.com/wolfomani" className="text-drx-orange hover:underline">
+                      <div className="font-semibold">GitHub</div>
+                      <a
+                        href="https://github.com/wolfomani"
+                        className="text-drx-orange hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         https://github.com/wolfomani
-                      </Link>
+                      </a>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4 space-x-reverse">
+                  <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center">
                       <Discord className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-semibold">Discord</h4>
-                      <p className="text-gray-300">@abdulaziz-x7r1g</p>
+                      <div className="font-semibold">Discord</div>
+                      <div className="text-gray-300">@abdulaziz-x7r1g</div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4 space-x-reverse">
+                  <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center">
-                      <Globe className="h-6 w-6 text-white" />
+                      <ExternalLink className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-semibold">التطبيق</h4>
-                      <Link href="https://hamkamai.github.io/3weep.app" className="text-drx-orange hover:underline">
+                      <div className="font-semibold">التطبيق</div>
+                      <a
+                        href="https://hamkamai.github.io/3weep.app"
+                        className="text-drx-orange hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         https://hamkamai.github.io/3weep.app
-                      </Link>
+                      </a>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4 space-x-reverse">
+                  <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center">
                       <Globe className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-semibold">الموقع</h4>
-                      <Link href="https://36drx.vercel.app" className="text-drx-orange hover:underline">
+                      <div className="font-semibold">الموقع</div>
+                      <a
+                        href="https://36drx.vercel.app"
+                        className="text-drx-orange hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         https://36drx.vercel.app
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -276,11 +316,23 @@ export default function ContactPage() {
           <div className="bg-gray-800 p-8 rounded-2xl shadow-lg">
             <div className="relative h-96 bg-gray-700 rounded-lg flex items-center justify-center">
               <div className="text-center text-white">
-                <Map className="h-24 w-24 text-drx-orange mx-auto mb-4" />
+                <Globe className="h-24 w-24 text-drx-orange mx-auto mb-4" />
                 <h3 className="text-2xl font-semibold mb-2">خريطة تفاعلية</h3>
                 <p className="text-gray-300">يمكنك العثور علينا في حي العليا، الرياض</p>
                 <Button className="mt-4 btn-gradient text-white px-6 py-2 rounded-lg">
-                  <MapPin className="h-5 w-5 ml-2" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-5 w-5 ml-2"
+                  >
+                    <path d="M12 2v3h1a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h1V2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2z"></path>
+                    <polyline points="16 2 16 6 20 6"></polyline>
+                  </svg>
                   احصل على الاتجاهات
                 </Button>
               </div>
