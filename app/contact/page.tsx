@@ -3,19 +3,7 @@
 import type React from "react"
 
 import Link from "next/link"
-import {
-  MailOpenIcon as Envelope,
-  Phone,
-  MapPin,
-  Clock,
-  Facebook,
-  Twitter,
-  Linkedin,
-  Instagram,
-  Send,
-  Check,
-  Map,
-} from "lucide-react"
+import { MailOpenIcon as Envelope, MapPin, Send, Check, Map, Github, DiscIcon as Discord, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -38,31 +26,19 @@ export default function ContactPage() {
     }, 2000)
   }
 
-  const contactCardClass =
-    "bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 text-center text-white transition-all duration-300 hover:bg-white/15 hover:-translate-y-1"
+  const contactCardClass = "bg-gray-800 p-6 rounded-2xl text-center card-hover"
   const formInputClass =
-    "bg-white/10 border border-white/30 text-white placeholder-gray-400 focus-visible:ring-blue-500 focus-visible:ring-offset-0"
+    "w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-drx-orange focus:border-transparent text-white"
 
   return (
-    <div className="bg-gray-900 text-white">
+    <div className="bg-black text-white">
       {/* القسم الرئيسي */}
-      <section className="bg-gradient-to-br from-blue-600 to-purple-700 min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-        {/* العناصر المزخرفة */}
-        <div className="absolute w-64 h-64 top-20 left-10 opacity-30 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 animate-float"></div>
-        <div
-          className="absolute w-48 h-48 top-60 right-20 opacity-20 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 animate-float"
-          style={{ animationDelay: "-2s" }}
-        ></div>
-        <div
-          className="absolute w-32 h-32 bottom-40 left-1/3 opacity-25 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 animate-float"
-          style={{ animationDelay: "-4s" }}
-        ></div>
-
-        <div className="relative z-10 text-center text-white px-4 max-w-6xl mx-auto pt-8">
-          <div className="animate-float">
-            <Envelope className="h-24 w-24 text-blue-300 mx-auto mb-8 animate-pulse" />
+      <section className="gradient-bg min-h-screen flex flex-col items-center justify-center p-4 pt-16">
+        <div className="relative z-10 text-center px-4 max-w-6xl mx-auto pt-8">
+          <div className="floating">
+            <Envelope className="h-24 w-24 text-drx-orange mx-auto mb-8 animate-pulse-glow" />
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">تواصل معنا</h1>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 gradient-text">تواصل معنا</h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
             نحن هنا لمساعدتك في تحقيق أهدافك الرقمية. تواصل معنا اليوم ودع الخبراء يقودون مشروعك نحو النجاح
           </p>
@@ -70,30 +46,38 @@ export default function ContactPage() {
           {/* معلومات الاتصال السريعة */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
             <div className={contactCardClass}>
-              <Phone className="h-8 w-8 text-green-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">اتصل بنا</h3>
-              <p className="text-blue-200">+966 50 123 4567</p>
+              <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center mx-auto mb-4">
+                <Envelope className="h-6 w-6 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">البريد الإلكتروني</h3>
+              <p className="text-gray-300">balqees0alalawi@gmail.com</p>
             </div>
             <div className={contactCardClass}>
-              <Envelope className="h-8 w-8 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">راسلنا</h3>
-              <p className="text-blue-200">info@drx.com</p>
+              <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center mx-auto mb-4">
+                <Github className="h-6 w-6 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">GitHub</h3>
+              <Link href="https://github.com/wolfomani" className="text-drx-orange hover:underline">
+                wolfomani
+              </Link>
             </div>
             <div className={contactCardClass}>
-              <MapPin className="h-8 w-8 text-red-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">زرنا</h3>
-              <p className="text-blue-200">الرياض، المملكة العربية السعودية</p>
+              <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center mx-auto mb-4">
+                <Discord className="h-6 w-6 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Discord</h3>
+              <p className="text-gray-300">@abdulaziz-x7r1g</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* قسم النموذج ومعلومات الاتصال */}
-      <section className="py-20 bg-gray-900">
+      <section className="section-bg py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* نموذج الاتصال */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-lg">
+            <div className="bg-gray-800/50 backdrop-blur-lg p-8 rounded-2xl shadow-lg">
               <h2 className="text-3xl font-bold text-white mb-8 text-center">أرسل لنا رسالة</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -105,7 +89,7 @@ export default function ContactPage() {
                       id="firstName"
                       type="text"
                       required
-                      className={cn("w-full px-4 py-3 rounded-lg", formInputClass)}
+                      className={formInputClass}
                       placeholder="أدخل اسمك الأول"
                     />
                   </div>
@@ -117,7 +101,7 @@ export default function ContactPage() {
                       id="lastName"
                       type="text"
                       required
-                      className={cn("w-full px-4 py-3 rounded-lg", formInputClass)}
+                      className={formInputClass}
                       placeholder="أدخل اسم العائلة"
                     />
                   </div>
@@ -131,7 +115,7 @@ export default function ContactPage() {
                     id="email"
                     type="email"
                     required
-                    className={cn("w-full px-4 py-3 rounded-lg", formInputClass)}
+                    className={formInputClass}
                     placeholder="your.email@domain.com"
                   />
                 </div>
@@ -140,12 +124,7 @@ export default function ContactPage() {
                   <Label htmlFor="phone" className="block text-white text-sm font-medium mb-2">
                     رقم الهاتف
                   </Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    className={cn("w-full px-4 py-3 rounded-lg", formInputClass)}
-                    placeholder="+966 5X XXX XXXX"
-                  />
+                  <Input id="phone" type="tel" className={formInputClass} placeholder="+966 5X XXX XXXX" />
                 </div>
 
                 <div>
@@ -153,7 +132,7 @@ export default function ContactPage() {
                     موضوع الرسالة
                   </Label>
                   <Select required>
-                    <SelectTrigger id="subject" className={cn("w-full px-4 py-3 rounded-lg", formInputClass)}>
+                    <SelectTrigger id="subject" className={formInputClass}>
                       <SelectValue placeholder="اختر موضوع الرسالة" />
                     </SelectTrigger>
                     <SelectContent className="bg-gray-800 text-white border-gray-700">
@@ -174,7 +153,7 @@ export default function ContactPage() {
                     id="message"
                     required
                     rows={5}
-                    className={cn("w-full px-4 py-3 rounded-lg resize-none", formInputClass)}
+                    className={cn(formInputClass, "resize-none")}
                     placeholder="اكتب رسالتك هنا..."
                   ></Textarea>
                 </div>
@@ -182,7 +161,7 @@ export default function ContactPage() {
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full btn-gradient text-white py-3 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
@@ -225,87 +204,60 @@ export default function ContactPage() {
 
             {/* معلومات التواصل التفصيلية */}
             <div className="space-y-8">
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-lg">
+              <div className="bg-gray-800 p-8 rounded-2xl shadow-lg">
                 <h3 className="text-2xl font-bold text-white mb-6">معلومات الاتصال</h3>
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4 space-x-reverse">
-                    <div className="bg-blue-500 p-3 rounded-full">
-                      <MapPin className="h-5 w-5 text-white" />
+                    <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center">
+                      <Envelope className="h-6 w-6 text-white" />
                     </div>
-                    <div className="text-white">
-                      <h4 className="font-semibold">العنوان</h4>
-                      <p className="text-gray-300">
-                        شارع الملك فهد، حي العليا
-                        <br />
-                        الرياض 12213، المملكة العربية السعودية
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-4 space-x-reverse">
-                    <div className="bg-green-500 p-3 rounded-full">
-                      <Phone className="h-5 w-5 text-white" />
-                    </div>
-                    <div className="text-white">
-                      <h4 className="font-semibold">الهاتف</h4>
-                      <p className="text-gray-300">
-                        +966 50 123 4567
-                        <br />
-                        +966 11 456 7890
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-4 space-x-reverse">
-                    <div className="bg-red-500 p-3 rounded-full">
-                      <Envelope className="h-5 w-5 text-white" />
-                    </div>
-                    <div className="text-white">
+                    <div>
                       <h4 className="font-semibold">البريد الإلكتروني</h4>
-                      <p className="text-gray-300">
-                        info@drx.com
-                        <br />
-                        support@drx.com
-                      </p>
+                      <p className="text-gray-300">balqees0alalawi@gmail.com</p>
                     </div>
                   </div>
-
                   <div className="flex items-center space-x-4 space-x-reverse">
-                    <div className="bg-purple-500 p-3 rounded-full">
-                      <Clock className="h-5 w-5 text-white" />
+                    <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center">
+                      <Github className="h-6 w-6 text-white" />
                     </div>
-                    <div className="text-white">
-                      <h4 className="font-semibold">ساعات العمل</h4>
-                      <p className="text-gray-300">
-                        الأحد - الخميس: 9:00 - 18:00
-                        <br />
-                        الجمعة - السبت: مغلق
-                      </p>
+                    <div>
+                      <h4 className="font-semibold">GitHub</h4>
+                      <Link href="https://github.com/wolfomani" className="text-drx-orange hover:underline">
+                        https://github.com/wolfomani
+                      </Link>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* وسائل التواصل الاجتماعي */}
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-lg">
-                <h3 className="text-2xl font-bold text-white mb-6">تابعنا على</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <Link href="#" className="bg-blue-600 hover:bg-blue-700 p-4 rounded-lg text-center transition-colors">
-                    <Facebook className="h-6 w-6 text-white mx-auto mb-2" />
-                    <p className="text-white text-sm">Facebook</p>
-                  </Link>
-                  <Link href="#" className="bg-blue-400 hover:bg-blue-500 p-4 rounded-lg text-center transition-colors">
-                    <Twitter className="h-6 w-6 text-white mx-auto mb-2" />
-                    <p className="text-white text-sm">Twitter</p>
-                  </Link>
-                  <Link href="#" className="bg-blue-700 hover:bg-blue-800 p-4 rounded-lg text-center transition-colors">
-                    <Linkedin className="h-6 w-6 text-white mx-auto mb-2" />
-                    <p className="text-white text-sm">LinkedIn</p>
-                  </Link>
-                  <Link href="#" className="bg-pink-600 hover:bg-pink-700 p-4 rounded-lg text-center transition-colors">
-                    <Instagram className="h-6 w-6 text-white mx-auto mb-2" />
-                    <p className="text-white text-sm">Instagram</p>
-                  </Link>
+                  <div className="flex items-center space-x-4 space-x-reverse">
+                    <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center">
+                      <Discord className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold">Discord</h4>
+                      <p className="text-gray-300">@abdulaziz-x7r1g</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4 space-x-reverse">
+                    <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center">
+                      <Globe className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold">التطبيق</h4>
+                      <Link href="https://hamkamai.github.io/3weep.app" className="text-drx-orange hover:underline">
+                        https://hamkamai.github.io/3weep.app
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4 space-x-reverse">
+                    <div className="w-12 h-12 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center">
+                      <Globe className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold">الموقع</h4>
+                      <Link href="https://36drx.vercel.app" className="text-drx-orange hover:underline">
+                        https://36drx.vercel.app
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -314,19 +266,20 @@ export default function ContactPage() {
       </section>
 
       {/* قسم الخريطة */}
-      <section className="py-20 bg-gray-800">
+      <section className="section-bg py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-white mb-4">موقعنا على الخريطة</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-drx-orange to-drx-red mx-auto mb-8"></div>
             <p className="text-xl text-gray-300">زر مكاتبنا في قلب الرياض</p>
           </div>
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-lg">
+          <div className="bg-gray-800 p-8 rounded-2xl shadow-lg">
             <div className="relative h-96 bg-gray-700 rounded-lg flex items-center justify-center">
               <div className="text-center text-white">
-                <Map className="h-24 w-24 text-blue-400 mx-auto mb-4" />
+                <Map className="h-24 w-24 text-drx-orange mx-auto mb-4" />
                 <h3 className="text-2xl font-semibold mb-2">خريطة تفاعلية</h3>
                 <p className="text-gray-300">يمكنك العثور علينا في حي العليا، الرياض</p>
-                <Button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors">
+                <Button className="mt-4 btn-gradient text-white px-6 py-2 rounded-lg">
                   <MapPin className="h-5 w-5 ml-2" />
                   احصل على الاتجاهات
                 </Button>
@@ -337,10 +290,11 @@ export default function ContactPage() {
       </section>
 
       {/* قسم الأسئلة الشائعة */}
-      <section className="py-20 bg-gray-900">
+      <section className="section-bg py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-white mb-4">الأسئلة الشائعة</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-drx-orange to-drx-red mx-auto mb-8"></div>
             <p className="text-xl text-gray-300">إجابات سريعة على أكثر الأسئلة شيوعاً</p>
           </div>
 
@@ -367,10 +321,10 @@ export default function ContactPage() {
 function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false)
   return (
-    <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg">
+    <div className="bg-gray-800 rounded-lg shadow-lg border border-gray-700">
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 text-right text-white font-semibold hover:bg-white/10 transition-colors rounded-lg flex justify-between items-center"
+        className="w-full px-6 py-4 text-right text-white font-semibold hover:bg-gray-700 transition-colors rounded-lg flex justify-between items-center"
         variant="ghost"
       >
         <span>{question}</span>

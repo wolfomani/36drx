@@ -13,7 +13,6 @@ import {
   Trophy,
   Star,
   ArrowUp,
-  ArrowDown,
   CircleDot,
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -48,8 +47,8 @@ export default function AnalyticsPage() {
             {
               label: "الزيارات",
               data: [1200, 1900, 3000, 5000, 2000, 3000, 4500, 3200, 2800, 4200, 3600, 2900, 4100, 3800],
-              borderColor: "rgba(59, 130, 246, 1)",
-              backgroundColor: "rgba(59, 130, 246, 0.1)",
+              borderColor: "rgba(255, 77, 0, 1)", // drx-orange
+              backgroundColor: "rgba(255, 77, 0, 0.1)", // drx-orange
               borderWidth: 3,
               fill: true,
               tension: 0.4,
@@ -98,11 +97,11 @@ export default function AnalyticsPage() {
             {
               data: [35, 25, 20, 15, 5],
               backgroundColor: [
-                "rgba(59, 130, 246, 0.8)",
-                "rgba(16, 185, 129, 0.8)",
-                "rgba(245, 158, 11, 0.8)",
-                "rgba(239, 68, 68, 0.8)",
-                "rgba(139, 92, 246, 0.8)",
+                "rgba(255, 77, 0, 0.8)", // drx-orange
+                "rgba(16, 185, 129, 0.8)", // green
+                "rgba(245, 158, 11, 0.8)", // yellow
+                "rgba(239, 68, 68, 0.8)", // red
+                "rgba(139, 92, 246, 0.8)", // purple
               ],
               borderWidth: 2,
               borderColor: "rgba(255, 255, 255, 0.2)",
@@ -134,8 +133,16 @@ export default function AnalyticsPage() {
             {
               label: "عدد المستخدمين",
               data: [15420, 8760, 2850],
-              backgroundColor: ["rgba(59, 130, 246, 0.8)", "rgba(16, 185, 129, 0.8)", "rgba(245, 158, 11, 0.8)"],
-              borderColor: ["rgba(59, 130, 246, 1)", "rgba(16, 185, 129, 1)", "rgba(245, 158, 11, 1)"],
+              backgroundColor: [
+                "rgba(255, 77, 0, 0.8)", // drx-orange
+                "rgba(16, 185, 129, 0.8)", // green
+                "rgba(245, 158, 11, 0.8)", // yellow
+              ],
+              borderColor: [
+                "rgba(255, 77, 0, 1)", // drx-orange
+                "rgba(16, 185, 129, 1)", // green
+                "rgba(245, 158, 11, 1)", // yellow
+              ],
               borderWidth: 2,
               borderRadius: 8,
             },
@@ -186,20 +193,19 @@ export default function AnalyticsPage() {
     }
   }, [])
 
-  const statCardClass =
-    "bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-center text-white p-6 transition-all duration-300 hover:bg-white/15 hover:-translate-y-1"
-  const chartContainerClass = "relative h-[400px] bg-white/5 rounded-xl p-6 backdrop-blur-md border border-white/10"
+  const statCardClass = "bg-gray-800 p-6 rounded-2xl text-center card-hover"
+  const chartContainerClass = "relative h-[400px] bg-gray-800 rounded-xl p-6 border border-gray-700"
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 pt-16 pb-12">
+    <div className="section-bg min-h-screen pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* العنوان الرئيسي */}
         <div className="text-center mb-12 pt-8">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-            <ChartLine className="inline-block h-12 w-12 md:h-16 md:w-16 ml-4" />
+            <ChartLine className="inline-block h-12 w-12 md:h-16 md:w-16 ml-4 text-drx-orange" />
             التحليلات والإحصائيات
           </h1>
-          <p className="text-xl text-white opacity-90 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 opacity-90 max-w-3xl mx-auto">
             لوحة تحكم شاملة لمراقبة الأداء وتحليل البيانات
           </p>
         </div>
@@ -209,48 +215,32 @@ export default function AnalyticsPage() {
           <Card className={statCardClass}>
             <CardContent className="p-0">
               <Users className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold">{totalUsers}</h3>
-              <p className="text-gray-300">إجمالي المستخدمين</p>
-              <div className="mt-2 text-green-400 flex items-center justify-center">
-                <ArrowUp className="h-4 w-4 ml-1" />
-                <span className="text-sm">+12% من الشهر الماضي</span>
-              </div>
+              <h3 className="text-2xl font-bold gradient-text">{totalUsers}</h3>
+              <p className="text-gray-400">إجمالي المستخدمين</p>
             </CardContent>
           </Card>
 
           <Card className={statCardClass}>
             <CardContent className="p-0">
               <Eye className="h-12 w-12 text-green-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold">{pageViews}</h3>
-              <p className="text-gray-300">مشاهدات الصفحة</p>
-              <div className="mt-2 text-green-400 flex items-center justify-center">
-                <ArrowUp className="h-4 w-4 ml-1" />
-                <span className="text-sm">+8% من الشهر الماضي</span>
-              </div>
+              <h3 className="text-2xl font-bold gradient-text">{pageViews}</h3>
+              <p className="text-gray-400">مشاهدات الصفحة</p>
             </CardContent>
           </Card>
 
           <Card className={statCardClass}>
             <CardContent className="p-0">
-              <Clock className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold">{avgTime}</h3>
-              <p className="text-gray-300">متوسط وقت الجلسة</p>
-              <div className="mt-2 text-green-400 flex items-center justify-center">
-                <ArrowUp className="h-4 w-4 ml-1" />
-                <span className="text-sm">+15% من الشهر الماضي</span>
-              </div>
+              <Clock className="h-12 w-12 text-purple-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold gradient-text">{avgTime}</h3>
+              <p className="text-gray-400">متوسط وقت الجلسة</p>
             </CardContent>
           </Card>
 
           <Card className={statCardClass}>
             <CardContent className="p-0">
-              <Percent className="h-12 w-12 text-red-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold">{bounceRate}</h3>
-              <p className="text-gray-300">معدل الارتداد</p>
-              <div className="mt-2 text-red-400 flex items-center justify-center">
-                <ArrowDown className="h-4 w-4 ml-1" />
-                <span className="text-sm">-5% من الشهر الماضي</span>
-              </div>
+              <Percent className="h-12 w-12 text-drx-orange mx-auto mb-4" />
+              <h3 className="text-2xl font-bold gradient-text">{bounceRate}</h3>
+              <p className="text-gray-400">معدل الارتداد</p>
             </CardContent>
           </Card>
         </div>
@@ -261,7 +251,7 @@ export default function AnalyticsPage() {
           <Card className={chartContainerClass}>
             <CardHeader className="p-0 mb-4">
               <CardTitle className="text-xl font-semibold text-white flex items-center">
-                <ChartLine className="h-6 w-6 ml-2" />
+                <ChartLine className="h-6 w-6 ml-2 text-drx-orange" />
                 الزيارات اليومية
               </CardTitle>
             </CardHeader>
@@ -274,7 +264,7 @@ export default function AnalyticsPage() {
           <Card className={chartContainerClass}>
             <CardHeader className="p-0 mb-4">
               <CardTitle className="text-xl font-semibold text-white flex items-center">
-                <PieChart className="h-6 w-6 ml-2" />
+                <PieChart className="h-6 w-6 ml-2 text-drx-orange" />
                 مصادر الزيارات
               </CardTitle>
             </CardHeader>
@@ -288,7 +278,7 @@ export default function AnalyticsPage() {
         <Card className={cn(chartContainerClass, "h-[450px] mb-12")}>
           <CardHeader className="p-0 mb-6">
             <CardTitle className="text-xl font-semibold text-white flex items-center">
-              <Smartphone className="h-6 w-6 ml-2" />
+              <Smartphone className="h-6 w-6 ml-2 text-drx-orange" />
               إحصائيات الأجهزة
             </CardTitle>
           </CardHeader>
@@ -301,7 +291,7 @@ export default function AnalyticsPage() {
         <Card className={cn(statCardClass, "p-6 mb-12")}>
           <CardHeader className="p-0 mb-6">
             <CardTitle className="text-xl font-semibold text-white flex items-center">
-              <Trophy className="h-6 w-6 ml-2" />
+              <Trophy className="h-6 w-6 ml-2 text-drx-orange" />
               أهم الصفحات
             </CardTitle>
           </CardHeader>

@@ -84,28 +84,17 @@ export default function PortfolioPage() {
 
   const filterButtonClass = (filter: string) =>
     cn(
-      "px-6 py-3 rounded-full font-medium border-2 border-gray-300 dark:border-gray-700 hover:border-blue-500 transition-colors",
-      activeFilter === filter
-        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-600"
-        : "bg-white dark:bg-gray-800 text-gray-700 dark:text-white",
+      "px-6 py-3 rounded-full font-medium border-2 border-gray-700 transition-colors",
+      activeFilter === filter ? "btn-gradient text-white" : "bg-gray-800 text-white hover:bg-gray-700",
     )
 
-  const projectCardClass =
-    "bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+  const projectCardClass = "bg-gray-800 p-6 rounded-2xl card-hover"
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
+    <div className="bg-black text-white">
       {/* قسم البطل */}
-      <section className="bg-gradient-to-br from-blue-600 to-purple-700 min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 right-20 w-72 h-72 bg-white rounded-full animate-float"></div>
-          <div
-            className="absolute bottom-20 left-20 w-96 h-96 bg-white rounded-full animate-float"
-            style={{ animationDelay: "-2s" }}
-          ></div>
-        </div>
-
-        <div className="relative z-10 text-center text-white px-4 pt-8">
+      <section className="gradient-bg min-h-screen flex flex-col items-center justify-center p-4 pt-16">
+        <div className="relative z-10 text-center px-4 pt-8">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">معرض أعمالنا</h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
             استكشف مجموعة متنوعة من المشاريع المبتكرة التي أنجزناها بنجاح
@@ -113,7 +102,7 @@ export default function PortfolioPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               onClick={() => document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" })}
-              className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center"
+              className="btn-gradient text-white px-8 py-3 rounded-full text-lg font-semibold flex items-center justify-center"
             >
               <Eye className="h-5 w-5 ml-2" />
               استعرض المشاريع
@@ -121,7 +110,7 @@ export default function PortfolioPage() {
             <Link href="/contact">
               <Button
                 variant="outline"
-                className="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-colors bg-transparent flex items-center justify-center"
+                className="border-2 border-drx-orange text-drx-orange px-8 py-3 rounded-full text-lg font-semibold hover:bg-drx-orange hover:text-black transition-colors bg-transparent flex items-center justify-center"
               >
                 <Phone className="h-5 w-5 ml-2" />
                 اطلب مشروعك
@@ -132,36 +121,37 @@ export default function PortfolioPage() {
       </section>
 
       {/* إحصائيات سريعة */}
-      <section className="py-16 bg-white dark:bg-gray-800">
+      <section className="py-16 section-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="p-6">
-              <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">150+</div>
-              <div className="text-gray-600 dark:text-gray-300">مشروع مكتمل</div>
+              <div className="text-4xl font-bold gradient-text mb-2">150+</div>
+              <div className="text-gray-400">مشروع مكتمل</div>
             </div>
             <div className="p-6">
-              <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">95%</div>
-              <div className="text-gray-600 dark:text-gray-300">رضا العملاء</div>
+              <div className="text-4xl font-bold gradient-text mb-2">95%</div>
+              <div className="text-gray-400">رضا العملاء</div>
             </div>
             <div className="p-6">
-              <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">50+</div>
-              <div className="text-gray-600 dark:text-gray-300">عميل سعيد</div>
+              <div className="text-4xl font-bold gradient-text mb-2">50+</div>
+              <div className="text-gray-400">عميل سعيد</div>
             </div>
             <div className="p-6">
-              <div className="text-4xl font-bold text-red-600 dark:text-red-400 mb-2">5</div>
-              <div className="text-gray-600 dark:text-gray-300">سنوات خبرة</div>
+              <div className="text-4xl font-bold gradient-text mb-2">5</div>
+              <div className="text-gray-400">سنوات خبرة</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* معرض المشاريع */}
-      <section id="portfolio" className="py-20 bg-gray-50 dark:bg-gray-900">
+      <section id="portfolio" className="py-20 gradient-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">مشاريعنا المميزة</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              مجموعة من أفضل المشاريع التي نفذناها في مختلف المجالات
+            <h2 className="text-4xl font-bold text-white mb-4">أعمالنا</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-drx-orange to-drx-red mx-auto mb-8"></div>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              مجموعة مختارة من أفضل مشاريعنا التي تعكس خبرتنا وإبداعنا
             </p>
           </div>
 
@@ -203,27 +193,21 @@ export default function PortfolioPage() {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">{project.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+                  <h3 className="text-xl font-bold mb-3 text-white">{project.title}</h3>
+                  <p className="text-gray-300 mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech, index) => (
-                      <span
-                        key={index}
-                        className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-3 py-1 rounded-full text-sm"
-                      >
+                      <span key={index} className="bg-blue-600 text-white px-2 py-1 rounded text-sm">
                         {tech}
                       </span>
                     ))}
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-500 text-sm flex items-center">
+                    <span className="text-gray-400 text-sm flex items-center">
                       <Calendar className="h-4 w-4 ml-1" />
                       {project.year}
                     </span>
-                    <Link
-                      href="#"
-                      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium flex items-center"
-                    >
+                    <Link href="#" className="text-drx-orange hover:text-drx-red font-medium flex items-center">
                       عرض المشروع <ArrowLeft className="h-4 w-4 mr-1" />
                     </Link>
                   </div>
@@ -235,7 +219,7 @@ export default function PortfolioPage() {
           {/* زر عرض المزيد */}
           <div className="text-center mt-12">
             <Link href="/contact">
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:from-blue-700 hover:to-purple-700 transition-colors flex items-center justify-center">
+              <Button className="btn-gradient text-white px-8 py-3 rounded-full font-semibold flex items-center justify-center">
                 <Plus className="h-5 w-5 ml-2" />
                 شاهد المزيد من المشاريع
               </Button>
@@ -245,17 +229,15 @@ export default function PortfolioPage() {
       </section>
 
       {/* شهادات العملاء */}
-      <section className="py-20 bg-white dark:bg-gray-800">
+      <section className="py-20 section-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">ماذا يقول عملاؤنا</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              آراء حقيقية من عملائنا الذين حققوا النجاح معنا
-            </p>
+            <h2 className="text-4xl font-bold text-white mb-4">ماذا يقول عملاؤنا</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">آراء حقيقية من عملائنا الذين حققوا النجاح معنا</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl shadow-lg">
+            <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
               <div className="flex items-center mb-4">
                 <div className="flex text-yellow-400">
                   <Star fill="currentColor" className="h-5 w-5" />
@@ -265,7 +247,7 @@ export default function PortfolioPage() {
                   <Star fill="currentColor" className="h-5 w-5" />
                 </div>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-300 mb-4">
                 "فريق Dr X نفذ لنا مشروع رائع فاق توقعاتنا. الاحترافية والجودة كانت في المقدمة."
               </p>
               <div className="flex items-center">
@@ -273,13 +255,13 @@ export default function PortfolioPage() {
                   أ
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">أحمد محمد</h4>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">مدير شركة التقنية الحديثة</p>
+                  <h4 className="font-semibold text-white">أحمد محمد</h4>
+                  <p className="text-gray-400 text-sm">مدير شركة التقنية الحديثة</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl shadow-lg">
+            <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
               <div className="flex items-center mb-4">
                 <div className="flex text-yellow-400">
                   <Star fill="currentColor" className="h-5 w-5" />
@@ -289,7 +271,7 @@ export default function PortfolioPage() {
                   <Star fill="currentColor" className="h-5 w-5" />
                 </div>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-300 mb-4">
                 "تطبيق الجوال الذي طوروه لنا ساعدنا في زيادة مبيعاتنا بنسبة 40%. شكراً للفريق المميز."
               </p>
               <div className="flex items-center">
@@ -297,13 +279,13 @@ export default function PortfolioPage() {
                   س
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">سارة أحمد</h4>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">مؤسسة متجر الأناقة</p>
+                  <h4 className="font-semibold text-white">سارة أحمد</h4>
+                  <p className="text-gray-400 text-sm">مؤسسة متجر الأناقة</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl shadow-lg">
+            <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
               <div className="flex items-center mb-4">
                 <div className="flex text-yellow-400">
                   <Star fill="currentColor" className="h-5 w-5" />
@@ -313,7 +295,7 @@ export default function PortfolioPage() {
                   <Star fill="currentColor" className="h-5 w-5" />
                 </div>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-300 mb-4">
                 "خدمة عملاء ممتازة ودعم فني متواصل. أنصح بالتعامل مع Dr X لجميع المشاريع التقنية."
               </p>
               <div className="flex items-center">
@@ -321,8 +303,8 @@ export default function PortfolioPage() {
                   م
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">محمد علي</h4>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">رئيس قسم التسويق</p>
+                  <h4 className="font-semibold text-white">محمد علي</h4>
+                  <p className="text-gray-400 text-sm">رئيس قسم التسويق</p>
                 </div>
               </div>
             </div>
@@ -331,13 +313,13 @@ export default function PortfolioPage() {
       </section>
 
       {/* دعوة للعمل */}
-      <section className="bg-gradient-to-br from-blue-600 to-purple-700 py-20">
+      <section className="gradient-bg py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">مستعد لبدء مشروعك القادم؟</h2>
           <p className="text-xl text-white mb-8 max-w-3xl mx-auto">دعنا نحول أفكارك إلى واقع رقمي مبهر</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">
-              <Button className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center">
+              <Button className="btn-gradient text-white px-8 py-3 rounded-full font-semibold flex items-center justify-center">
                 <Phone className="h-5 w-5 ml-2" />
                 ابدأ مشروعك الآن
               </Button>
@@ -345,7 +327,7 @@ export default function PortfolioPage() {
             <Link href="/chat">
               <Button
                 variant="outline"
-                className="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-colors bg-transparent flex items-center justify-center"
+                className="border-2 border-drx-orange text-drx-orange px-8 py-3 rounded-full font-semibold hover:bg-drx-orange hover:text-black transition-colors bg-transparent flex items-center justify-center"
               >
                 <MessageSquare className="h-5 w-5 ml-2" />
                 دردش مع د. إكس

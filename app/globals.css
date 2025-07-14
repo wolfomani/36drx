@@ -73,42 +73,85 @@
   }
 }
 
-/* Custom animations */
-@keyframes float {
+/* Custom styles from HTML */
+.gradient-bg {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d1b69 50%, #ff4d00 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #ff4d00, #ff8a00, #ff0040);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-effect {
+  box-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+  from {
+    box-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(255, 77, 0, 0.6);
+  }
+}
+
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
   0%,
   100% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-10px);
   }
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+.chat-bubble-user {
+  background: linear-gradient(135deg, #ff4d00, #ff8a00);
+  border-radius: 20px 20px 5px 20px;
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.chat-bubble-ai {
+  background: linear-gradient(135deg, #2d1b69, #4c1d95);
+  border-radius: 20px 20px 20px 5px;
 }
 
-.animate-pulse-slow {
-  animation: pulse 3s ease-in-out infinite;
+.nav-blur {
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.8);
 }
 
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+.card-hover {
+  transition: all 0.3s ease;
 }
 
-/* Specific styles for chat page background */
-.bg-gradient-to-br.from-gray-900.to-black {
-  background: radial-gradient(ellipse at center, #1a0000 0%, #000000 70%);
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(255, 77, 0, 0.2);
+}
+
+.btn-gradient {
+  background: linear-gradient(135deg, #ff4d00, #ff8a00);
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(135deg, #ff8a00, #ff4d00);
+  transform: scale(1.05);
+}
+
+.section-bg {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d1b69 100%);
 }
 
 /* Custom scrollbar for ScrollArea */
