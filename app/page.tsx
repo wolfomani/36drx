@@ -1,33 +1,31 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardTitle } from "@/components/ui/card"
-import { Code, Smartphone, Brain, Rocket, ShieldCheck, Lightbulb, ArrowRight, Star, Users, Award } from "lucide-react"
+import { ArrowRight, Lightbulb, Rocket, ShieldCheck } from "lucide-react"
 
 export default function HomePage() {
   return (
-    <div className="pt-24">
-      {" "}
-      {/* Adjusted padding for fixed navbar */}
+    <div className="pt-24 bg-black text-white min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[calc(100vh-96px)] flex items-center justify-center text-center text-white overflow-hidden">
-        <div className="absolute inset-0 gradient-bg opacity-80"></div>
-        <div className="relative z-10 p-8 max-w-4xl mx-auto animate-fade-in-up">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight gradient-text">
-            مستقبلك الرقمي يبدأ هنا مع Dr X
+      <section className="relative py-20 md:py-32 text-center overflow-hidden">
+        <div className="absolute inset-0 gradient-bg opacity-50"></div>
+        <div className="relative z-10 p-8 max-w-5xl mx-auto">
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight gradient-text animate-fade-in-up">
+            مساعدك الذكي المتطور
           </h1>
-          <p className="text-lg md:text-xl mb-8 text-gray-200">
-            نقدم حلولاً مبتكرة في تطوير الويب، تطبيقات الجوال، والذكاء الاصطناعي لتمكين أعمالك.
+          <p className="text-xl md:text-2xl text-gray-300 mb-8 animate-fade-in-up delay-200">
+            مدعوم بأحدث تقنيات الذكاء الاصطناعي لتبسيط مهامك اليومية وتعزيز إنتاجيتك.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href="/contact">
-              <Button className="btn-gradient text-white px-8 py-3 text-lg rounded-full shadow-lg hover:shadow-xl transition-all">
-                ابدأ مشروعك الآن <ArrowRight className="mr-2 h-5 w-5" />
+          <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up delay-400">
+            <Link href="/chat">
+              <Button className="btn-gradient text-white px-8 py-3 text-lg rounded-full shadow-lg hover:scale-105 transition-transform">
+                ابدأ الدردشة الآن <ArrowRight className="mr-2 h-5 w-5" />
               </Button>
             </Link>
             <Link href="/services">
               <Button
                 variant="outline"
-                className="bg-transparent border-2 border-white text-white px-8 py-3 text-lg rounded-full hover:bg-white/20 transition-all"
+                className="btn-outline-gradient px-8 py-3 text-lg rounded-full shadow-lg hover:scale-105 transition-transform bg-transparent"
               >
                 اكتشف خدماتنا
               </Button>
@@ -35,90 +33,94 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {/* Services Overview Section */}
-      <section id="services-overview" className="py-20 bg-gray-900 text-white">
+
+      {/* Features Section */}
+      <section className="py-16 md:py-24 bg-gray-900/70 backdrop-blur-lg">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-12 gradient-text animate-fade-in-up">خدماتنا المتكاملة</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 gradient-text animate-fade-in-up">لماذا تختار Dr X؟</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up">
-              <Code className="h-12 w-12 text-amber-400 mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">تطوير الويب</CardTitle>
-              <CardContent className="text-gray-300 text-sm">
-                بناء مواقع ويب قوية، متجاوبة، ومحسّنة للأداء باستخدام أحدث التقنيات.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up delay-200">
-              <Smartphone className="h-12 w-12 text-blue-400 mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">تطبيقات الجوال</CardTitle>
-              <CardContent className="text-gray-300 text-sm">
-                تصميم وتطوير تطبيقات جوال مبتكرة لأجهزة iOS و Android توفر تجربة مستخدم استثنائية.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up delay-400">
-              <Brain className="h-12 w-12 text-purple-400 mb-4" />
-              <CardTitle className="text-2xl font-semibold mb-2">حلول الذكاء الاصطناعي</CardTitle>
-              <CardContent className="text-gray-300 text-sm">
-                تطوير أنظمة ذكاء اصطناعي مخصصة، تعلم آلة، ومعالجة اللغة الطبيعية لتحويل أعمالك.
-              </CardContent>
-            </Card>
+            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-drx-orange transition-all duration-300 animate-fade-in-up">
+              <Lightbulb className="h-12 w-12 text-drx-orange mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold text-white mb-3">حلول مبتكرة</h3>
+              <p className="text-gray-300">نقدم أحدث التقنيات في الذكاء الاصطناعي وتطوير الويب.</p>
+            </div>
+            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-drx-red transition-all duration-300 animate-fade-in-up delay-200">
+              <Rocket className="h-12 w-12 text-drx-red mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold text-white mb-3">أداء لا مثيل له</h3>
+              <p className="text-gray-300">تصميمات سريعة، آمنة، وموثوقة لعملك.</p>
+            </div>
+            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-blue-500 transition-all duration-300 animate-fade-in-up delay-400">
+              <ShieldCheck className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold text-white mb-3">أمان وخصوصية</h3>
+              <p className="text-gray-300">نضمن حماية بياناتك بأعلى معايير الأمان.</p>
+            </div>
           </div>
-          <Link href="/services">
-            <Button className="btn-gradient text-white px-8 py-3 text-lg rounded-full shadow-lg mt-12 hover:shadow-xl transition-all">
-              عرض جميع الخدمات <ArrowRight className="mr-2 h-5 w-5" />
-            </Button>
-          </Link>
         </div>
       </section>
-      {/* Why Choose Us Section */}
-      <section id="why-us" className="py-20 bg-gray-800 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-12 gradient-text animate-fade-in-up">لماذا تختار Dr X؟</h2>
+
+      {/* Services Overview Section */}
+      <section className="py-16 md:py-24 text-center">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 gradient-text animate-fade-in-up">خدماتنا الرئيسية</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gray-900/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center animate-fade-in-up">
-              <Rocket className="h-10 w-10 text-green-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">الابتكار والتميز</h3>
-              <p className="text-gray-300 text-sm">نحن نتبنى أحدث التقنيات ونقدم حلولاً مبتكرة تتجاوز التوقعات.</p>
+            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 animate-fade-in-up">
+              <Image
+                src="/placeholder.svg?height=100&width=100"
+                alt="Web Development"
+                width={100}
+                height={100}
+                className="mx-auto mb-4 rounded-lg"
+              />
+              <h3 className="text-2xl font-semibold text-white mb-3">تطوير الويب</h3>
+              <p className="text-gray-300">بناء مواقع وتطبيقات ويب عصرية ومتجاوبة.</p>
+              <Link href="/services#web-development" className="text-drx-orange hover:underline mt-4 block">
+                اعرف المزيد <ArrowRight className="inline-block h-4 w-4 mr-1" />
+              </Link>
             </div>
-            <div className="bg-gray-900/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center animate-fade-in-up delay-200">
-              <ShieldCheck className="h-10 w-10 text-red-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">الجودة والموثوقية</h3>
-              <p className="text-gray-300 text-sm">نلتزم بأعلى معايير الجودة لضمان حلول قوية وموثوقة لعملائنا.</p>
+            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 animate-fade-in-up delay-200">
+              <Image
+                src="/placeholder.svg?height=100&width=100"
+                alt="Mobile App Development"
+                width={100}
+                height={100}
+                className="mx-auto mb-4 rounded-lg"
+              />
+              <h3 className="text-2xl font-semibold text-white mb-3">تطوير تطبيقات الجوال</h3>
+              <p className="text-gray-300">تطبيقات iOS و Android قوية وسهلة الاستخدام.</p>
+              <Link href="/services#mobile-development" className="text-drx-orange hover:underline mt-4 block">
+                اعرف المزيد <ArrowRight className="inline-block h-4 w-4 mr-1" />
+              </Link>
             </div>
-            <div className="bg-gray-900/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center animate-fade-in-up delay-400">
-              <Users className="h-10 w-10 text-yellow-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">فريق متخصص</h3>
-              <p className="text-gray-300 text-sm">فريق من الخبراء والمطورين ذوي الكفاءة العالية في مجالاتهم.</p>
-            </div>
-            <div className="bg-gray-900/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center animate-fade-in-up">
-              <Award className="h-10 w-10 text-indigo-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">دعم مستمر</h3>
-              <p className="text-gray-300 text-sm">نقدم دعماً فنياً شاملاً لضمان استمرارية عمل حلولك بكفاءة.</p>
-            </div>
-            <div className="bg-gray-900/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center animate-fade-in-up delay-200">
-              <Lightbulb className="h-10 w-10 text-orange-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">حلول مخصصة</h3>
-              <p className="text-gray-300 text-sm">نصمم حلولاً تتناسب تماماً مع احتياجات عملك الفريدة وأهدافك.</p>
-            </div>
-            <div className="bg-gray-900/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center animate-fade-in-up delay-400">
-              <Star className="h-10 w-10 text-pink-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">رضا العملاء</h3>
-              <p className="text-gray-300 text-sm">
-                نسعى دائماً لتحقيق أقصى درجات رضا العملاء من خلال تقديم أفضل الخدمات.
-              </p>
+            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 animate-fade-in-up delay-400">
+              <Image
+                src="/placeholder.svg?height=100&width=100"
+                alt="AI Solutions"
+                width={100}
+                height={100}
+                className="mx-auto mb-4 rounded-lg"
+              />
+              <h3 className="text-2xl font-semibold text-white mb-3">حلول الذكاء الاصطناعي</h3>
+              <p className="text-gray-300">تطوير أنظمة ذكاء اصطناعي مخصصة لعملك.</p>
+              <Link href="/services#ai-solutions" className="text-drx-orange hover:underline mt-4 block">
+                اعرف المزيد <ArrowRight className="inline-block h-4 w-4 mr-1" />
+              </Link>
             </div>
           </div>
         </div>
       </section>
-      {/* Call to Action Section */}
+
+      {/* Call to Action */}
       <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800 text-white text-center">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-6 gradient-text animate-fade-in-up">هل أنت مستعد لبدء مشروعك؟</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text animate-fade-in-up">
+            هل أنت مستعد للارتقاء بعملك؟
+          </h2>
           <p className="text-lg mb-8 text-gray-300 animate-fade-in-up delay-200">
-            دعنا نساعدك في تحويل أفكارك إلى واقع رقمي ملموس.
+            تواصل معنا اليوم لمناقشة مشروعك والحصول على استشارة مجانية.
           </p>
           <Link href="/contact">
             <Button className="btn-gradient text-white px-10 py-4 text-xl rounded-full shadow-lg hover:shadow-xl transition-all animate-fade-in-up delay-400">
-              تواصل معنا اليوم <ArrowRight className="mr-2 h-6 w-6" />
+              ابدأ مشروعك الآن
             </Button>
           </Link>
         </div>

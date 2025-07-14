@@ -22,8 +22,8 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Navbar />
           <main className="min-h-screen flex flex-col">{children}</main>
-          <Footer />
           <Toaster />
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

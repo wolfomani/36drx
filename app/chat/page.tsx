@@ -1,6 +1,6 @@
 "use client"
 
-import "ios-vibrator-pro-max" // Assuming this is a valid import for vibration
+import "ios-vibrator-pro-max"
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { useChat } from "ai/react"
@@ -50,9 +50,8 @@ interface StreamingWord {
   text: string
 }
 
-// Faster word delay for smoother streaming
-const WORD_DELAY = 40 // ms per word
-const CHUNK_SIZE = 2 // Number of words to add at once
+const WORD_DELAY = 40
+const CHUNK_SIZE = 2
 
 export default function ChatInterface() {
   const [inputValue, setInputValue] = useState("")
@@ -62,7 +61,7 @@ export default function ChatInterface() {
   const [hasTyped, setHasTyped] = useState(false)
   const [activeButton, setActiveButton] = useState<ActiveButton>("none")
   const [isMobile, setIsMobile] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([]) // Renamed from `messages` to `localMessages` to avoid conflict with `useChat`
+  const [messages, setMessages] = useState<Message[]>([])
   const [messageSections, setMessageSections] = useState<MessageSection[]>([])
   const [isStreaming, setIsStreaming] = useState(false)
   const [streamingWords, setStreamingWords] = useState<StreamingWord[]>([])
@@ -74,17 +73,14 @@ export default function ChatInterface() {
   const inputContainerRef = useRef<HTMLDivElement>(null)
   const shouldFocusAfterStreamingRef = useRef(false)
   const mainContainerRef = useRef<HTMLDivElement>(null)
-  // Store selection state
   const selectionStateRef = useRef<{ start: number | null; end: number | null }>({ start: null, end: null })
 
-  // Constants for layout calculations to account for the padding values
-  // These are now less critical as we're relying on global layout for top padding
-  const TOP_PADDING_GLOBAL_NAV = 96 // pt-24 (6rem = 96px) from global layout
-  const BOTTOM_PADDING_INPUT_AREA = 128 // pb-32 (8rem = 128px)
-  const ADDITIONAL_OFFSET = 16 // Reduced offset for fine-tuning
+  const TOP_PADDING_GLOBAL_NAV = 96 // Approx height of Navbar
+  const BOTTOM_PADDING_INPUT_AREA = 128 // Approx height of input area
+  const ADDITIONAL_OFFSET = 16 // Some extra padding
 
-  // AI SDK integration
   const [currentModel, setCurrentModel] = useState("deepseek")
+
   const {
     messages: aiMessages,
     input: aiInput,
@@ -97,16 +93,14 @@ export default function ChatInterface() {
     api: "/api/chat",
     onFinish: () => {
       scrollToBottom()
-      setIsStreaming(false) // Ensure streaming state is reset
+      setIsStreaming(false)
       setStreamingWords([])
       setStreamingMessageId(null)
     },
     onStreamMode: "text",
   })
 
-  // Sync AI SDK messages with local messages for rendering and custom logic
   useEffect(() => {
-    // Add initial welcome message if no messages exist in AI SDK
     if (aiMessages.length === 0) {
       setAiMessages([
         {
@@ -116,56 +110,50 @@ export default function ChatInterface() {
         },
       ])
     }
-    // Convert aiMessages to local Message format and manage sections
+
     const newLocalMessages: Message[] = aiMessages.map((msg) => ({
       id: msg.id,
       content: msg.content,
       type: msg.role === "user" ? "user" : "system",
-      completed: true, // AI SDK messages are always "completed" when received
+      completed: true, // Mark all AI messages as completed for now
     }))
     setMessages(newLocalMessages)
   }, [aiMessages, setAiMessages])
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages, aiIsLoading]) // Scroll when messages change or AI is loading
+  }, [messages, aiIsLoading])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
-  // Check if device is mobile and get viewport height
   useEffect(() => {
     const checkMobileAndViewport = () => {
       const isMobileDevice = window.innerWidth < 768
       setIsMobile(isMobileDevice)
-
-      // Capture the viewport height
       const vh = window.innerHeight
       setViewportHeight(vh)
 
-      // Apply fixed height to main container on mobile
+      // For mobile, set main container height to viewport height
       if (isMobileDevice && mainContainerRef.current) {
         mainContainerRef.current.style.height = `${vh}px`
       }
     }
 
-    checkMobileAndViewport()
+    checkMobileAndViewport() // Initial check
 
-    // Set initial height
+    // Set height on mount for non-mobile as well, or ensure it's 100svh
     if (mainContainerRef.current) {
       mainContainerRef.current.style.height = isMobile ? `${viewportHeight}px` : "100svh"
     }
 
-    // Update on resize
     window.addEventListener("resize", checkMobileAndViewport)
-
     return () => {
       window.removeEventListener("resize", checkMobileAndViewport)
     }
   }, [isMobile, viewportHeight])
 
-  // Organize messages into sections (this logic might be redundant with AI SDK, but keeping for now)
   useEffect(() => {
     if (messages.length === 0) {
       setMessageSections([])
@@ -183,34 +171,27 @@ export default function ChatInterface() {
 
     messages.forEach((message) => {
       if (message.newSection) {
-        // Start a new section
         if (currentSection.messages.length > 0) {
-          // Mark previous section as inactive
           sections.push({
             ...currentSection,
-            isActive: false,
+            isActive: false, // Deactivate previous section
           })
         }
-
-        // Create new active section
         const newSectionId = `section-${Date.now()}-${sections.length}`
         currentSection = {
           id: newSectionId,
           messages: [message],
           isNewSection: true,
-          isActive: true,
+          isActive: true, // Activate new section
           sectionIndex: sections.length,
         }
-
-        // Update active section ID
         setActiveSectionId(newSectionId)
       } else {
-        // Add to current section
         currentSection.messages.push(message)
       }
     })
 
-    // Add the last section if it has messages
+    // Push the last section
     if (currentSection.messages.length > 0) {
       sections.push(currentSection)
     }
@@ -218,31 +199,27 @@ export default function ChatInterface() {
     setMessageSections(sections)
   }, [messages])
 
-  // Scroll to maximum position when new section is created, but only for sections after the first
   useEffect(() => {
+    // Scroll to bottom when a new section is added
     if (messageSections.length > 1) {
       setTimeout(() => {
         const scrollContainer = chatContainerRef.current
-
         if (scrollContainer) {
-          // Scroll to maximum possible position
           scrollContainer.scrollTo({
             top: scrollContainer.scrollHeight,
             behavior: "smooth",
           })
         }
-      }, 100)
+      }, 100) // Small delay to allow DOM to update
     }
   }, [messageSections])
 
-  // Focus the textarea on component mount (only on desktop)
   useEffect(() => {
     if (textareaRef.current && !isMobile) {
       textareaRef.current.focus()
     }
   }, [isMobile])
 
-  // Set focus back to textarea after streaming ends (only on desktop)
   useEffect(() => {
     if (!isStreaming && shouldFocusAfterStreamingRef.current && !isMobile) {
       focusTextarea()
@@ -250,13 +227,10 @@ export default function ChatInterface() {
     }
   }, [isStreaming, isMobile])
 
-  // Calculate available content height (viewport minus header and input)
   const getContentHeight = () => {
-    // Calculate available height by subtracting the top and bottom padding from viewport height
     return viewportHeight - TOP_PADDING_GLOBAL_NAV - BOTTOM_PADDING_INPUT_AREA - ADDITIONAL_OFFSET
   }
 
-  // Save the current selection state
   const saveSelectionState = () => {
     if (textareaRef.current) {
       selectionStateRef.current = {
@@ -266,17 +240,13 @@ export default function ChatInterface() {
     }
   }
 
-  // Restore the saved selection state
   const restoreSelectionState = () => {
     const textarea = textareaRef.current
     const { start, end } = selectionStateRef.current
-
     if (textarea && start !== null && end !== null) {
-      // Focus first, then set selection range
       textarea.focus()
       textarea.setSelectionRange(start, end)
     } else if (textarea) {
-      // If no selection was saved, just focus
       textarea.focus()
     }
   }
@@ -288,7 +258,7 @@ export default function ChatInterface() {
   }
 
   const handleInputContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Only focus if clicking directly on the container, not on buttons or other interactive elements
+    // Only focus textarea if the click is directly on the container or not on a button
     if (
       e.target === e.currentTarget ||
       (e.currentTarget === inputContainerRef.current && !(e.target as HTMLElement).closest("button"))
@@ -320,11 +290,9 @@ export default function ChatInterface() {
 
   const handleLocalInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value
-
-    // Only allow input changes when not streaming
     if (!aiIsLoading) {
-      setInputValue(newValue) // Update local input state
-      handleAiInputChange(e) // Also update AI SDK input state
+      setInputValue(newValue)
+      handleAiInputChange(e) // Pass to AI SDK's handler
 
       if (newValue.trim() !== "" && !hasTyped) {
         setHasTyped(true)
@@ -332,10 +300,11 @@ export default function ChatInterface() {
         setHasTyped(false)
       }
 
+      // Auto-resize textarea
       const textarea = textareaRef.current
       if (textarea) {
-        textarea.style.height = "auto"
-        const newHeight = Math.max(24, Math.min(textarea.scrollHeight, 160))
+        textarea.style.height = "auto" // Reset height to recalculate
+        const newHeight = Math.max(24, Math.min(textarea.scrollHeight, 160)) // Min 24px, Max 160px
         textarea.style.height = `${newHeight}px`
       }
     }
@@ -344,28 +313,21 @@ export default function ChatInterface() {
   const handleLocalSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (inputValue.trim() && !aiIsLoading) {
-      navigator.vibrate(50)
-
-      // Use AI SDK's handleSubmit
+      navigator.vibrate(50) // Haptic feedback on submit
       handleAiSubmit(e, {
         messages: [...aiMessages, { id: `user-${Date.now()}`, role: "user", content: inputValue.trim() }],
         data: { model: currentModel },
       })
-
-      // Reset local input state
       setInputValue("")
       setHasTyped(false)
-      setActiveButton("none")
-
+      setActiveButton("none") // Reset active button
       if (textareaRef.current) {
-        textareaRef.current.style.height = "auto"
+        textareaRef.current.style.height = "auto" // Reset textarea height after submit
       }
-
-      // Only focus the textarea on desktop, not on mobile
       if (!isMobile) {
         focusTextarea()
       } else {
-        // On mobile, blur the textarea to dismiss the keyboard
+        // On mobile, blur textarea after sending to hide keyboard
         if (textareaRef.current) {
           textareaRef.current.blur()
         }
@@ -374,14 +336,13 @@ export default function ChatInterface() {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // Handle Cmd+Enter on both mobile and desktop
+    // Allow Cmd/Ctrl + Enter for new line or submit
     if (!aiIsLoading && e.key === "Enter" && e.metaKey) {
       e.preventDefault()
       handleLocalSubmit(e)
       return
     }
-
-    // Only handle regular Enter key (without Shift) on desktop
+    // Submit on Enter, unless Shift is pressed for new line
     if (!aiIsLoading && !isMobile && e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
       handleLocalSubmit(e)
@@ -390,21 +351,16 @@ export default function ChatInterface() {
 
   const toggleButton = (button: ActiveButton) => {
     if (!aiIsLoading) {
-      // Save the current selection state before toggling
-      saveSelectionState()
-
+      saveSelectionState() // Save cursor position
       setActiveButton((prev) => (prev === button ? "none" : button))
-
-      // Restore the selection state after toggling
       setTimeout(() => {
-        restoreSelectionState()
+        restoreSelectionState() // Restore cursor position after state update
       }, 0)
     }
   }
 
   const renderMessage = (message: Message) => {
-    const isCompleted = message.completed // AI SDK messages are completed by default
-
+    const isCompleted = message.completed
     return (
       <div key={message.id} className={cn("flex flex-col", message.type === "user" ? "items-end" : "items-start")}>
         <div
@@ -426,7 +382,6 @@ export default function ChatInterface() {
             </span>
           )}
         </div>
-
         {message.type === "system" && isCompleted && (
           <div className="flex items-center gap-3 px-2 mt-2 mb-4">
             <button className="text-gray-400 hover:text-white transition-colors p-1.5 rounded-full bg-gray-700/50">
@@ -451,12 +406,12 @@ export default function ChatInterface() {
   }
 
   const shouldApplyHeight = (sectionIndex: number) => {
-    return sectionIndex > 0
+    return sectionIndex > 0 // Apply height to all sections except the first one
   }
 
   return (
     <div
-      className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center pt-24 px-4 pb-4" // Adjusted pt-24
+      className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center pt-24 px-0 pb-0 md:px-4 md:pb-4" // Adjusted padding for full width on mobile
       ref={mainContainerRef}
     >
       {/* AI Status Header */}
@@ -473,11 +428,13 @@ export default function ChatInterface() {
             <p className="text-sm text-gray-300">مساعدك الذكي المتطور - مدعوم بأحدث تقنيات الذكاء الاصطناعي</p>
           </div>
         </div>
+
         <div className="flex items-center gap-2 bg-green-600/20 border border-green-600/50 rounded-full px-4 py-2 text-sm">
           <CircleDot className="h-2 w-2 bg-green-400 rounded-full animate-pulse" />
           <span className="text-green-300">Dr X متصل</span>
         </div>
       </div>
+
       {/* Chat Container */}
       <div className="flex flex-col w-full max-w-4xl flex-1 rounded-2xl overflow-hidden bg-gray-800/50 backdrop-blur-xl border border-gray-700 shadow-2xl">
         {/* Model Selector */}
@@ -487,6 +444,7 @@ export default function ChatInterface() {
               <Brain className="h-5 w-5 text-amber-400" />
               <h3 className="text-lg font-medium text-white">اختر نموذج الذكاء الاصطناعي:</h3>
             </div>
+
             <div className="flex flex-wrap gap-2">
               <Button
                 onClick={() => selectModel("deepseek")}
@@ -514,6 +472,7 @@ export default function ChatInterface() {
               </Button>
             </div>
           </div>
+
           {/* Features Panel */}
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-3 flex flex-col items-center">
@@ -536,14 +495,16 @@ export default function ChatInterface() {
             </div>
           </div>
         </div>
+
         {/* Messages Area */}
         <div
           ref={chatContainerRef}
           className="flex-1 p-4 overflow-y-auto bg-gradient-to-b from-gray-900/30 to-gray-800/30"
-          style={{ maxHeight: "calc(100vh - 320px)" }}
+          style={{ maxHeight: "calc(100vh - 320px)" }} // Adjust based on actual header/footer height
         >
           <div className="max-w-3xl mx-auto space-y-6">
             {messages.map((message) => renderMessage(message))}
+
             {aiIsLoading && (
               <div className="flex items-center gap-3 mb-4 justify-start">
                 <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-full p-2 flex-shrink-0 animate-pulse">
@@ -568,14 +529,17 @@ export default function ChatInterface() {
                 </div>
               </div>
             )}
+
             {aiError && (
               <div className="bg-red-900/30 border border-red-700 rounded-xl p-4 text-red-300">
                 <span className="font-medium">حدث خطأ:</span> {aiError.message}
               </div>
             )}
+
             <div ref={messagesEndRef} className="h-4" />
           </div>
         </div>
+
         {/* Input Area */}
         <form onSubmit={handleLocalSubmit} className="p-4 border-t border-gray-700 bg-gray-900/50 backdrop-blur-lg">
           <div

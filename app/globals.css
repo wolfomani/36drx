@@ -28,21 +28,21 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --border: 214.3 31.6% 91.4%;
+    --input: 214.3 31.6% 91.4%;
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 47.4% 11.2%;
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 47.4% 11.2%;
+    --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 47.4% 11.2%;
+    --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
@@ -72,76 +72,95 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-cairo), sans-serif; /* Apply Cairo font */
+    font-family: var(--font-cairo);
   }
 }
 
 /* Custom Dr X Styles */
-.gradient-bg {
-  background: linear-gradient(135deg, #4169e1, #8a2be2, #ffa07a, #ff6b6b); /* Blue-purple to orange-red */
-  background-size: 400% 400%;
-  animation: gradientAnimation 15s ease infinite;
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
 .gradient-text {
-  background: linear-gradient(45deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1); /* Orange-red to blue-purple */
+  background: linear-gradient(to right, var(--drx-orange), var(--drx-red));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
 }
 
+.gradient-bg {
+  background: linear-gradient(to bottom right, var(--drx-orange-dark), var(--drx-red-dark));
+}
+
 .btn-gradient {
-  background: linear-gradient(45deg, #ff6b6b, #ffa07a); /* Orange-red to softer orange */
+  background: linear-gradient(to right, var(--drx-orange), var(--drx-red));
   border: none;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.btn-gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, var(--drx-red), var(--drx-orange));
+  transition: left 0.3s ease-in-out;
+  z-index: -1;
+}
+
+.btn-gradient:hover::before {
+  left: 0;
+}
+
+.btn-outline-gradient {
+  background: transparent;
+  border: 2px solid;
+  border-image: linear-gradient(to right, var(--drx-orange), var(--drx-red)) 1;
   color: white;
-  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
 }
 
-.btn-gradient:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
+.btn-outline-gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, var(--drx-orange-dark), var(--drx-red-dark));
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: -1;
 }
 
-.glow-effect {
-  box-shadow: 0 0 8px rgba(255, 160, 122, 0.6), 0 0 15px rgba(138, 43, 226, 0.4);
+.btn-outline-gradient:hover::before {
+  opacity: 1;
 }
 
-/* Chat bubble styles (from new chat interface) */
-.chat-bubble-user {
-  background: linear-gradient(to right, #3b82f6, #4f46e5); /* Blue to Indigo */
-  border-radius: 1rem 1rem 0 1rem;
-}
-
-.chat-bubble-ai {
-  background: linear-gradient(to right, #fbbf24, #f97316); /* Amber to Orange */
-  border-radius: 1rem 1rem 1rem 0;
-}
-
-/* Card hover effect */
 .card-hover {
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
 }
 
 .card-hover:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(255, 77, 0, 0.2); /* Using a Dr X orange shade for consistency */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border-color: var(--drx-orange);
 }
 
 /* Animations */
-@keyframes fade-in-up {
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -153,7 +172,8 @@
 }
 
 .animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0; /* Start invisible */
 }
 
 .animate-fade-in-up.delay-200 {
@@ -168,15 +188,6 @@
   animation-delay: 0.6s;
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 .animate-fade-in {
-  animation: fade-in 0.3s ease-out forwards;
+  animation: fadeIn 0.3s ease-out forwards;
 }

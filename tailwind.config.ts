@@ -33,6 +33,10 @@ const config = {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -40,10 +44,6 @@ const config = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -53,11 +53,14 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom Dr X colors (aligned with new gradients)
-        "drx-orange": "#ff6b6b", // A vibrant orange-red
-        "drx-red": "#ffa07a", // A softer orange
-        "drx-purple": "#8a2be2", // Blue-violet
-        "drx-blue": "#4169e1", // Royal blue
+        // Dr X Custom Colors
+        "drx-orange": "#FF4D00", // A vibrant orange
+        "drx-orange-dark": "#CC3D00", // A darker shade for gradients
+        "drx-red": "#FF0000", // A strong red
+        "drx-red-dark": "#CC0000", // A darker shade for gradients
+        "drx-blue": "#007BFF", // A standard blue
+        "drx-indigo": "#4B0082", // A deep indigo
+        "drx-purple": "#8A2BE2", // A medium purple
       },
       borderRadius: {
         lg: "var(--radius)",
