@@ -1,185 +1,136 @@
-import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ExternalLink, Github } from "lucide-react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 export default function PortfolioPage() {
+  const projects = [
+    {
+      id: 1,
+      name: "منصة التجارة الإلكترونية الذكية",
+      description: "متجر إلكتروني متكامل مدعوم بالذكاء الاصطناعي لتحسين تجربة التسوق والتوصيات الشخصية.",
+      image: "/placeholder.svg?height=400&width=600",
+      tags: ["تطوير الويب", "ذكاء اصطناعي", "تجارة إلكترونية"],
+      liveLink: "#",
+      githubLink: "#",
+    },
+    {
+      id: 2,
+      name: "تطبيق إدارة المهام للجوال",
+      description: "تطبيق جوال سهل الاستخدام لإدارة المهام والمشاريع بفعالية، متوفر على iOS و Android.",
+      image: "/placeholder.svg?height=400&width=600",
+      tags: ["تطبيقات الجوال", "UI/UX", "إنتاجية"],
+      liveLink: "#",
+      githubLink: "#",
+    },
+    {
+      id: 3,
+      name: "نظام تحليل البيانات التنبؤي",
+      description: "حل ذكاء اصطناعي لتحليل البيانات الضخمة وتقديم تنبؤات دقيقة لدعم اتخاذ القرار.",
+      image: "/placeholder.svg?height=400&width=600",
+      tags: ["ذكاء اصطناعي", "تحليل بيانات", "تعلم آلة"],
+      liveLink: "#",
+      githubLink: "#",
+    },
+    {
+      id: 4,
+      name: "موقع شركة عقارية متجاوب",
+      description: "تصميم وتطوير موقع ويب حديث ومتجاوب لشركة عقارية، مع معرض صور وميزات بحث متقدمة.",
+      image: "/placeholder.svg?height=400&width=600",
+      tags: ["تطوير الويب", "تصميم متجاوب", "عقارات"],
+      liveLink: "#",
+      githubLink: "#",
+    },
+    {
+      id: 5,
+      name: "تطبيق لياقة بدنية شخصي",
+      description: "تطبيق جوال يقدم خطط تمارين مخصصة وتتبع التقدم، مع واجهة مستخدم جذابة.",
+      image: "/placeholder.svg?height=400&width=600",
+      tags: ["تطبيقات الجوال", "صحة ولياقة", "UI/UX"],
+      liveLink: "#",
+      githubLink: "#",
+    },
+    {
+      id: 6,
+      name: "نظام محادثة ذكي (Chatbot)",
+      description: "تطوير روبوت محادثة مدعوم بالذكاء الاصطناعي لخدمة العملاء والدعم الفني.",
+      image: "/placeholder.svg?height=400&width=600",
+      tags: ["ذكاء اصطناعي", "معالجة اللغة الطبيعية", "خدمة عملاء"],
+      liveLink: "#",
+      githubLink: "#",
+    },
+  ]
+
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white pt-24">
-      {/* Hero Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 text-center bg-gradient-to-b from-gray-900/50 to-transparent">
-        <div className="container px-4 md:px-6">
-          <div className="max-w-3xl mx-auto space-y-6">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text leading-tight">
-              أعمالنا ومشاريعنا
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300">
-              نحن فخورون بتقديم مجموعة من المشاريع الناجحة التي تعكس خبرتنا وابتكارنا في مختلف المجالات.
-            </p>
+    <div className="pt-24 bg-gray-900 text-white min-h-screen">
+      {" "}
+      {/* Adjusted padding for fixed navbar */}
+      <section className="py-20 text-center">
+        <div className="container mx-auto px-4">
+          <h1 className="text-5xl font-extrabold mb-6 gradient-text animate-fade-in-up">أعمالنا المميزة</h1>
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto animate-fade-in-up delay-200">
+            نحن نفخر بتقديم حلول رقمية مبتكرة وعالية الجودة لعملائنا في مختلف الصناعات.
+          </p>
+        </div>
+      </section>
+      <section className="py-16 bg-gray-800/70">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.map((project) => (
+              <Card
+                key={project.id}
+                className="bg-gray-900/70 border border-gray-700 rounded-xl overflow-hidden shadow-lg card-hover animate-fade-in-up"
+              >
+                <Image
+                  src={project.image || "/placeholder.svg"}
+                  alt={project.name}
+                  width={600}
+                  height={400}
+                  className="w-full h-48 object-cover"
+                />
+                <CardHeader className="p-4 pb-2">
+                  <CardTitle className="text-xl font-semibold text-white">{project.name}</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 pt-0">
+                  <p className="text-gray-300 text-sm mb-4">{project.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.tags.map((tag) => (
+                      <span key={tag} className="bg-gray-700 text-gray-200 text-xs px-3 py-1 rounded-full">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-3">
+                    <Link href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                      <Button className="btn-gradient text-white px-4 py-2 text-sm rounded-full flex items-center gap-2">
+                        <ExternalLink className="h-4 w-4" />
+                        عرض مباشر
+                      </Button>
+                    </Link>
+                    <Link href={project.githubLink} target="_blank" rel="noopener noreferrer">
+                      <Button
+                        variant="outline"
+                        className="bg-transparent border border-gray-600 text-gray-300 px-4 py-2 text-sm rounded-full flex items-center gap-2 hover:bg-gray-700"
+                      >
+                        <Github className="h-4 w-4" />
+                        GitHub
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
-
-      {/* Portfolio Grid */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-900/50">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {/* Project 1 */}
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <Image
-                src="/placeholder.svg?height=300&width=500"
-                width={500}
-                height={300}
-                alt="Project 1"
-                className="rounded-t-xl object-cover w-full h-48"
-              />
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-white">مشروع تطوير ويب</CardTitle>
-              </CardHeader>
-              <CardContent className="text-gray-300">
-                تطوير موقع ويب متكامل لشركة ناشئة، يتميز بتصميم عصري وأداء عالي.
-              </CardContent>
-              <div className="p-6 pt-0">
-                <Button
-                  variant="outline"
-                  className="w-full border-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-all bg-transparent"
-                >
-                  عرض المشروع
-                </Button>
-              </div>
-            </Card>
-            {/* Project 2 */}
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <Image
-                src="/placeholder.svg?height=300&width=500"
-                width={500}
-                height={300}
-                alt="Project 2"
-                className="rounded-t-xl object-cover w-full h-48"
-              />
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-white">تطبيق جوال ذكي</CardTitle>
-              </CardHeader>
-              <CardContent className="text-gray-300">
-                بناء تطبيق جوال مبتكر يوفر حلولًا ذكية للمستخدمين اليوميين.
-              </CardContent>
-              <div className="p-6 pt-0">
-                <Button
-                  variant="outline"
-                  className="w-full border-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-all bg-transparent"
-                >
-                  عرض المشروع
-                </Button>
-              </div>
-            </Card>
-            {/* Project 3 */}
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <Image
-                src="/placeholder.svg?height=300&width=500"
-                width={500}
-                height={300}
-                alt="Project 3"
-                className="rounded-t-xl object-cover w-full h-48"
-              />
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-white">حل ذكاء اصطناعي</CardTitle>
-              </CardHeader>
-              <CardContent className="text-gray-300">
-                تطوير نظام ذكاء اصطناعي لتحليل البيانات وتقديم رؤى قيمة للأعمال.
-              </CardContent>
-              <div className="p-6 pt-0">
-                <Button
-                  variant="outline"
-                  className="w-full border-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-all bg-transparent"
-                >
-                  عرض المشروع
-                </Button>
-              </div>
-            </Card>
-            {/* Project 4 */}
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <Image
-                src="/placeholder.svg?height=300&width=500"
-                width={500}
-                height={300}
-                alt="Project 4"
-                className="rounded-t-xl object-cover w-full h-48"
-              />
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-white">منصة تجارة إلكترونية</CardTitle>
-              </CardHeader>
-              <CardContent className="text-gray-300">
-                تصميم وتنفيذ منصة تجارة إلكترونية قوية وسهلة الاستخدام.
-              </CardContent>
-              <div className="p-6 pt-0">
-                <Button
-                  variant="outline"
-                  className="w-full border-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-all bg-transparent"
-                >
-                  عرض المشروع
-                </Button>
-              </div>
-            </Card>
-            {/* Project 5 */}
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <Image
-                src="/placeholder.svg?height=300&width=500"
-                width={500}
-                height={300}
-                alt="Project 5"
-                className="rounded-t-xl object-cover w-full h-48"
-              />
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-white">نظام إدارة محتوى</CardTitle>
-              </CardHeader>
-              <CardContent className="text-gray-300">
-                بناء نظام إدارة محتوى مخصص لتلبية احتياجات العملاء الفريدة.
-              </CardContent>
-              <div className="p-6 pt-0">
-                <Button
-                  variant="outline"
-                  className="w-full border-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-all bg-transparent"
-                >
-                  عرض المشروع
-                </Button>
-              </div>
-            </Card>
-            {/* Project 6 */}
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <Image
-                src="/placeholder.svg?height=300&width=500"
-                width={500}
-                height={300}
-                alt="Project 6"
-                className="rounded-t-xl object-cover w-full h-48"
-              />
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-white">تكامل API</CardTitle>
-              </CardHeader>
-              <CardContent className="text-gray-300">
-                توفير حلول تكامل API سلسة لربط الأنظمة والتطبيقات المختلفة.
-              </CardContent>
-              <div className="p-6 pt-0">
-                <Button
-                  variant="outline"
-                  className="w-full border-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-all bg-transparent"
-                >
-                  عرض المشروع
-                </Button>
-              </div>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 text-center bg-gradient-to-r from-drx-blue to-drx-purple">
-        <div className="container px-4 md:px-6 space-y-6">
-          <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">هل لديك مشروع في ذهنك؟</h2>
-          <p className="text-lg md:text-xl text-gray-200">دعنا نساعدك على تحويل فكرتك إلى واقع ملموس.</p>
+      <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800 text-white text-center">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-6 gradient-text animate-fade-in-up">هل لديك فكرة لمشروع؟</h2>
+          <p className="text-lg mb-8 text-gray-300 animate-fade-in-up delay-200">دعنا نحولها إلى واقع رقمي مذهل.</p>
           <Link href="/contact">
-            <Button className="px-8 py-3 text-lg font-semibold rounded-full bg-white text-drx-blue hover:bg-gray-100 transition-all shadow-lg">
-              تواصل معنا
+            <Button className="btn-gradient text-white px-10 py-4 text-xl rounded-full shadow-lg hover:shadow-xl transition-all animate-fade-in-up delay-400">
+              تواصل معنا اليوم
             </Button>
           </Link>
         </div>

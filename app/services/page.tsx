@@ -4,21 +4,36 @@ import type React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import {
-  ArrowRight,
   Code,
   Smartphone,
   Brain,
-  Database,
   Cloud,
-  ShieldCheck,
-  ShoppingCart,
-  Cog,
+  Rocket,
+  Lightbulb,
   Users,
   Gamepad,
   Briefcase,
   Heart,
   Server,
-  BrainCircuit,
+  Database,
+  ShieldCheck,
+  Expand,
+  DollarSign,
+  Globe,
+  Lock,
+  MessageSquare,
+  Check,
+  ShoppingCart,
+  Cog,
+  RefreshCw,
+  Eye,
+  Languages,
+  LineChart,
+  Clock,
+  Star,
+  User,
+  Send,
+  Palette,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
@@ -27,7 +42,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardTitle } from "@/components/ui/card"
 
 export default function ServicesPage() {
   const [activeService, setActiveService] = useState("all")
@@ -61,228 +76,162 @@ export default function ServicesPage() {
     )
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white pt-24">
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32 text-center overflow-hidden">
-        <div className="absolute inset-0 gradient-bg opacity-50"></div>
-        <div className="relative z-10 p-8 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight gradient-text animate-fade-in-up">
-            خدماتنا المتكاملة
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 animate-fade-in-up delay-200">
-            نقدم حلولاً رقمية مبتكرة ومتكاملة لتعزيز حضورك الرقمي وتحقيق أهداف عملك.
-          </p>
-          <Link href="/contact">
-            <Button className="btn-gradient text-white px-8 py-3 text-lg rounded-full shadow-lg hover:scale-105 transition-transform animate-fade-in-up delay-400">
-              اطلب استشارة مجانية <ArrowRight className="mr-2 h-5 w-5" />
-            </Button>
-          </Link>
-        </div>
-      </section>
-
-      {/* Hero Section (Updated) */}
-      <section className="w-full py-12 md:py-24 lg:py-32 text-center bg-gradient-to-b from-gray-900/50 to-transparent">
-        <div className="container px-4 md:px-6">
-          <div className="max-w-3xl mx-auto space-y-6">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text leading-tight">
-              خدماتنا المتكاملة
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300">
-              نقدم مجموعة واسعة من الخدمات المبتكرة في تطوير الويب، تطبيقات الجوال، وحلول الذكاء الاصطناعي لمساعدتك على
-              تحقيق أهدافك.
-            </p>
-            <Link href="/contact">
-              <Button className="px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg">
-                اطلب استشارة مجانية
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-900/50">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <CardHeader className="flex flex-col items-center text-center">
-                <div className="bg-blue-500/20 p-4 rounded-full mb-4">
-                  <Code className="h-8 w-8 text-blue-400" />
-                </div>
-                <CardTitle className="text-2xl font-bold text-white">تطوير الويب</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center text-gray-300">
-                بناء مواقع ويب عصرية، متجاوبة، وعالية الأداء باستخدام أحدث التقنيات.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <CardHeader className="flex flex-col items-center text-center">
-                <div className="bg-green-500/20 p-4 rounded-full mb-4">
-                  <Smartphone className="h-8 w-8 text-green-400" />
-                </div>
-                <CardTitle className="text-2xl font-bold text-white">تطوير تطبيقات الجوال</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center text-gray-300">
-                تصميم وتطوير تطبيقات جوال مبتكرة لأنظمة iOS و Android.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <CardHeader className="flex flex-col items-center text-center">
-                <div className="bg-purple-500/20 p-4 rounded-full mb-4">
-                  <BrainCircuit className="h-8 w-8 text-purple-400" />
-                </div>
-                <CardTitle className="text-2xl font-bold text-white">حلول الذكاء الاصطناعي</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center text-gray-300">
-                تطوير حلول ذكاء اصطناعي مخصصة لتحسين الكفاءة واتخاذ القرارات.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <CardHeader className="flex flex-col items-center text-center">
-                <div className="bg-red-500/20 p-4 rounded-full mb-4">
-                  <Cloud className="h-8 w-8 text-red-400" />
-                </div>
-                <CardTitle className="text-2xl font-bold text-white">خدمات السحابة</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center text-gray-300">
-                استضافة وإدارة التطبيقات على منصات السحابة الرائدة لضمان التوافر والأداء.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <CardHeader className="flex flex-col items-center text-center">
-                <div className="bg-yellow-500/20 p-4 rounded-full mb-4">
-                  <Database className="h-8 w-8 text-yellow-400" />
-                </div>
-                <CardTitle className="text-2xl font-bold text-white">إدارة البيانات</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center text-gray-300">
-                تصميم، تنفيذ، وإدارة قواعد البيانات لضمان سلامة وكفاءة بياناتك.
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/50 border border-gray-700 shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <CardHeader className="flex flex-col items-center text-center">
-                <div className="bg-teal-500/20 p-4 rounded-full mb-4">
-                  <ShieldCheck className="h-8 w-8 text-teal-400" />
-                </div>
-                <CardTitle className="text-2xl font-bold text-white">الأمن السيبراني</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center text-gray-300">
-                حماية أنظمتك وبياناتك من التهديدات السيبرانية المتزايدة.
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Web Development Section */}
-      <section id="web-development" className="py-16 md:py-24 bg-gray-900/70 backdrop-blur-lg">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 gradient-text animate-fade-in-up">تطوير الويب</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-drx-orange transition-all duration-300 animate-fade-in-up">
-              <Code className="h-12 w-12 text-drx-orange mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-white mb-3">مواقع الشركات</h3>
-              <p className="text-gray-300">تصميم وتطوير مواقع احترافية تعكس هوية شركتك.</p>
-            </div>
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-drx-red transition-all duration-300 animate-fade-in-up delay-200">
-              <Database className="h-12 w-12 text-drx-red mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-white mb-3">متاجر إلكترونية</h3>
-              <p className="text-gray-300">منصات تجارة إلكترونية آمنة وسهلة الاستخدام.</p>
-            </div>
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-blue-500 transition-all duration-300 animate-fade-in-up delay-400">
-              <Cloud className="h-12 w-12 text-blue-500 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-white mb-3">تطبيقات الويب المخصصة</h3>
-              <p className="text-gray-300">حلول ويب مخصصة تلبي احتياجات عملك الفريدة.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Mobile App Development Section */}
-      <section id="mobile-development" className="py-16 md:py-24 text-center">
+    <div className="pt-24 bg-gray-900 text-white min-h-screen">
+      {" "}
+      {/* Adjusted padding for fixed navbar */}
+      <section className="py-20 text-center">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 gradient-text animate-fade-in-up">
-            تطوير تطبيقات الجوال
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 animate-fade-in-up">
-              <Smartphone className="h-12 w-12 text-green-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-white mb-3">تطبيقات iOS</h3>
-              <p className="text-gray-300">تطوير تطبيقات أصلية لأجهزة iPhone و iPad.</p>
+          <h1 className="text-5xl font-extrabold mb-6 gradient-text animate-fade-in-up">خدماتنا المبتكرة</h1>
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto animate-fade-in-up delay-200">
+            نقدم مجموعة شاملة من الحلول الرقمية المصممة لتمكين أعمالك وتحقيق أهدافك في العالم الرقمي.
+          </p>
+        </div>
+      </section>
+      <section id="web-development" className="py-16 bg-gray-800/70">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-10 text-center gradient-text animate-fade-in-up">تطوير الويب</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-6 animate-fade-in-up">
+              <p className="text-lg text-gray-300">
+                نحن متخصصون في بناء مواقع ويب قوية، متجاوبة، ومحسّنة للأداء باستخدام أحدث التقنيات. سواء كنت بحاجة إلى
+                موقع تعريفي بسيط، متجر إلكتروني معقد، أو منصة ويب مخصصة، فإن فريقنا يضمن لك حلاً يلبي احتياجاتك بدقة.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 space-y-2">
+                <li>تطوير الواجهات الأمامية (Frontend) باستخدام React, Next.js</li>
+                <li>تطوير الواجهات الخلفية (Backend) باستخدام Node.js, Python</li>
+                <li>متاجر إلكترونية متكاملة (E-commerce)</li>
+                <li>أنظمة إدارة المحتوى (CMS) مخصصة</li>
+                <li>تحسين محركات البحث (SEO)</li>
+              </ul>
+              <Link href="/contact">
+                <Button className="btn-gradient text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all">
+                  اطلب خدمة تطوير الويب
+                </Button>
+              </Link>
             </div>
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 animate-fade-in-up delay-200">
-              <Smartphone className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-white mb-3">تطبيقات Android</h3>
-              <p className="text-gray-300">بناء تطبيقات قوية ومرنة لأجهزة Android.</p>
+            <div className="flex justify-center animate-fade-in-up delay-200">
+              <Image
+                src="/placeholder.svg?height=400&width=600"
+                alt="Web Development"
+                width={600}
+                height={400}
+                className="rounded-xl shadow-lg"
+              />
             </div>
           </div>
         </div>
       </section>
-
-      {/* AI Solutions Section */}
-      <section id="ai-solutions" className="py-16 md:py-24 bg-gray-900/70 backdrop-blur-lg">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 gradient-text animate-fade-in-up">
+      <section id="mobile-apps" className="py-16 bg-gray-900">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-10 text-center gradient-text animate-fade-in-up">تطبيقات الجوال</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="flex justify-center order-2 md:order-1 animate-fade-in-up">
+              <Image
+                src="/placeholder.svg?height=400&width=600"
+                alt="Mobile Apps"
+                width={600}
+                height={400}
+                className="rounded-xl shadow-lg"
+              />
+            </div>
+            <div className="space-y-6 order-1 md:order-2 animate-fade-in-up delay-200">
+              <p className="text-lg text-gray-300">
+                نصمم ونطور تطبيقات جوال مبتكرة لأجهزة iOS و Android توفر تجربة مستخدم استثنائية. نركز على الأداء،
+                الأمان، وسهولة الاستخدام لضمان وصولك إلى جمهور أوسع.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 space-y-2">
+                <li>تطبيقات iOS أصلية (Swift/Objective-C)</li>
+                <li>تطبيقات Android أصلية (Kotlin/Java)</li>
+                <li>تطبيقات هجينة (Hybrid) باستخدام React Native, Flutter</li>
+                <li>تصميم واجهة المستخدم (UI) وتجربة المستخدم (UX)</li>
+                <li>دمج واجهات برمجة التطبيقات (APIs)</li>
+              </ul>
+              <Link href="/contact">
+                <Button className="btn-gradient text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all">
+                  اطلب خدمة تطبيقات الجوال
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="ai-solutions" className="py-16 bg-gray-800/70">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-10 text-center gradient-text animate-fade-in-up">
             حلول الذكاء الاصطناعي
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition-all duration-300 animate-fade-in-up">
-              <Brain className="h-12 w-12 text-purple-500 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-white mb-3">معالجة اللغة الطبيعية (NLP)</h3>
-              <p className="text-gray-300">حلول لفهم وتحليل النصوص واللغة البشرية.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-6 animate-fade-in-up">
+              <p className="text-lg text-gray-300">
+                نطور أنظمة ذكاء اصطناعي مخصصة، تعلم آلة، ومعالجة اللغة الطبيعية لتحويل أعمالك. من التحليلات التنبؤية إلى
+                الأتمتة الذكية، نساعدك على استغلال قوة البيانات.
+              </p>
+              <ul className="list-disc list-inside text-gray-300 space-y-2">
+                <li>التعلم الآلي (Machine Learning) والتعلم العميق (Deep Learning)</li>
+                <li>معالجة اللغة الطبيعية (NLP)</li>
+                <li>الرؤية الحاسوبية (Computer Vision)</li>
+                <li>التحليلات التنبؤية (Predictive Analytics)</li>
+                <li>أنظمة التوصية (Recommendation Systems)</li>
+              </ul>
+              <Link href="/contact">
+                <Button className="btn-gradient text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all">
+                  اطلب خدمة حلول الذكاء الاصطناعي
+                </Button>
+              </Link>
             </div>
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-pink-500 transition-all duration-300 animate-fade-in-up delay-200">
+            <div className="flex justify-center animate-fade-in-up delay-200">
               <Image
-                src="/placeholder.svg?height=100&width=100"
-                alt="Computer Vision"
-                width={100}
-                height={100}
-                className="mx-auto mb-4 rounded-lg"
+                src="/placeholder.svg?height=400&width=600"
+                alt="AI Solutions"
+                width={600}
+                height={400}
+                className="rounded-xl shadow-lg"
               />
-              <h3 className="text-2xl font-semibold text-white mb-3">الرؤية الحاسوبية</h3>
-              <p className="text-gray-300">أنظمة للتعرف على الصور والفيديوهات وتحليلها.</p>
-            </div>
-            <div className="bg-gray-800/70 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-cyan-500 transition-all duration-300 animate-fade-in-up delay-400">
-              <ShieldCheck className="h-12 w-12 text-cyan-500 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-white mb-3">التحليلات التنبؤية</h3>
-              <p className="text-gray-300">بناء نماذج للتنبؤ بالاتجاهات المستقبلية واتخاذ القرارات.</p>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Call to Action */}
+      <section id="other-services" className="py-16 bg-gray-900">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-10 gradient-text animate-fade-in-up">خدمات إضافية</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up">
+              <Palette className="h-12 w-12 text-pink-400 mb-4" />
+              <CardTitle className="text-2xl font-semibold mb-2">تصميم UI/UX</CardTitle>
+              <CardContent className="text-gray-300 text-sm">
+                تصميم واجهات مستخدم جذابة وتجارب مستخدم سلسة لمنتجاتك الرقمية.
+              </CardContent>
+            </Card>
+            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up delay-200">
+              <Database className="h-12 w-12 text-green-400 mb-4" />
+              <CardTitle className="text-2xl font-semibold mb-2">إدارة قواعد البيانات</CardTitle>
+              <CardContent className="text-gray-300 text-sm">
+                تصميم، تنفيذ، وإدارة قواعد بيانات قوية وآمنة لبياناتك.
+              </CardContent>
+            </Card>
+            <Card className="bg-gray-800/70 border border-gray-700 rounded-xl p-6 flex flex-col items-center text-center card-hover animate-fade-in-up delay-400">
+              <Cloud className="h-12 w-12 text-indigo-400 mb-4" />
+              <CardTitle className="text-2xl font-semibold mb-2">حلول السحابة</CardTitle>
+              <CardContent className="text-gray-300 text-sm">
+                نشر وإدارة تطبيقاتك على منصات السحابة مثل AWS, Azure, Google Cloud.
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
       <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800 text-white text-center">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text animate-fade-in-up">
-            دعنا نبني مستقبلك الرقمي معًا
-          </h2>
+          <h2 className="text-4xl font-bold mb-6 gradient-text animate-fade-in-up">هل أنت مستعد لبدء مشروعك؟</h2>
           <p className="text-lg mb-8 text-gray-300 animate-fade-in-up delay-200">
-            تواصل معنا اليوم لمناقشة مشروعك والحصول على استشارة مجانية.
+            دعنا نساعدك في تحويل أفكارك إلى واقع رقمي ملموس.
           </p>
           <Link href="/contact">
             <Button className="btn-gradient text-white px-10 py-4 text-xl rounded-full shadow-lg hover:shadow-xl transition-all animate-fade-in-up delay-400">
-              تواصل معنا
+              تواصل معنا اليوم
             </Button>
           </Link>
         </div>
       </section>
-
-      {/* Call to Action Section (Updated) */}
-      <section className="w-full py-12 md:py-24 lg:py-32 text-center bg-gradient-to-r from-drx-blue to-drx-purple">
-        <div className="container px-4 md:px-6 space-y-6">
-          <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">دعنا نبني مستقبلك الرقمي معًا</h2>
-          <p className="text-lg md:text-xl text-gray-200">
-            تواصل معنا اليوم لمناقشة مشروعك والحصول على استشارة مجانية.
-          </p>
-          <Link href="/contact">
-            <Button className="px-8 py-3 text-lg font-semibold rounded-full bg-white text-drx-blue hover:bg-gray-100 transition-all shadow-lg">
-              تواصل معنا
-            </Button>
-          </Link>
-        </div>
-      </section>
-
       {/* قسم فلترة الخدمات */}
       <section className="py-12 section-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -305,7 +254,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
       {/* خدماتنا الرئيسية */}
       <section id="services" className="py-20 w-full section-bg pt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -342,7 +290,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
       {/* خدمات تطوير الويب */}
       {(activeService === "all" || activeService === "web") && (
         <section className="py-20 section-bg">
@@ -367,15 +314,15 @@ export default function ServicesPage() {
                   <p className="text-gray-300 mb-6">مواقع تعمل بكفاءة على جميع الأجهزة مع تصميم متجاوب وسريع</p>
                   <ul className="text-sm text-gray-400 space-y-2 text-right">
                     <li>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       تصميم متجاوب 100%
                     </li>
                     <li>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       سرعة تحميل فائقة
                     </li>
                     <li>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       تحسين محركات البحث
                     </li>
                   </ul>
@@ -391,15 +338,15 @@ export default function ServicesPage() {
                   <p className="text-gray-300 mb-6">منصات تجارة إلكترونية متكاملة مع نظم دفع آمنة</p>
                   <ul className="text-sm text-gray-400 space-y-2 text-right">
                     <li>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       بوابات دفع متعددة
                     </li>
                     <li>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       إدارة المخزون
                     </li>
                     <li>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       تتبع الطلبات
                     </li>
                   </ul>
@@ -415,15 +362,15 @@ export default function ServicesPage() {
                   <p className="text-gray-300 mb-6">حلول مخصصة تلبي احتياجات عملك الخاصة</p>
                   <ul className="text-sm text-gray-400 space-y-2 text-right">
                     <li>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       تطوير مخصص
                     </li>
                     <li>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       تكامل مع الأنظمة
                     </li>
                     <li>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       أمان متقدم
                     </li>
                   </ul>
@@ -436,14 +383,13 @@ export default function ServicesPage() {
                 onClick={() => handleRequestService("web")}
                 className="btn-gradient text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg flex items-center justify-center mx-auto"
               >
-                <ArrowRight className="h-5 w-5 ml-2" />
+                <Rocket className="h-5 w-5 ml-2" />
                 ابدأ مشروع الويب الآن
               </Button>
             </div>
           </div>
         </section>
       )}
-
       {/* خدمات تطبيقات الجوال */}
       {(activeService === "all" || activeService === "mobile") && (
         <section className="py-20 section-bg">
@@ -489,7 +435,7 @@ export default function ServicesPage() {
                   <div className="flex items-start space-x-4 space-x-reverse">
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
-                        <ArrowRight className="h-6 w-6 text-white" />
+                        <RefreshCw className="h-6 w-6 text-white" />
                       </div>
                     </div>
                     <div>
@@ -532,14 +478,13 @@ export default function ServicesPage() {
                 onClick={() => handleRequestService("mobile")}
                 className="btn-gradient text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg flex items-center justify-center mx-auto"
               >
-                <ArrowRight className="h-5 w-5 ml-2" />
+                <Smartphone className="h-5 w-5 ml-2" />
                 ابدأ تطبيق الجوال الآن
               </Button>
             </div>
           </div>
         </section>
       )}
-
       {/* خدمات الذكاء الاصطناعي */}
       {(activeService === "all" || activeService === "ai") && (
         <section className="py-20 section-bg">
@@ -556,31 +501,25 @@ export default function ServicesPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
               <div className={serviceCardClass}>
-                <ArrowRight className="h-10 w-10 text-blue-400 mx-auto mb-4" />
+                <MessageSquare className="h-10 w-10 text-blue-400 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-3">روبوتات الدردشة</h3>
                 <p className="text-gray-400 text-sm">مساعدين أذكياء للتفاعل مع العملاء</p>
               </div>
 
               <div className={serviceCardClass}>
-                <Image
-                  src="/placeholder.svg?height=100&width=100"
-                  alt="Computer Vision"
-                  width={100}
-                  height={100}
-                  className="mx-auto mb-4 rounded-lg"
-                />
+                <Eye className="h-10 w-10 text-green-400 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-3">رؤية الحاسوب</h3>
                 <p className="text-gray-400 text-sm">تحليل وفهم الصور والفيديوهات</p>
               </div>
 
               <div className={serviceCardClass}>
-                <ArrowRight className="h-10 w-10 text-purple-400 mx-auto mb-4" />
+                <Languages className="h-10 w-10 text-purple-400 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-3">معالجة اللغة</h3>
                 <p className="text-gray-400 text-sm">فهم وتحليل النصوص والمحتوى</p>
               </div>
 
               <div className={serviceCardClass}>
-                <ArrowRight className="h-10 w-10 text-drx-orange mx-auto mb-4" />
+                <LineChart className="h-10 w-10 text-drx-orange mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-3">التعلم الآلي</h3>
                 <p className="text-gray-400 text-sm">نماذج ذكية للتنبؤ والتحليل</p>
               </div>
@@ -592,15 +531,15 @@ export default function ServicesPage() {
                 <p className="text-lg mb-6">تجربة دردشة متطورة مع ذكاء اصطناعي متقدم باستخدام أحدث التقنيات</p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                   <div className="bg-white bg-opacity-20 p-4 rounded-xl">
-                    <ArrowRight className="h-6 w-6 text-white mx-auto mb-2" />
+                    <MessageSquare className="h-6 w-6 text-white mx-auto mb-2" />
                     <h4 className="font-semibold">محادثات طبيعية</h4>
                   </div>
                   <div className="bg-white bg-opacity-20 p-4 rounded-xl">
-                    <ArrowRight className="h-6 w-6 text-white mx-auto mb-2" />
+                    <Lightbulb className="h-6 w-6 text-white mx-auto mb-2" />
                     <h4 className="font-semibold">حلول ذكية</h4>
                   </div>
                   <div className="bg-white bg-opacity-20 p-4 rounded-xl">
-                    <ArrowRight className="h-6 w-6 text-white mx-auto mb-2" />
+                    <Clock className="h-6 w-6 text-white mx-auto mb-2" />
                     <h4 className="font-semibold">متاح 24/7</h4>
                   </div>
                 </div>
@@ -617,14 +556,13 @@ export default function ServicesPage() {
                 onClick={() => handleRequestService("ai")}
                 className="btn-gradient text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg flex items-center justify-center mx-auto"
               >
-                <ArrowRight className="h-5 w-5 ml-2" />
+                <Brain className="h-5 w-5 ml-2" />
                 استكشف حلول الذكاء الاصطناعي
               </Button>
             </div>
           </div>
         </section>
       )}
-
       {/* خدمات الحلول السحابية */}
       {(activeService === "all" || activeService === "cloud") && (
         <section className="py-20 section-bg">
@@ -647,15 +585,15 @@ export default function ServicesPage() {
                   <p className="text-gray-300 mb-4">خوادم عالية الأداء مع إمكانية التطوير الفوري</p>
                   <div className="space-y-2 text-sm text-gray-400">
                     <div>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       أداء عالي ومستقر
                     </div>
                     <div>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       نسخ احتياطية تلقائية
                     </div>
                     <div>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       مراقبة مستمرة
                     </div>
                   </div>
@@ -669,15 +607,15 @@ export default function ServicesPage() {
                   <p className="text-gray-300 mb-4">إدارة وحماية بياناتك مع إمكانية الوصول السريع</p>
                   <div className="space-y-2 text-sm text-gray-400">
                     <div>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       حماية متقدمة
                     </div>
                     <div>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       استرداد سريع
                     </div>
                     <div>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       تحليلات فورية
                     </div>
                   </div>
@@ -691,15 +629,15 @@ export default function ServicesPage() {
                   <p className="text-gray-300 mb-4">حماية شاملة ضد التهديدات الإلكترونية</p>
                   <div className="space-y-2 text-sm text-gray-400">
                     <div>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       تشفير متقدم
                     </div>
                     <div>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       رصد التهديدات
                     </div>
                     <div>
-                      <ArrowRight className="h-4 w-4 text-green-500 ml-2 inline-block" />
+                      <Check className="h-4 w-4 text-green-500 ml-2 inline-block" />
                       استجابة سريعة
                     </div>
                   </div>
@@ -714,28 +652,28 @@ export default function ServicesPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <ArrowRight className="h-8 w-8 text-white" />
+                    <Expand className="h-8 w-8 text-white" />
                   </div>
                   <h4 className="font-semibold text-white mb-2">قابلية التطوير</h4>
                   <p className="text-sm text-gray-300">توسع مع نمو عملك</p>
                 </div>
                 <div className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <ArrowRight className="h-8 w-8 text-white" />
+                    <DollarSign className="h-8 w-8 text-white" />
                   </div>
                   <h4 className="font-semibold text-white mb-2">توفير التكلفة</h4>
                   <p className="text-sm text-gray-300">ادفع مقابل ما تستخدم فقط</p>
                 </div>
                 <div className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <ArrowRight className="h-8 w-8 text-white" />
+                    <Globe className="h-8 w-8 text-white" />
                   </div>
                   <h4 className="font-semibold text-white mb-2">وصول عالمي</h4>
                   <p className="text-sm text-gray-300">خدماتك متاحة في كل مكان</p>
                 </div>
                 <div className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-drx-orange to-drx-red rounded-full flex items-center justify-center mx-auto mb-4">
-                    <ArrowRight className="h-8 w-8 text-white" />
+                    <Lock className="h-8 w-8 text-white" />
                   </div>
                   <h4 className="font-semibold text-white mb-2">أمان عالي</h4>
                   <p className="text-sm text-gray-300">حماية بمعايير عالمية</p>
@@ -748,14 +686,13 @@ export default function ServicesPage() {
                 onClick={() => handleRequestService("cloud")}
                 className="btn-gradient text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg flex items-center justify-center mx-auto"
               >
-                <ArrowRight className="h-5 w-5 ml-2" />
+                <Cloud className="h-5 w-5 ml-2" />
                 احصل على حل سحابي مخصص
               </Button>
             </div>
           </div>
         </section>
       )}
-
       {/* قسم الإحصائيات */}
       <section className="py-20 section-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -784,7 +721,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
       {/* قسم الشهادات */}
       <section className="py-20 section-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -797,11 +733,11 @@ export default function ServicesPage() {
             <div className="bg-gray-800 p-8 rounded-2xl shadow-lg">
               <div className="flex items-center mb-4">
                 <div className="flex text-yellow-400">
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
                 </div>
               </div>
               <p className="text-gray-300 mb-6">
@@ -809,7 +745,7 @@ export default function ServicesPage() {
               </p>
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center ml-4">
-                  <ArrowRight className="h-6 w-6 text-white" />
+                  <User className="h-6 w-6 text-white" />
                 </div>
                 <div>
                   <div className="font-semibold text-white">أحمد محمد</div>
@@ -821,11 +757,11 @@ export default function ServicesPage() {
             <div className="bg-gray-800 p-8 rounded-2xl shadow-lg">
               <div className="flex items-center mb-4">
                 <div className="flex text-yellow-400">
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
                 </div>
               </div>
               <p className="text-gray-300 mb-6">
@@ -833,7 +769,7 @@ export default function ServicesPage() {
               </p>
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center ml-4">
-                  <ArrowRight className="h-6 w-6 text-white" />
+                  <User className="h-6 w-6 text-white" />
                 </div>
                 <div>
                   <div className="font-semibold text-white">سارة أحمد</div>
@@ -845,11 +781,11 @@ export default function ServicesPage() {
             <div className="bg-gray-800 p-8 rounded-2xl shadow-lg">
               <div className="flex items-center mb-4">
                 <div className="flex text-yellow-400">
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
-                  <ArrowRight fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
+                  <Star fill="currentColor" className="h-5 w-5" />
                 </div>
               </div>
               <p className="text-gray-300 mb-6">
@@ -857,7 +793,7 @@ export default function ServicesPage() {
               </p>
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center ml-4">
-                  <ArrowRight className="h-6 w-6 text-white" />
+                  <User className="h-6 w-6 text-white" />
                 </div>
                 <div>
                   <div className="font-semibold text-white">خالد العلي</div>
@@ -868,13 +804,12 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
       {/* نموذج الاتصال السريع (Modal) */}
       <Dialog open={showModal} onOpenChange={setShowModal}>
         <DialogContent className="bg-gray-900 text-white p-6 rounded-lg max-w-lg w-full border border-gray-700">
           <DialogHeader>
             <DialogTitle className="text-lg font-medium flex items-center">
-              <ArrowRight className="h-5 w-5 text-drx-orange ml-2" />
+              <Send className="h-5 w-5 text-drx-orange ml-2" />
               اطلب خدمة{" "}
               <span className="mr-1">
                 {selectedService === "web"

@@ -36,13 +36,13 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222.2 47.4% 11.2%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222.2 47.4% 11.2%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222.2 47.4% 11.2%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
@@ -62,7 +62,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 210 40% 98%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
@@ -72,41 +72,72 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-cairo), sans-serif; /* Apply Cairo font */
   }
 }
 
-/* Custom styles for Dr X theme */
+/* Custom Dr X Styles */
+.gradient-bg {
+  background: linear-gradient(135deg, #4169e1, #8a2be2, #ffa07a, #ff6b6b); /* Blue-purple to orange-red */
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .gradient-text {
-  background: linear-gradient(to right, var(--drx-orange), var(--drx-red));
+  background: linear-gradient(45deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1); /* Orange-red to blue-purple */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
 .btn-gradient {
-  background: linear-gradient(to right, var(--drx-orange), var(--drx-red));
-  transition: all 0.3s ease-in-out;
+  background: linear-gradient(45deg, #ff6b6b, #ffa07a); /* Orange-red to softer orange */
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
 }
 
 .btn-gradient:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255, 100, 0, 0.4);
+  opacity: 0.9;
+  transform: scale(1.02);
 }
 
 .glow-effect {
-  box-shadow: 0 0 10px rgba(255, 100, 0, 0.6), 0 0 20px rgba(255, 100, 0, 0.4);
+  box-shadow: 0 0 8px rgba(255, 160, 122, 0.6), 0 0 15px rgba(138, 43, 226, 0.4);
 }
 
+/* Chat bubble styles (from new chat interface) */
+.chat-bubble-user {
+  background: linear-gradient(to right, #3b82f6, #4f46e5); /* Blue to Indigo */
+  border-radius: 1rem 1rem 0 1rem;
+}
+
+.chat-bubble-ai {
+  background: linear-gradient(to right, #fbbf24, #f97316); /* Amber to Orange */
+  border-radius: 1rem 1rem 1rem 0;
+}
+
+/* Card hover effect */
 .card-hover {
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition: all 0.3s ease;
 }
 
 .card-hover:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-}
-
-.section-bg {
-  background: linear-gradient(to bottom, rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.9));
+  box-shadow: 0 10px 25px rgba(255, 77, 0, 0.2); /* Using a Dr X orange shade for consistency */
 }
 
 /* Animations */
@@ -125,20 +156,16 @@
   animation: fade-in-up 0.6s ease-out forwards;
 }
 
-.delay-100 {
-  animation-delay: 0.1s;
-}
-.delay-200 {
+.animate-fade-in-up.delay-200 {
   animation-delay: 0.2s;
 }
-.delay-300 {
-  animation-delay: 0.3s;
-}
-.delay-400 {
+
+.animate-fade-in-up.delay-400 {
   animation-delay: 0.4s;
 }
-.delay-500 {
-  animation-delay: 0.5s;
+
+.animate-fade-in-up.delay-600 {
+  animation-delay: 0.6s;
 }
 
 @keyframes fade-in {
@@ -151,36 +178,5 @@
 }
 
 .animate-fade-in {
-  animation: fade-in 0.5s ease-in forwards;
-}
-
-/* Chat specific styles */
-.chat-message-user {
-  background: linear-gradient(to right, var(--drx-blue), var(--drx-purple));
-  border-bottom-left-radius: 0.5rem;
-}
-
-.chat-message-system {
-  background: linear-gradient(to right, var(--drx-orange), var(--drx-red));
-  border-bottom-right-radius: 0.5rem;
-}
-
-/* Ensure full width on mobile for chat page */
-@media (max-width: 767px) {
-  .min-h-screen.flex.flex-col.items-center.justify-center.pt-24.px-0.pb-0.md\:px-4.md\:pb-4 {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  .w-full.max-w-4xl.mb-4.bg-gray-800\/80.backdrop-blur-xl.border.border-gray-700.rounded-2xl.p-4.flex.items-center.justify-between.px-4.md\:px-4 {
-    border-radius: 0;
-    margin-bottom: 0;
-    border-left: none;
-    border-right: none;
-  }
-  .flex.flex-col.w-full.max-w-4xl.flex-1.rounded-2xl.overflow-hidden.bg-gray-800\/50.backdrop-blur-xl.border.border-gray-700.shadow-2xl {
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
-  }
+  animation: fade-in 0.3s ease-out forwards;
 }
