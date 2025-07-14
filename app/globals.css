@@ -36,13 +36,13 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222.2 47.4% 11.2%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222.2 47.4% 11.2%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222.2 47.4% 11.2%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
@@ -67,108 +67,101 @@
 }
 
 @layer base {
+  * {
+    @apply border-border;
+  }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-cairo), sans-serif; /* Apply Cairo font */
   }
 }
 
-/* Custom styles from HTML */
+/* Custom Dr X Styles */
 .gradient-bg {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d1b69 50%, #ff4d00 100%);
+  background: linear-gradient(135deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #ff4d00, #ff8a00, #ff0040);
+  background: linear-gradient(45deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-.glow-effect {
-  box-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
-}
-
-.pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes pulse-glow {
-  from {
-    box-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
-  }
-  to {
-    box-shadow: 0 0 30px rgba(255, 77, 0, 0.6);
-  }
-}
-
-.floating {
-  animation: floating 3s ease-in-out infinite;
-}
-
-@keyframes floating {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.chat-bubble-user {
-  background: linear-gradient(135deg, #ff4d00, #ff8a00);
-  border-radius: 20px 20px 5px 20px;
-}
-
-.chat-bubble-ai {
-  background: linear-gradient(135deg, #2d1b69, #4c1d95);
-  border-radius: 20px 20px 20px 5px;
-}
-
-.nav-blur {
-  backdrop-filter: blur(10px);
-  background: rgba(0, 0, 0, 0.8);
-}
-
-.card-hover {
-  transition: all 0.3s ease;
-}
-
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(255, 77, 0, 0.2);
+  text-fill-color: transparent;
 }
 
 .btn-gradient {
-  background: linear-gradient(135deg, #ff4d00, #ff8a00);
+  background: linear-gradient(45deg, var(--drx-orange), var(--drx-red));
+  border: none;
+  color: white;
   transition: all 0.3s ease;
 }
 
 .btn-gradient:hover {
-  background: linear-gradient(135deg, #ff8a00, #ff4d00);
-  transform: scale(1.05);
+  opacity: 0.9;
+  transform: scale(1.02);
 }
 
-.section-bg {
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d1b69 100%);
+.glow-effect {
+  box-shadow: 0 0 8px rgba(255, 160, 122, 0.6), 0 0 15px rgba(138, 43, 226, 0.4);
 }
 
-/* Custom scrollbar for ScrollArea */
-.scroll-area-viewport::-webkit-scrollbar {
-  width: 8px;
+/* Chat bubble styles (from previous chat page) */
+.chat-bubble-user {
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6); /* Blue to Purple */
+  border-radius: 1rem 1rem 0 1rem;
 }
 
-.scroll-area-viewport::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+.chat-bubble-ai {
+  background: linear-gradient(45deg, var(--drx-orange), var(--drx-red)); /* Orange to Red */
+  border-radius: 1rem 1rem 1rem 0;
 }
 
-.scroll-area-viewport::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
+/* Animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.scroll-area-viewport::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-fade-in-up.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-fade-in-up.delay-400 {
+  animation-delay: 0.4s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
 }

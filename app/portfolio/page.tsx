@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import {
-  Eye,
   Phone,
   Plus,
   Calendar,
@@ -11,10 +11,10 @@ import {
   Smartphone,
   Brain,
   Paintbrush,
-  ShoppingCart,
   Star,
-  LineChartIcon as ChartLine,
   MessageSquare,
+  ArrowRight,
+  ExternalLink,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
@@ -26,57 +26,52 @@ export default function PortfolioPage() {
   const projects = [
     {
       id: 1,
-      category: "web",
-      title: "منصة التجارة الإلكترونية",
-      description: "منصة تجارة إلكترونية متكاملة مع نظام دفع آمن وإدارة المخزون",
-      technologies: ["React", "Node.js", "MongoDB"],
-      year: "2024",
-      icon: Globe,
+      name: "تطبيق إدارة المشاريع الذكي",
+      category: "تطبيقات الجوال",
+      description:
+        "تطبيق جوال متكامل يساعد الفرق على إدارة المشاريع بكفاءة باستخدام الذكاء الاصطناعي لتتبع المهام وتحليل الأداء.",
+      image: "/images/placeholder.svg?height=400&width=600",
+      link: "#",
     },
     {
       id: 2,
-      category: "mobile",
-      title: "تطبيق إدارة المهام",
-      description: "تطبيق ذكي لإدارة المهام والمشاريع مع إشعارات فورية",
-      technologies: ["Flutter", "Firebase", "Dart"],
-      year: "2024",
-      icon: Smartphone,
+      name: "منصة التجارة الإلكترونية العصرية",
+      category: "تطوير الويب",
+      description: "متجر إلكتروني بتصميم جذاب وتجربة مستخدم سلسة، مع ميزات متقدمة لإدارة المنتجات والطلبات.",
+      image: "/images/placeholder.svg?height=400&width=600",
+      link: "#",
     },
     {
       id: 3,
-      category: "ai",
-      title: "نظام الذكاء الاصطناعي",
-      description: "نظام ذكي لتحليل البيانات والتنبؤ بالاتجاهات المستقبلية",
-      technologies: ["Python", "TensorFlow", "Docker"],
-      year: "2024",
-      icon: Brain,
+      name: "نظام تحليل البيانات بالذكاء الاصطناعي",
+      category: "حلول الذكاء الاصطناعي",
+      description: "نظام ذكاء اصطناعي يقوم بتحليل كميات هائلة من البيانات وتقديم رؤى قابلة للتنفيذ لدعم اتخاذ القرار.",
+      image: "/images/placeholder.svg?height=400&width=600",
+      link: "#",
     },
     {
       id: 4,
-      category: "web",
-      title: "لوحة تحكم تحليلية",
-      description: "لوحة تحكم شاملة لعرض البيانات والإحصائيات التفاعلية",
-      technologies: ["Vue.js", "Chart.js", "JavaScript"],
-      year: "2023",
-      icon: ChartLine,
+      name: "تطبيق اللياقة البدنية الشخصي",
+      category: "تطبيقات الجوال",
+      description: "تطبيق يقدم خطط تمارين مخصصة وتتبع التقدم، مدعومًا بخوارزميات الذكاء الاصطناعي.",
+      image: "/images/placeholder.svg?height=400&width=600",
+      link: "#",
     },
     {
       id: 5,
-      category: "design",
-      title: "هوية بصرية متكاملة",
-      description: "تصميم هوية بصرية شاملة لشركة تقنية ناشئة",
-      technologies: ["Photoshop", "Illustrator", "Figma"],
-      year: "2023",
-      icon: Paintbrush,
+      name: "موقع شركة استشارات تقنية",
+      category: "تطوير الويب",
+      description: "موقع تعريفي احترافي يعرض خدمات شركة استشارات تقنية، مع تصميم متجاوب وسهل الاستخدام.",
+      image: "/images/placeholder.svg?height=400&width=600",
+      link: "#",
     },
     {
       id: 6,
-      category: "mobile",
-      title: "تطبيق متجر إلكتروني",
-      description: "تطبيق تسوق محمول مع ميزات الدفع الآمن والتتبع",
-      technologies: ["React Native", "Redux", "API"],
-      year: "2023",
-      icon: ShoppingCart,
+      name: "روبوت دردشة لخدمة العملاء",
+      category: "حلول الذكاء الاصطناعي",
+      description: "روبوت دردشة ذكي يعمل على مدار الساعة لتقديم الدعم الفوري والإجابة على استفسارات العملاء.",
+      image: "/images/placeholder.svg?height=400&width=600",
+      link: "#",
     },
   ]
 
@@ -91,31 +86,55 @@ export default function PortfolioPage() {
   const projectCardClass = "bg-gray-800 p-6 rounded-2xl card-hover"
 
   return (
-    <div className="bg-black text-white">
-      {/* قسم البطل */}
-      <section className="gradient-bg min-h-screen flex flex-col items-center justify-center p-4 pt-16">
-        <div className="relative z-10 text-center px-4 pt-8">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">معرض أعمالنا</h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-            استكشف مجموعة متنوعة من المشاريع المبتكرة التي أنجزناها بنجاح
+    <div className="min-h-screen bg-black text-white pt-24">
+      {/* Hero Section for Portfolio */}
+      <section className="relative py-16 md:py-24 text-center overflow-hidden">
+        <div className="absolute inset-0 gradient-bg opacity-50"></div>
+        <div className="relative z-10 p-8 max-w-4xl mx-auto">
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight gradient-text animate-fade-in-up">
+            مشاريعنا المميزة
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-300 mb-8 animate-fade-in-up delay-200">
+            نحن نفخر بتحويل الأفكار الجريئة إلى حلول رقمية ملموسة.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              onClick={() => document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" })}
-              className="btn-gradient text-white px-8 py-3 rounded-full text-lg font-semibold flex items-center justify-center"
-            >
-              <Eye className="h-5 w-5 ml-2" />
-              استعرض المشاريع
+          <Link href="/contact">
+            <Button className="btn-gradient text-white px-8 py-3 text-lg rounded-full shadow-lg hover:scale-105 transition-transform animate-fade-in-up delay-400">
+              ابدأ مشروعك معنا <ArrowRight className="mr-2 h-5 w-5" />
             </Button>
-            <Link href="/contact">
-              <Button
-                variant="outline"
-                className="border-2 border-drx-orange text-drx-orange px-8 py-3 rounded-full text-lg font-semibold hover:bg-drx-orange hover:text-black transition-colors bg-transparent flex items-center justify-center"
+          </Link>
+        </div>
+      </section>
+
+      {/* Projects Grid */}
+      <section className="py-16 md:py-24 bg-gray-900/70 backdrop-blur-lg">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 gradient-text">استكشف أعمالنا</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProjects.map((project) => (
+              <div
+                key={project.id}
+                className="bg-gray-800/70 backdrop-blur-lg rounded-xl shadow-lg border border-gray-700 overflow-hidden hover:border-drx-orange transition-all duration-300"
               >
-                <Phone className="h-5 w-5 ml-2" />
-                اطلب مشروعك
-              </Button>
-            </Link>
+                <Image
+                  src={project.image || "/placeholder.svg"}
+                  alt={project.name}
+                  width={600}
+                  height={400}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6 text-right">
+                  <span className="text-sm font-semibold text-gray-400 mb-2 block">{project.category}</span>
+                  <h3 className="text-2xl font-bold text-white mb-3">{project.name}</h3>
+                  <p className="text-gray-300 mb-4 line-clamp-3">{project.description}</p>
+                  <Link
+                    href={project.link}
+                    className="inline-flex items-center text-drx-orange hover:text-white transition-colors font-semibold"
+                  >
+                    عرض المشروع <ExternalLink className="mr-2 h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -179,7 +198,15 @@ export default function PortfolioPage() {
             {filteredProjects.map((project) => (
               <div key={project.id} className={projectCardClass}>
                 <div className="h-48 bg-gradient-to-br from-blue-500 to-purple-600 relative flex items-center justify-center">
-                  <project.icon className="h-24 w-24 text-white opacity-80" />
+                  {project.category === "web" ? (
+                    <Globe className="h-24 w-24 text-white opacity-80" />
+                  ) : project.category === "mobile" ? (
+                    <Smartphone className="h-24 w-24 text-white opacity-80" />
+                  ) : project.category === "ai" ? (
+                    <Brain className="h-24 w-24 text-white opacity-80" />
+                  ) : (
+                    <Paintbrush className="h-24 w-24 text-white opacity-80" />
+                  )}
                   <div className="absolute top-4 right-4">
                     <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm">
                       {project.category === "web"
@@ -193,21 +220,18 @@ export default function PortfolioPage() {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3 text-white">{project.title}</h3>
+                  <h3 className="text-xl font-bold mb-3 text-white">{project.name}</h3>
                   <p className="text-gray-300 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech, index) => (
-                      <span key={index} className="bg-blue-600 text-white px-2 py-1 rounded text-sm">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                  <div className="flex flex-wrap gap-2 mb-4">{/* Technologies will be displayed here if needed */}</div>
                   <div className="flex justify-between items-center">
                     <span className="text-gray-400 text-sm flex items-center">
                       <Calendar className="h-4 w-4 ml-1" />
                       {project.year}
                     </span>
-                    <Link href="#" className="text-drx-orange hover:text-drx-red font-medium flex items-center">
+                    <Link
+                      href={project.link}
+                      className="text-drx-orange hover:text-drx-red font-medium flex items-center"
+                    >
                       عرض المشروع <ArrowLeft className="h-4 w-4 mr-1" />
                     </Link>
                   </div>
