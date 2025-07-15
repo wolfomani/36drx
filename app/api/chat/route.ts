@@ -1,42 +1,35 @@
-import { streamText } from "ai"
 import { createOpenAI } from "@ai-sdk/openai"
-import { google } from "@ai-sdk/google"
+import { streamText } from "ai"
 
-// DeepSeek configuration (OpenAI-compatible API)
+// Create OpenAI instance for DeepSeek
 const deepseek = createOpenAI({
-  baseURL: process.env.DEEPSEEK_API_URL || "https://api.deepseek.com/chat/completions",
-  apiKey: process.env.DEEPSEEK_API_KEY,
+  apiKey: process.env.DEEPSEEK_API_KEY || "",
+  baseURL: process.env.DEEPSEEK_API_URL || "https://api.deepseek.com",
 })
 
-// Gemini configuration
-// The @ai-sdk/google package automatically uses GOOGLE_API_KEY from process.env.
-// Ensure your GEMINI_API_KEY is set as GOOGLE_API_KEY in your environment variables.
-const gemini = google("gemini-1.5-flash") // Using a common Gemini model name
-
 export async function POST(req: Request) {
-  const { messages, modelName } = await req.json()
-
-  let model
-  if (modelName === "deepseek") {
-    model = deepseek("deepseek-chat") // Assuming 'deepseek-chat' is the model name for DeepSeek
-  } else if (modelName === "gemini") {
-    model = gemini
-  } else {
-    // Default to DeepSeek if no model is specified or recognized
-    model = deepseek("deepseek-chat")
-  }
-
   try {
+    const { messages, data } = await req.json()
+    const modelName = data?.model || "deepseek"
+
+    let model
+    if (modelName === "deepseek") {
+      model = deepseek("deepseek-chat")
+    } else {
+      // Default fallback
+      model = deepseek("deepseek-chat")
+    }
+
     const result = await streamText({
-      model: model,
+      model,
       messages,
+      system: `أنت Dr.X، مساعد ذكي متطور ومفيد. تجيب باللغة العربية بطريقة ودودة ومهنية. 
+      أنت خبير في مختلف المجالات وتقدم إجابات دقيقة ومفيدة.`,
     })
-    return result.toAIStreamResponse()
+
+    return result.toDataStreamResponse()
   } catch (error) {
-    console.error("Error streaming text:", error)
-    return new Response(JSON.stringify({ error: "Failed to stream AI response" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    })
+    console.error("Chat API Error:", error)
+    return new Response("Internal Server Error", { status: 500 })
   }
 }

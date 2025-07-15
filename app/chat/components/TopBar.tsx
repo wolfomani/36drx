@@ -1,4 +1,7 @@
-import { Search } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Settings, Search, User } from "lucide-react"
 
 const TopBar = () => {
   return (
@@ -6,22 +9,32 @@ const TopBar = () => {
       <div className="flex items-center justify-between">
         {/* الشعار */}
         <div>
-          <img src="/images/dr-x-logo.png" alt="Dr.X" className="h-8" />
+          <Link href="/">
+            <Image src="/images/dr-x-logo.png" alt="Dr.X" width={88} height={33} className="h-8 w-auto" />
+          </Link>
         </div>
 
         {/* عناصر التحكم */}
         <div className="flex items-center gap-4">
-          <button className="p-2 rounded-full hover:bg-surface-l2">
+          <Button variant="ghost" size="icon" className="p-2 rounded-full hover:bg-surface-l2">
             <Search className="w-5 h-5 text-fg-secondary" />
-          </button>
+          </Button>
+
+          <Button variant="ghost" size="icon" className="p-2 rounded-full hover:bg-surface-l2 hidden sm:flex">
+            <Settings className="w-5 h-5 text-fg-secondary" />
+          </Button>
 
           <div className="flex gap-2">
-            <button className="px-4 py-2 rounded-full bg-button-primary text-white text-sm font-medium hover:bg-button-primary-hover">
+            <Button className="px-4 py-2 rounded-full bg-button-primary hover:bg-button-primary-hover text-white text-sm font-medium">
+              <User className="w-4 h-4 ml-1" />
               سجل
-            </button>
-            <button className="px-4 py-2 rounded-full border border-toggle-border text-primary text-sm font-medium hidden sm:block hover:bg-surface-l2">
+            </Button>
+            <Button
+              variant="outline"
+              className="px-4 py-2 rounded-full border border-toggle-border text-primary text-sm font-medium hidden sm:block hover:bg-surface-l2 bg-transparent"
+            >
               تسجيل الدخول
-            </button>
+            </Button>
           </div>
         </div>
       </div>

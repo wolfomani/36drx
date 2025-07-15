@@ -1,11 +1,11 @@
 import type { Config } from "tailwindcss"
 
-const config: Config = {
+const config = {
   darkMode: ["class"],
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
     "*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -20,34 +20,19 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // الألوان المخصصة الجديدة
-        "surface-base": "#1e1f22",
-        "surface-l1": "#2b2d31",
-        "surface-l2": "#313338",
-        "surface-l3": "#383a40",
-
-        "border-l1": "#42444a",
-        "border-l2": "#4e5158",
-
-        "fg-primary": "#f2f3f5",
-        "fg-secondary": "#b5bac1",
-
-        "button-primary": "#5865f2",
-        "button-primary-hover": "#4752c4",
-
-        "toggle-border": "#80848e",
-
-        primary: "#00a8fc",
-        secondary: "#949ba4",
-
-        highlight: "rgba(88, 101, 242, 0.3)",
-
-        // الألوان الأصلية
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -68,6 +53,19 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // الألوان المخصصة الجديدة
+        "surface-base": "#1e1f22",
+        "surface-l1": "#2b2d31",
+        "surface-l2": "#313338",
+        "surface-l3": "#383a40",
+        "border-l1": "#42444a",
+        "border-l2": "#4e5158",
+        "fg-primary": "#f2f3f5",
+        "fg-secondary": "#b5bac1",
+        "button-primary": "#5865f2",
+        "button-primary-hover": "#4752c4",
+        "toggle-border": "#80848e",
+        highlight: "rgba(88, 101, 242, 0.3)",
         // Custom Dr.X colors
         drx: {
           black: "#0A0A0A",
@@ -75,6 +73,7 @@ const config: Config = {
           gold: "#FFD700",
           "dark-gray": "#1A1A1A",
           "light-gray": "#CCCCCC",
+          orange: "#ff6b6b",
         },
       },
       borderRadius: {
@@ -99,6 +98,6 @@ const config: Config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+} satisfies Config
 
 export default config

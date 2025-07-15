@@ -4,6 +4,23 @@
 
 @layer base {
   :root {
+    /* الألوان المظلمة */
+    --surface-base: #1e1f22;
+    --surface-l1: #2b2d31;
+    --surface-l2: #313338;
+    --surface-l3: #383a40;
+
+    --border-l1: #42444a;
+    --border-l2: #4e5158;
+
+    --fg-primary: #f2f3f5;
+    --fg-secondary: #b5bac1;
+
+    --button-primary: #5865f2;
+    --button-primary-hover: #4752c4;
+
+    --toggle-border: #80848e;
+
     --background: 10 3% 6%; /* drx-black */
     --foreground: 0 0% 98%;
 
@@ -33,28 +50,6 @@
     --ring: 48 100% 50%; /* drx-gold */
 
     --radius: 0.5rem;
-
-    /* الألوان المظلمة الجديدة */
-    --surface-base: #1e1f22;
-    --surface-l1: #2b2d31;
-    --surface-l2: #313338;
-    --surface-l3: #383a40;
-
-    --border-l1: #42444a;
-    --border-l2: #4e5158;
-
-    --fg-primary: #f2f3f5;
-    --fg-secondary: #b5bac1;
-
-    --button-primary: #5865f2;
-    --button-primary-hover: #4752c4;
-
-    --toggle-border: #80848e;
-
-    --primary: #00a8fc;
-    --secondary: #949ba4;
-
-    --highlight: rgba(88, 101, 242, 0.3);
   }
 }
 
@@ -63,6 +58,118 @@
     @apply border-border;
   }
   body {
-    @apply bg-surface-base text-fg-primary antialiased;
+    @apply bg-drx-black text-foreground;
   }
+}
+
+/* الأنماط الأساسية */
+/* body {
+  @apply bg-surface-base text-fg-primary antialiased;
+} */
+
+/* إضافة الأنماط الموجودة مسبقاً */
+.gradient-bg {
+  background: linear-gradient(135deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.btn-gradient {
+  background: linear-gradient(45deg, #ff6b6b, #b22222);
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.glow-effect {
+  box-shadow: 0 0 8px rgba(255, 160, 122, 0.6), 0 0 15px rgba(138, 43, 226, 0.4);
+}
+
+/* Chat bubble styles */
+.chat-bubble-user {
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+  border-radius: 1rem 1rem 0 1rem;
+}
+
+.chat-bubble-ai {
+  background: linear-gradient(45deg, #ff6b6b, #b22222);
+  border-radius: 1rem 1rem 1rem 0;
+}
+
+/* Animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-fade-in-up.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-fade-in-up.delay-400 {
+  animation-delay: 0.4s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
 }

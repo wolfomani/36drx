@@ -76,7 +76,7 @@ Dr X هي شركة رائدة في تقديم حلول الذكاء الاصطن
 هذا المشروع مرخص بموجب ترخيص MIT. انظر ملف `LICENSE` لمزيد من التفاصيل.
 \`\`\`
 
-```plaintext file=".gitignore"
+\`\`\`plaintext file=".gitignore"
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
