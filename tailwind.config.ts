@@ -1,11 +1,11 @@
 import type { Config } from "tailwindcss"
 
-const config = {
+const config: Config = {
   darkMode: ["class"],
   content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
     "*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -20,18 +20,37 @@ const config = {
     },
     extend: {
       colors: {
+        // الألوان المخصصة الجديدة
+        "surface-base": "#1e1f22",
+        "surface-l1": "#2b2d31",
+        "surface-l2": "#313338",
+        "surface-l3": "#383a40",
+
+        "border-l1": "#42444a",
+        "border-l2": "#4e5158",
+
+        "fg-primary": "#f2f3f5",
+        "fg-secondary": "#b5bac1",
+
+        "button-primary": "#5865f2",
+        "button-primary-hover": "#4752c4",
+
+        "toggle-border": "#80848e",
+
+        primary: "#00a8fc",
+        secondary: "#949ba4",
+
+        highlight: "rgba(88, 101, 242, 0.3)",
+
+        // الألوان الأصلية
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -41,10 +60,6 @@ const config = {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -53,11 +68,14 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom Dr X colors
-        "drx-orange": "#ff6b6b", // A vibrant orange-red
-        "drx-red": "#ffa07a", // A softer orange
-        "drx-purple": "#8a2be2", // Blue-violet
-        "drx-blue": "#4169e1", // Royal blue
+        // Custom Dr.X colors
+        drx: {
+          black: "#0A0A0A",
+          red: "#B22222",
+          gold: "#FFD700",
+          "dark-gray": "#1A1A1A",
+          "light-gray": "#CCCCCC",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -78,12 +96,9 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
-      fontFamily: {
-        cairo: ["var(--font-cairo)"],
-      },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+}
 
 export default config
