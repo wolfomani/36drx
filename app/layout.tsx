@@ -1,26 +1,16 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
-import { Cairo, Tajawal } from "next/font/google"
+import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/sonner"
+import { Navbar } from "@/components/navbar"
+import { Footer } from "@/components/footer"
 
-const cairo = Cairo({
-  subsets: ["arabic"],
-  variable: "--font-cairo",
-})
-
-const tajawal = Tajawal({
-  weight: ["400", "700"],
-  subsets: ["arabic"],
-  variable: "--font-tajawal",
-})
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Dr.X AI Assistant",
-  description: "Your advanced AI assistant powered by DeepSeek and other models.",
+  title: "Dr. X - AI Website Design",
+  description: "Your personal AI assistant for website design and more.",
     generator: 'v0.dev'
 }
 
@@ -30,15 +20,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="ar"
-      suppressHydrationWarning
-      className={`${GeistSans.variable} ${GeistMono.variable} ${cairo.variable} ${tajawal.variable}`}
-    >
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          {children}
-          <Toaster />
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>
