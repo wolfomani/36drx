@@ -1,512 +1,420 @@
 "use client"
 
-import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { useChat } from "ai/react"
-import { cn } from "@/lib/utils"
-import { RefreshCcw, Copy, Share2, ThumbsUp, ThumbsDown, Newspaper, ImageIcon, Users } from "lucide-react"
-import ChatInput from "./components/ChatInput"
 import TopBar from "./components/TopBar"
+import ChatInput from "./components/ChatInput"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { ThumbsUp, ThumbsDown, Bot, Share2, MessageSquarePlus, ImageIcon, Mic, FileText } from "lucide-react"
+import { toast } from "@/hooks/use-toast"
+import dynamic from "next/dynamic" // Import dynamic
+import { motion, AnimatePresence } from "framer-motion" // Import motion and AnimatePresence
 
-type ActiveButton = "none" | "add" | "deepSearch" | "think"
-type MessageType = "user" | "system"
+// Dynamically import ReactMarkdown and SyntaxHighlighter with SSR disabled
+const ReactMarkdown = dynamic(() => import("react-markdown"), { ssr: false })
+const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter"), { ssr: false })
+import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs"
+import remarkGfm from "remark-gfm"
 
 interface Message {
   id: string
+  role: "user" | "assistant" | "system"
   content: string
-  type: MessageType
-  completed?: boolean
-  newSection?: boolean
+  rating?: "up" | "down"
+  attachments?: { name: string; url: string; type: string }[]
 }
 
-interface MessageSection {
-  id: string
-  messages: Message[]
-  isNewSection: boolean
-  isActive?: boolean
-  sectionIndex: number
-}
-
-interface StreamingWord {
-  id: number
-  text: string
-}
-
-// Faster word delay for smoother streaming
-const WORD_DELAY = 40 // ms per word
-const CHUNK_SIZE = 2 // Number of words to add at once
-
-export default function ChatInterface() {
-  const [inputValue, setInputValue] = useState("")
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const chatContainerRef = useRef<HTMLDivElement>(null)
-  const newSectionRef = useRef<HTMLDivElement>(null)
-  const [hasTyped, setHasTyped] = useState(false)
-  const [activeButton, setActiveButton] = useState<ActiveButton>("none")
-  const [isMobile, setIsMobile] = useState(false)
-  const [localMessages, setLocalMessages] = useState<Message[]>([]) // Renamed from `messages` to `localMessages` to avoid conflict with `useChat`
-  const [messageSections, setMessageSections] = useState<MessageSection[]>([])
-  const [isStreaming, setIsStreaming] = useState(false)
-  const [streamingWords, setStreamingWords] = useState<StreamingWord[]>([])
-  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null)
-  const [viewportHeight, setViewportHeight] = useState(0)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  const [completedMessages, setCompletedMessages] = useState<Set<string>>(new Set())
-  const [activeSectionId, setActiveSectionId] = useState<string | null>(null)
-  const inputContainerRef = useRef<HTMLDivElement>(null)
-  const shouldFocusAfterStreamingRef = useRef(false)
-  const mainContainerRef = useRef<HTMLDivElement>(null)
+export default function ChatPage() {
   const [selectedModel, setSelectedModel] = useState("deepseek")
-  // Store selection state
-  const selectionStateRef = useRef<{ start: number | null; end: number | null }>({ start: null, end: null })
+  const [isDatabaseConnected, setIsDatabaseConnected] = useState(false)
+  const [isDatabaseInitialized, setIsDatabaseInitialized] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  // Constants for layout calculations to account for the padding values
-  // These are now less critical as we're relying on global layout for top padding
-  const TOP_PADDING_GLOBAL_NAV = 96 // pt-24 (6rem = 96px) from global layout
-  const BOTTOM_PADDING_INPUT_AREA = 128 // pb-32 (8rem = 128px)
-  const ADDITIONAL_OFFSET = 16 // Reduced offset for fine-tuning
-
-  // AI SDK integration
-  const {
-    messages: aiMessages,
-    input: aiInput,
-    handleInputChange: handleAiInputChange,
-    handleSubmit: handleAiSubmit,
-    isLoading: aiIsLoading,
-    error: aiError,
-    setMessages: setAiMessages,
-  } = useChat({
+  const { messages, input, handleInputChange, handleSubmit, isLoading, append, setMessages } = useChat({
     api: "/api/chat",
     body: {
-      modelName: selectedModel,
+      model: selectedModel,
     },
-    onFinish: () => {
+    onFinish: (message) => {
+      // Add haptic feedback on message finish
+      if (navigator.vibrate) {
+        navigator.vibrate(100)
+      }
       scrollToBottom()
-      setIsStreaming(false) // Ensure streaming state is reset
-      setStreamingWords([])
-      setStreamingMessageId(null)
     },
-    onStreamMode: "text",
+    onError: (error) => {
+      toast({
+        title: "خطأ في الدردشة",
+        description: error.message || "حدث خطأ أثناء معالجة رسالتك.",
+        variant: "destructive",
+      })
+    },
   })
-
-  // Sync AI SDK messages with local messages for rendering and custom logic
-  useEffect(() => {
-    // Add initial welcome message if no messages exist in AI SDK
-    if (aiMessages.length === 0) {
-      setAiMessages([
-        {
-          id: "welcome-message",
-          role: "assistant",
-          content: "مرحباً! أنا Dr X، مساعدك الذكي المتطور. كيف يمكنني مساعدتك اليوم؟",
-        },
-      ])
-    }
-    // Convert aiMessages to local Message format and manage sections
-    const newLocalMessages: Message[] = aiMessages.map((msg) => ({
-      id: msg.id,
-      content: msg.content,
-      type: msg.role === "user" ? "user" : "system",
-      completed: true, // AI SDK messages are always "completed" when received
-    }))
-    setLocalMessages(newLocalMessages)
-  }, [aiMessages, setAiMessages])
-
-  useEffect(() => {
-    scrollToBottom()
-  }, [localMessages, aiIsLoading]) // Scroll when messages change or AI is loading
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
-  // Check if device is mobile and get viewport height
   useEffect(() => {
-    const checkMobileAndViewport = () => {
-      const isMobileDevice = window.innerWidth < 768
-      setIsMobile(isMobileDevice)
+    scrollToBottom()
+  }, [messages])
 
-      // Capture the viewport height
-      const vh = window.innerHeight
-      setViewportHeight(vh)
-
-      // Apply fixed height to main container on mobile
-      if (isMobileDevice && mainContainerRef.current) {
-        mainContainerRef.current.style.height = `${vh}px`
-      }
-    }
-
-    checkMobileAndViewport()
-
-    // Set initial height
-    if (mainContainerRef.current) {
-      mainContainerRef.current.style.height = isMobile ? `${viewportHeight}px` : "100svh"
-    }
-
-    // Update on resize
-    window.addEventListener("resize", checkMobileAndViewport)
-
-    return () => {
-      window.removeEventListener("resize", checkMobileAndViewport)
-    }
-  }, [isMobile, viewportHeight])
-
-  // Organize messages into sections (this logic might be redundant with AI SDK, but keeping for now)
   useEffect(() => {
-    if (localMessages.length === 0) {
-      setMessageSections([])
-      setActiveSectionId(null)
-      return
-    }
+    checkDatabaseConnection()
+  }, [])
 
-    const sections: MessageSection[] = []
-    let currentSection: MessageSection = {
-      id: `section-${Date.now()}-0`,
-      messages: [],
-      isNewSection: false,
-      sectionIndex: 0,
-    }
-
-    localMessages.forEach((message) => {
-      if (message.newSection) {
-        // Start a new section
-        if (currentSection.messages.length > 0) {
-          // Mark previous section as inactive
-          sections.push({
-            ...currentSection,
-            isActive: false,
+  const checkDatabaseConnection = async () => {
+    try {
+      const res = await fetch("/api/database/test")
+      if (res.ok) {
+        const data = await res.json()
+        setIsDatabaseConnected(data.connected)
+        if (data.connected) {
+          toast({
+            title: "اتصال قاعدة البيانات",
+            description: "تم الاتصال بقاعدة البيانات بنجاح.",
+            variant: "success",
+          })
+        } else {
+          toast({
+            title: "خطأ في الاتصال بقاعدة البيانات",
+            description: "فشل الاتصال بقاعدة البيانات.",
+            variant: "destructive",
           })
         }
-
-        // Create new active section
-        const newSectionId = `section-${Date.now()}-${sections.length}`
-        currentSection = {
-          id: newSectionId,
-          messages: [message],
-          isNewSection: true,
-          isActive: true,
-          sectionIndex: sections.length,
-        }
-
-        // Update active section ID
-        setActiveSectionId(newSectionId)
       } else {
-        // Add to current section
-        currentSection.messages.push(message)
+        toast({
+          title: "خطأ في فحص الاتصال",
+          description: "فشل في فحص حالة اتصال قاعدة البيانات.",
+          variant: "destructive",
+        })
       }
-    })
-
-    // Add the last section if it has messages
-    if (currentSection.messages.length > 0) {
-      sections.push(currentSection)
-    }
-
-    setMessageSections(sections)
-  }, [localMessages])
-
-  // Scroll to maximum position when new section is created, but only for sections after the first
-  useEffect(() => {
-    if (messageSections.length > 1) {
-      setTimeout(() => {
-        const scrollContainer = chatContainerRef.current
-
-        if (scrollContainer) {
-          // Scroll to maximum possible position
-          scrollContainer.scrollTo({
-            top: scrollContainer.scrollHeight,
-            behavior: "smooth",
-          })
-        }
-      }, 100)
-    }
-  }, [messageSections])
-
-  // Focus the textarea on component mount (only on desktop)
-  useEffect(() => {
-    if (textareaRef.current && !isMobile) {
-      textareaRef.current.focus()
-    }
-  }, [isMobile])
-
-  // Set focus back to textarea after streaming ends (only on desktop)
-  useEffect(() => {
-    if (!isStreaming && shouldFocusAfterStreamingRef.current && !isMobile) {
-      focusTextarea()
-      shouldFocusAfterStreamingRef.current = false
-    }
-  }, [isStreaming, isMobile])
-
-  // Calculate available content height (viewport minus header and input)
-  const getContentHeight = () => {
-    // Calculate available height by subtracting the top and bottom padding from viewport height
-    return viewportHeight - TOP_PADDING_GLOBAL_NAV - BOTTOM_PADDING_INPUT_AREA - ADDITIONAL_OFFSET
-  }
-
-  // Save the current selection state
-  const saveSelectionState = () => {
-    if (textareaRef.current) {
-      selectionStateRef.current = {
-        start: textareaRef.current.selectionStart,
-        end: textareaRef.current.selectionEnd,
-      }
-    }
-  }
-
-  // Restore the saved selection state
-  const restoreSelectionState = () => {
-    const textarea = textareaRef.current
-    const { start, end } = selectionStateRef.current
-
-    if (textarea && start !== null && end !== null) {
-      // Focus first, then set selection range
-      textarea.focus()
-      textarea.setSelectionRange(start, end)
-    } else if (textarea) {
-      // If no selection was saved, just focus
-      textarea.focus()
-    }
-  }
-
-  const focusTextarea = () => {
-    if (textareaRef.current && !isMobile) {
-      textareaRef.current.focus()
-    }
-  }
-
-  const handleInputContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Only focus if clicking directly on the container, not on buttons or other interactive elements
-    if (
-      e.target === e.currentTarget ||
-      (e.currentTarget === inputContainerRef.current && !(e.target as HTMLElement).closest("button"))
-    ) {
-      if (textareaRef.current) {
-        textareaRef.current.focus()
-      }
-    }
-  }
-
-  const handleLocalInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value
-
-    // Only allow input changes when not streaming
-    if (!aiIsLoading) {
-      setInputValue(newValue) // Update local input state
-      handleAiInputChange(e) // Also update AI SDK input state
-
-      if (newValue.trim() !== "" && !hasTyped) {
-        setHasTyped(true)
-      } else if (newValue.trim() === "" && hasTyped) {
-        setHasTyped(false)
-      }
-
-      const textarea = textareaRef.current
-      if (textarea) {
-        textarea.style.height = "auto"
-        const newHeight = Math.max(24, Math.min(textarea.scrollHeight, 160))
-        textarea.style.height = `${newHeight}px`
-      }
-    }
-  }
-
-  const handleLocalSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (inputValue.trim() && !aiIsLoading) {
-      // Add vibration when message is submitted
-      navigator.vibrate(50)
-
-      // Use AI SDK's handleSubmit
-      handleAiSubmit(e, {
-        messages: [...aiMessages, { id: `user-${Date.now()}`, role: "user", content: inputValue.trim() }],
-        data: { model: selectedModel },
+    } catch (error) {
+      console.error("Error checking database connection:", error)
+      toast({
+        title: "خطأ في الشبكة",
+        description: "فشل في الاتصال بخادم فحص قاعدة البيانات.",
+        variant: "destructive",
       })
+    }
+  }
 
-      // Reset local input state
-      setInputValue("")
-      setHasTyped(false)
-      setActiveButton("none")
-
-      if (textareaRef.current) {
-        textareaRef.current.style.height = "auto"
-      }
-
-      // Only focus the textarea on desktop, not on mobile
-      if (!isMobile) {
-        focusTextarea()
-      } else {
-        // On mobile, blur the textarea to dismiss the keyboard
-        if (textareaRef.current) {
-          textareaRef.current.blur()
+  const initializeDatabase = async () => {
+    try {
+      const res = await fetch("/api/database/init", { method: "POST" })
+      if (res.ok) {
+        const data = await res.json()
+        setIsDatabaseInitialized(data.initialized)
+        if (data.initialized) {
+          toast({
+            title: "تهيئة قاعدة البيانات",
+            description: "تم تهيئة قاعدة البيانات بنجاح.",
+            variant: "success",
+          })
+        } else {
+          toast({
+            title: "خطأ في تهيئة قاعدة البيانات",
+            description: "فشل تهيئة قاعدة البيانات.",
+            variant: "destructive",
+          })
         }
+      } else {
+        toast({
+          title: "خطأ في التهيئة",
+          description: "فشل في تهيئة قاعدة البيانات.",
+          variant: "destructive",
+        })
       }
+    } catch (error) {
+      console.error("Error initializing database:", error)
+      toast({
+        title: "خطأ في الشبكة",
+        description: "فشل في الاتصال بخادم تهيئة قاعدة البيانات.",
+        variant: "destructive",
+      })
     }
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // Handle Cmd+Enter on both mobile and desktop
-    if (!aiIsLoading && e.key === "Enter" && e.metaKey) {
-      e.preventDefault()
-      handleLocalSubmit(e)
-      return
+  const handleSendMessage = async (text: string, attachments?: File[]) => {
+    if (!text.trim() && (!attachments || attachments.length === 0)) return
+
+    const userMessage: Message = {
+      id: `user-${messages.length + 1}`,
+      role: "user",
+      content: text,
+      attachments: attachments?.map((file) => ({
+        name: file.name,
+        url: URL.createObjectURL(file), // Temporary URL for display
+        type: file.type,
+      })),
     }
 
-    // Only handle regular Enter key (without Shift) on desktop
-    if (!aiIsLoading && !isMobile && e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault()
-      handleLocalSubmit(e)
+    setMessages((prevMessages) => [...prevMessages, userMessage])
+
+    // For now, we'll just append the message.
+    // In a real app, you'd upload attachments and then send the message with attachment URLs.
+    append(userMessage)
+  }
+
+  const handleRateMessage = (messageId: string, rating: "up" | "down") => {
+    setMessages((prevMessages) =>
+      prevMessages.map((msg) =>
+        msg.id === messageId ? { ...msg, rating: msg.rating === rating ? undefined : rating } : msg,
+      ),
+    )
+    toast({
+      title: "تم التقييم",
+      description: `تم تقييم الرسالة بـ ${rating === "up" ? "إعجاب" : "عدم إعجاب"}.`,
+    })
+    // Here you would send the rating to your backend API
+  }
+
+  const handleShareMessage = (messageContent: string) => {
+    if (navigator.share) {
+      navigator.share({
+        title: "محادثة Dr.X",
+        text: messageContent,
+      })
+    } else {
+      navigator.clipboard.writeText(messageContent)
+      toast({
+        title: "تم النسخ",
+        description: "تم نسخ الرسالة إلى الحافظة.",
+      })
     }
   }
 
-  const toggleButton = (button: ActiveButton) => {
-    if (!aiIsLoading) {
-      // Save the current selection state before toggling
-      saveSelectionState()
-
-      setActiveButton((prev) => (prev === button ? "none" : button))
-
-      // Restore the selection state after toggling
-      setTimeout(() => {
-        restoreSelectionState()
-      }, 0)
-    }
+  const handleDownloadConversation = () => {
+    const conversationText = messages
+      .map((msg) => `${msg.role === "user" ? "أنت" : "Dr.X"}: ${msg.content}`)
+      .join("\n\n")
+    const blob = new Blob([conversationText], { type: "text/plain;charset=utf-8" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = "drx_conversation.txt"
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+    toast({
+      title: "تم التحميل",
+      description: "تم تحميل المحادثة بنجاح.",
+    })
   }
 
-  const renderMessage = (message: Message) => {
-    const isCompleted = message.completed // AI SDK messages are completed by default
-
+  const renderMessageContent = (content: string) => {
     return (
-      <div key={message.id} className={cn("flex flex-col", message.type === "user" ? "items-end" : "items-start")}>
-        <div
-          className={cn(
-            "max-w-[80%] px-4 py-2 rounded-2xl text-white",
-            message.type === "user"
-              ? "bg-gradient-to-r from-blue-500 to-purple-500 rounded-bl-none"
-              : "bg-gradient-to-r from-drx-orange to-drx-red rounded-br-none",
-          )}
-        >
-          {/* For user messages or completed system messages, render without animation */}
-          {message.content && (
-            <span className={message.type === "system" && !isCompleted ? "animate-fade-in" : ""}>
-              {message.content}
-            </span>
-          )}
-
-          {/* For streaming messages, render with animation (if AI SDK supports chunking for this) */}
-          {/* This part might need adjustment based on how `useChat` streams.
-              For now, `useChat` handles streaming directly into `message.content`. */}
-        </div>
-
-        {/* Message actions */}
-        {message.type === "system" && isCompleted && (
-          <div className="flex items-center gap-2 px-4 mt-1 mb-2">
-            <button className="text-gray-400 hover:text-gray-200 transition-colors">
-              <RefreshCcw className="h-4 w-4" />
-            </button>
-            <button className="text-gray-400 hover:text-gray-200 transition-colors">
-              <Copy className="h-4 w-4" />
-            </button>
-            <button className="text-gray-400 hover:text-gray-200 transition-colors">
-              <Share2 className="h-4 w-4" />
-            </button>
-            <button className="text-gray-400 hover:text-gray-200 transition-colors">
-              <ThumbsUp className="h-4 w-4" />
-            </button>
-            <button className="text-gray-400 hover:text-gray-200 transition-colors">
-              <ThumbsDown className="h-4 w-4" />
-            </button>
-          </div>
-        )}
-      </div>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          code({ node, inline, className, children, ...props }) {
+            const match = /language-(\w+)/.exec(className || "")
+            return !inline && match ? (
+              <SyntaxHighlighter style={atomOneDark} language={match[1]} PreTag="div" {...props}>
+                {String(children).replace(/\n$/, "")}
+              </SyntaxHighlighter>
+            ) : (
+              <code className={className} {...props}>
+                {children}
+              </code>
+            )
+          },
+          p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+          ul: ({ node, ...props }) => <ul className="list-disc list-inside mb-2 last:mb-0" {...props} />,
+          ol: ({ node, ...props }) => <ol className="list-decimal list-inside mb-2 last:mb-0" {...props} />,
+          li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+          a: ({ node, ...props }) => <a className="text-blue-400 hover:underline" {...props} />,
+        }}
+      >
+        {content}
+      </ReactMarkdown>
     )
   }
 
-  // Determine if a section should have fixed height (only for sections after the first)
-  const shouldApplyHeight = (sectionIndex: number) => {
-    return sectionIndex > 0
-  }
-
   return (
-    <div className="dark min-h-screen bg-surface-base text-fg-primary overflow-hidden" dir="rtl">
-      <div className="flex flex-col h-screen">
-        {/* الشريط العلوي */}
-        <TopBar />
+    <div className="flex flex-col h-screen bg-surface-base text-fg-primary">
+      <TopBar
+        selectedModel={selectedModel}
+        onSelectModel={setSelectedModel}
+        onDownloadConversation={handleDownloadConversation}
+        onNewChat={() => setMessages([])}
+        onTestDatabase={checkDatabaseConnection}
+        onInitializeDatabase={initializeDatabase}
+        isDatabaseConnected={isDatabaseConnected}
+        isDatabaseInitialized={isDatabaseInitialized}
+      />
 
-        {/* المحتوى الرئيسي */}
-        <div className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6">
-          {localMessages.length === 0 ? (
-            <div className="flex flex-col items-center gap-8 max-w-4xl w-full">
-              <img src="/images/dr-x-logo.png" alt="Dr.X" className="w-64 sm:w-80 mb-6" />
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-2xl">
-                {[
-                  { icon: ImageIcon, label: "تعديل الصورة" },
-                  { icon: Newspaper, label: "آخر الأخبار" },
-                  { icon: Users, label: "شخصيات" },
-                ].map((item, index) => (
-                  <button
-                    key={index}
-                    className="flex items-center justify-center gap-2 p-4 rounded-xl bg-surface-l2 hover:bg-surface-l3 transition-colors border border-border-l2"
+      <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 custom-scrollbar">
+        {messages.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full text-center arabic-text">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="w-24 h-24 bg-gradient-to-br from-button-primary to-purple-600 rounded-full flex items-center justify-center mb-6 shadow-lg"
+            >
+              <Bot className="w-10 h-10 text-white" />
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-3xl font-bold mb-4 text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500"
+            >
+              مرحباً بك في دكتور إكس
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-lg text-fg-secondary max-w-md leading-relaxed"
+            >
+              أنا Dr.X، مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mt-8 flex flex-wrap justify-center gap-3"
+            >
+              <Button
+                variant="outline"
+                className="arabic-text bg-transparent"
+                onClick={() => handleSendMessage("ما هي أحدث التطورات في الذكاء الاصطناعي؟")}
+              >
+                <MessageSquarePlus className="w-4 h-4 ml-2" />
+                أحدث التطورات في الذكاء الاصطناعي
+              </Button>
+              <Button
+                variant="outline"
+                className="arabic-text bg-transparent"
+                onClick={() => handleSendMessage("اشرح لي مفهوم الحوسبة السحابية.")}
+              >
+                <MessageSquarePlus className="w-4 h-4 ml-2" />
+                مفهوم الحوسبة السحابية
+              </Button>
+              <Button
+                variant="outline"
+                className="arabic-text bg-transparent"
+                onClick={() => handleSendMessage("اكتب لي قصيدة قصيرة عن المستقبل.")}
+              >
+                <MessageSquarePlus className="w-4 h-4 ml-2" />
+                قصيدة عن المستقبل
+              </Button>
+            </motion.div>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            <AnimatePresence>
+              {messages.map((message, index) => (
+                <motion.div
+                  key={message.id || index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`flex gap-3 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  {message.role === "assistant" && (
+                    <Avatar className="w-8 h-8 border border-border-l1">
+                      <AvatarImage src="/images/drx-app-icon.png" alt="Dr.X Avatar" />
+                      <AvatarFallback>DR</AvatarFallback>
+                    </Avatar>
+                  )}
+                  <div
+                    className={`max-w-[80%] rounded-2xl p-4 shadow-md ${
+                      message.role === "user"
+                        ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-br-none"
+                        : "bg-surface-l1 text-fg-primary rounded-bl-none border border-border-l1"
+                    }`}
                   >
-                    <item.icon className="w-5 h-5 text-secondary" />
-                    <span className="text-fg-primary">{item.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="flex-1 w-full max-w-4xl overflow-y-auto px-4">
-              <div className="space-y-4">
-                {localMessages.map((message) => (
-                  <div key={message.id} className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}>
-                    <div
-                      className={`max-w-[80%] px-4 py-3 rounded-2xl ${
-                        message.type === "user"
-                          ? "bg-button-primary text-white rounded-bl-none"
-                          : "bg-surface-l2 text-fg-primary rounded-br-none"
-                      }`}
-                    >
-                      {message.content}
-                    </div>
-                  </div>
-                ))}
-                {aiIsLoading && (
-                  <div className="flex justify-start">
-                    <div className="bg-surface-l2 text-fg-primary px-4 py-3 rounded-2xl rounded-br-none">
-                      <div className="flex items-center gap-2">
-                        <span>Dr.X يكتب</span>
-                        <div className="flex gap-1">
-                          <div
-                            className="w-2 h-2 bg-fg-secondary rounded-full animate-bounce"
-                            style={{ animationDelay: "0s" }}
-                          ></div>
-                          <div
-                            className="w-2 h-2 bg-fg-secondary rounded-full animate-bounce"
-                            style={{ animationDelay: "0.1s" }}
-                          ></div>
-                          <div
-                            className="w-2 h-2 bg-fg-secondary rounded-full animate-bounce"
-                            style={{ animationDelay: "0.2s" }}
-                          ></div>
-                        </div>
+                    <div className="prose prose-invert max-w-none arabic-text">
+                      <div className="whitespace-pre-wrap leading-relaxed text-justify">
+                        {renderMessageContent(message.content)}
                       </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
 
-        {/* شريط الإدخال */}
-        <div className="pb-6 pt-4 px-4">
-          <ChatInput
-            input={inputValue}
-            handleInputChange={handleLocalInputChange}
-            handleSubmit={handleLocalSubmit}
-            selectedModel={selectedModel}
-            handleModelChange={setSelectedModel}
-            isLoading={aiIsLoading}
-          />
-        </div>
-      </div>
+                    {message.attachments && message.attachments.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {message.attachments.map((attachment, attIndex) => (
+                          <a
+                            key={attIndex}
+                            href={attachment.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 bg-surface-l2 rounded-lg px-3 py-2 text-sm text-fg-secondary hover:bg-surface-l3 transition-colors"
+                          >
+                            {attachment.type.startsWith("image/") ? (
+                              <ImageIcon className="w-4 h-4 text-blue-400" />
+                            ) : attachment.type.startsWith("audio/") ? (
+                              <Mic className="w-4 h-4 text-green-400" />
+                            ) : (
+                              <FileText className="w-4 h-4 text-gray-400" />
+                            )}
+                            <span>{attachment.name}</span>
+                          </a>
+                        ))}
+                      </div>
+                    )}
+
+                    {message.role === "assistant" && (
+                      <div className="mt-3 flex items-center gap-2 text-fg-secondary">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className={`p-1 h-auto ${message.rating === "up" ? "text-green-500" : "hover:text-green-400"}`}
+                          onClick={() => handleRateMessage(message.id, "up")}
+                        >
+                          <ThumbsUp className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className={`p-1 h-auto ${message.rating === "down" ? "text-red-500" : "hover:text-red-400"}`}
+                          onClick={() => handleRateMessage(message.id, "down")}
+                        >
+                          <ThumbsDown className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="p-1 h-auto hover:text-blue-400"
+                          onClick={() => handleShareMessage(message.content)}
+                        >
+                          <Share2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                  {message.role === "user" && (
+                    <Avatar className="w-8 h-8 border border-border-l1">
+                      <AvatarImage src="/placeholder-user.jpg" alt="User Avatar" />
+                      <AvatarFallback>ME</AvatarFallback>
+                    </Avatar>
+                  )}
+                </motion.div>
+              ))}
+              {isLoading && messages.length > 0 && (
+                <div className="flex justify-start gap-3">
+                  <Avatar className="w-8 h-8 border border-border-l1">
+                    <AvatarImage src="/images/drx-app-icon.png" alt="Dr.X Avatar" />
+                    <AvatarFallback>DR</AvatarFallback>
+                  </Avatar>
+                  <div className="bg-surface-l1 text-fg-primary rounded-2xl rounded-bl-none p-4 shadow-md max-w-[80%]">
+                    <div className="loading-dots">
+                      <div />
+                      <div />
+                      <div />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </AnimatePresence>
+            <div ref={messagesEndRef} />
+          </div>
+        )}
+      </main>
+
+      <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} disabled={isLoading} />
     </div>
   )
 }

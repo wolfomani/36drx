@@ -1,35 +1,40 @@
-import { createOpenAI } from "@ai-sdk/openai"
+import { type NextRequest, NextResponse } from "next/server"
 import { streamText } from "ai"
+import { deepseek } from "@ai-sdk/deepseek"
 
-// Create OpenAI instance for DeepSeek
-const deepseek = createOpenAI({
-  apiKey: process.env.DEEPSEEK_API_KEY || "",
-  baseURL: process.env.DEEPSEEK_API_URL || "https://api.deepseek.com",
-})
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const { messages, data } = await req.json()
-    const modelName = data?.model || "deepseek"
+    const { messages, model = "deepseek" } = await req.json()
 
-    let model
-    if (modelName === "deepseek") {
-      model = deepseek("deepseek-chat")
-    } else {
-      // Default fallback
-      model = deepseek("deepseek-chat")
-    }
+    // System prompt for Dr.X
+    const systemPrompt = `أنت Dr.X، مساعد الذكاء الاصطناعي المتطور والمتخصص. أنت خبير في:
+
+1. البرمجة وتطوير البرمجيات
+2. التحليل والبحث العلمي
+3. حل المشاكل التقنية
+4. التعليم والشرح المبسط
+5. الإبداع والابتكار
+
+خصائصك:
+- تجيب باللغة العربية بشكل واضح ومفصل
+- تقدم حلول عملية وقابلة للتطبيق
+- تشرح المفاهيم المعقدة بطريقة مبسطة
+- تتفاعل بود واحترافية
+- تقدم أمثلة عملية عند الحاجة
+
+تذكر: أنت مساعد ذكي متطور يهدف لتقديم أفضل المساعدة الممكنة.`
 
     const result = await streamText({
-      model,
+      model: deepseek("deepseek-chat"),
+      system: systemPrompt,
       messages,
-      system: `أنت Dr.X، مساعد ذكي متطور ومفيد. تجيب باللغة العربية بطريقة ودودة ومهنية. 
-      أنت خبير في مختلف المجالات وتقدم إجابات دقيقة ومفيدة.`,
+      temperature: 0.7,
+      maxTokens: 2000,
     })
 
     return result.toDataStreamResponse()
   } catch (error) {
     console.error("Chat API Error:", error)
-    return new Response("Internal Server Error", { status: 500 })
+    return NextResponse.json({ error: "حدث خطأ في معالجة الطلب" }, { status: 500 })
   }
 }

@@ -4,52 +4,74 @@
 
 @layer base {
   :root {
-    /* الألوان المظلمة */
-    --surface-base: #1e1f22;
-    --surface-l1: #2b2d31;
-    --surface-l2: #313338;
-    --surface-l3: #383a40;
-
-    --border-l1: #42444a;
-    --border-l2: #4e5158;
-
-    --fg-primary: #f2f3f5;
-    --fg-secondary: #b5bac1;
-
-    --button-primary: #5865f2;
-    --button-primary-hover: #4752c4;
-
-    --toggle-border: #80848e;
-
-    --background: 10 3% 6%; /* drx-black */
-    --foreground: 0 0% 98%;
-
-    --card: 10 3% 6%; /* drx-black */
-    --card-foreground: 0 0% 98%;
-
-    --popover: 10 3% 6%; /* drx-black */
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 70% 40%; /* drx-red */
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 0 0% 15%; /* drx-dark-gray */
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 15%; /* drx-dark-gray */
-    --muted-foreground: 0 0% 62%;
-
-    --accent: 48 100% 50%; /* drx-gold */
-    --accent-foreground: 10 3% 6%; /* drx-black */
-
-    --destructive: 0 63.9% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 48 100% 50%; /* drx-gold */
+    --background: 220 14.3% 4.3%; /* Dark background */
+    --foreground: 210 20% 98%; /* Light foreground */
+    --card: 220 14.3% 4.3%; /* Dark card background */
+    --card-foreground: 210 20% 98%; /* Light card foreground */
+    --popover: 220 14.3% 4.3%; /* Dark popover background */
+    --popover-foreground: 210 20% 98%; /* Light popover foreground */
+    --primary: 220 14.3% 4.3%; /* Primary color (dark) */
+    --primary-foreground: 210 20% 98%; /* Primary foreground (light) */
+    --secondary: 217.2 32.6% 17.5%; /* Secondary color (darker gray) */
+    --secondary-foreground: 210 20% 98%; /* Secondary foreground (light) */
+    --muted: 217.2 32.6% 17.5%; /* Muted background (darker gray) */
+    --muted-foreground: 215 20.2% 65.1%; /* Muted foreground (light gray) */
+    --accent: 217.2 32.6% 17.5%; /* Accent background (darker gray) */
+    --accent-foreground: 210 20% 98%; /* Accent foreground (light) */
+    --destructive: 0 62.8% 30.6%; /* Destructive red */
+    --destructive-foreground: 210 20% 98%; /* Destructive foreground (light) */
+    --border: 217.2 32.6% 17.5%; /* Border color (darker gray) */
+    --input: 217.2 32.6% 17.5%; /* Input background (darker gray) */
+    --ring: 215 20.2% 65.1%; /* Ring color (light gray) */
 
     --radius: 0.5rem;
+
+    /* Custom Dr.X Colors */
+    --surface-base: 220 14.3% 4.3%; /* Base background */
+    --surface-l1: 217.2 32.6% 17.5%; /* Layer 1 surface */
+    --surface-l2: 215 20.2% 20%; /* Layer 2 surface */
+    --surface-l3: 212 15% 25%; /* Layer 3 surface */
+
+    --fg-primary: 210 20% 98%; /* Primary foreground */
+    --fg-secondary: 215 20.2% 65.1%; /* Secondary foreground */
+    --fg-tertiary: 212 15% 50%; /* Tertiary foreground */
+
+    --button-primary: 240 5.9% 10%; /* Dark blue/purple for primary buttons */
+    --button-primary-hover: 240 5.9% 15%; /* Darker hover state */
+    --button-secondary: 217.2 32.6% 17.5%; /* Secondary button */
+    --button-secondary-hover: 215 20.2% 20%; /* Secondary button hover */
+
+    --drx-blue: 210 80% 50%; /* A vibrant blue */
+    --drx-purple: 270 70% 60%; /* A vibrant purple */
+    --drx-green: 120 60% 40%; /* A vibrant green */
+    --drx-red: 0 70% 50%; /* A vibrant red */
+  }
+
+  .dark {
+    --background: 220 14.3% 4.3%;
+    --foreground: 210 20% 98%;
+    --card: 220 14.3% 4.3%;
+    --card-foreground: 210 20% 98%;
+    --popover: 220 14.3% 4.3%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 210 20% 98%;
+    --primary-foreground: 220 14.3% 4.3%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 215 20.2% 65.1%;
+
+    --drx-blue: 210 80% 50%;
+    --drx-purple: 270 70% 60%;
+    --drx-green: 120 60% 40%;
+    --drx-red: 0 70% 50%;
   }
 }
 
@@ -58,118 +80,75 @@
     @apply border-border;
   }
   body {
-    @apply bg-drx-black text-foreground;
+    @apply bg-background text-foreground;
   }
 }
 
-/* الأنماط الأساسية */
-/* body {
-  @apply bg-surface-base text-fg-primary antialiased;
-} */
-
-/* إضافة الأنماط الموجودة مسبقاً */
-.gradient-bg {
-  background: linear-gradient(135deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1);
-  background-size: 400% 400%;
-  animation: gradientAnimation 15s ease infinite;
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
+@layer utilities {
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
-  50% {
-    background-position: 100% 50%;
+
+  .arabic-text {
+    font-family: "Cairo", "Tajawal", sans-serif;
+    line-height: 1.8;
+    text-align: right;
+    direction: rtl;
   }
-  100% {
-    background-position: 0% 50%;
+
+  .loading-dots {
+    display: flex;
+    padding: 10px 0;
   }
-}
 
-.gradient-text {
-  background: linear-gradient(45deg, #ff6b6b, #ffa07a, #8a2be2, #4169e1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
-.btn-gradient {
-  background: linear-gradient(45deg, #ff6b6b, #b22222);
-  border: none;
-  color: white;
-  transition: all 0.3s ease;
-}
-
-.btn-gradient:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
-}
-
-.glow-effect {
-  box-shadow: 0 0 8px rgba(255, 160, 122, 0.6), 0 0 15px rgba(138, 43, 226, 0.4);
-}
-
-/* Chat bubble styles */
-.chat-bubble-user {
-  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
-  border-radius: 1rem 1rem 0 1rem;
-}
-
-.chat-bubble-ai {
-  background: linear-gradient(45deg, #ff6b6b, #b22222);
-  border-radius: 1rem 1rem 1rem 0;
-}
-
-/* Animations */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  .loading-dots div {
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+    border-radius: 50%;
+    background-color: #5865f2;
+    animation: pulse 1.2s infinite ease-in-out;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .loading-dots div:nth-child(1) {
+    animation-delay: 0s;
   }
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
-}
-
-.animate-fade-in-up.delay-200 {
-  animation-delay: 0.2s;
-}
-
-.animate-fade-in-up.delay-400 {
-  animation-delay: 0.4s;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
+  .loading-dots div:nth-child(2) {
+    animation-delay: 0.2s;
   }
-  to {
-    opacity: 1;
+  .loading-dots div:nth-child(3) {
+    animation-delay: 0.4s;
   }
-}
 
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out forwards;
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.7;
+    }
   }
-  50% {
-    transform: none;
-    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-  }
-}
 
-.animate-bounce {
-  animation: bounce 1s infinite;
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: hsl(var(--surface-l1));
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--fg-secondary));
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--fg-primary));
+  }
 }

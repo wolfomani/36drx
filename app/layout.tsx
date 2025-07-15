@@ -1,22 +1,26 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Cairo } from "next/font/google"
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
+import { Cairo, Tajawal } from "next/font/google"
 import "./globals.css"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import { Toaster } from "@/components/ui/toaster"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/sonner"
 
 const cairo = Cairo({
   subsets: ["arabic"],
   variable: "--font-cairo",
 })
 
+const tajawal = Tajawal({
+  weight: ["400", "700"],
+  subsets: ["arabic"],
+  variable: "--font-tajawal",
+})
+
 export const metadata: Metadata = {
-  title: "Dr X - مساعد الذكاء الاصطناعي المتطور",
-  description: "مساعدك الذكي المتطور - مدعوم بأحدث تقنيات الذكاء الاصطناعي",
-  icons: {
-    icon: "/images/drx-app-icon.png",
-  },
+  title: "Dr.X AI Assistant",
+  description: "Your advanced AI assistant powered by DeepSeek and other models.",
     generator: 'v0.dev'
 }
 
@@ -25,20 +29,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // In a server component, you cannot use usePathname directly.
-  // For conditional rendering based on route, you would typically pass a prop
-  // from a layout.tsx that wraps a client component, or use a separate layout
-  // for specific routes. For simplicity and to avoid breaking the existing structure,
-  // we will keep Navbar and Footer rendered globally.
-  // The chat page will be modified to remove its internal header.
-
   return (
-    <html lang="ar" dir="rtl">
-      <body className={`${cairo.variable} bg-black text-white`}>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <Toaster />
+    <html
+      lang="ar"
+      suppressHydrationWarning
+      className={`${GeistSans.variable} ${GeistMono.variable} ${cairo.variable} ${tajawal.variable}`}
+    >
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )
